@@ -18,8 +18,8 @@ const editCustomerSchema = z.object({
     .max(60, "Độ dài tên tối đa là 60 ký tự"),
   phone: z.string().refine((value) => {
     const rawValue = removeNonNumericFromString(value);
-    return rawValue.length === 11;
-  }, "Số điện thoại di động không hợp lệ"),
+    return rawValue.length === 10;
+  }, "Số điện thoại không hợp lệ"),
 });
 
 export type EditCustomerFormData = z.infer<typeof editCustomerSchema>;
@@ -39,7 +39,7 @@ export function EditCustomerForm(props: Props) {
     resolver: zodResolver(editCustomerSchema),
     defaultValues: {
       name: props.customer.name,
-      phone: removeCountryCodeAnd9FromRawPhone(props.customer.phone),
+      phone: props.customer.phone,
     },
   });
 

@@ -43,9 +43,7 @@ export default function Customers() {
         axios.isAxiosError(err) &&
         (err.response?.data as APIError).name === "InvalidDeleteOperation"
       ) {
-        toast.error(
-          "Không thể xóa khách hàng vì đã có lịch hẹn."
-        );
+        toast.error("Không thể xóa khách hàng vì đã có lịch hẹn.");
       } else {
         toast.error("Ối. Đã xảy ra sự cố khi cố xóa ứng dụng khách.");
       }
@@ -63,7 +61,7 @@ export default function Customers() {
     }),
     columnHelper.accessor("phone", {
       cell: (info) =>
-        patternFormatter(removeCountryCodeAnd9FromRawPhone(info.getValue()), {
+        patternFormatter(info.getValue(), {
           format: cellPhonePattern,
           patternChar: "#",
         }),

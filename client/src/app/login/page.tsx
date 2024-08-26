@@ -56,7 +56,7 @@ export default function Login() {
     mutationFn: (payload: SignInFormData) => signIn(payload),
     onSuccess: (data) => {
       signInUser(data.user, data.accessToken, data.refreshToken);
-      router.push("/dashboard");
+      router.push("/home");
     },
     onError: (err) => {
       if (isAxiosError(err) && err.response?.status === 401) {

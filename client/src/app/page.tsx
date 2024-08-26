@@ -20,7 +20,6 @@ export default function Home() {
 
   return (
     <div className="h-full min-h-screen flex flex-col">
-      {/* header height is 65px */}
       <Header />
 
       <section className="hero min-h-[calc(100vh-66px)] bg-base-100 relativ">

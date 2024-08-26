@@ -12,7 +12,7 @@ export function ProvidersWrapper({ children }: { children: React.ReactNode }) {
   const client = new QueryClient();
   const pathname = usePathname();
   const [showWarning, setShowWarning] = useState(true);
-  const aboutPageURL = pathname.includes("dashboard") ? "/dashboard/about" : "/#about-section";
+  // const aboutPageURL = pathname.includes("dashboard") ? "/dashboard/about" : "/#about-section";
 
   return (
     <QueryClientProvider client={client}>
