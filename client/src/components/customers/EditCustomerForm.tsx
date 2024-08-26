@@ -18,7 +18,7 @@ const editCustomerSchema = z.object({
     .max(60, "Độ dài tên tối đa là 60 ký tự"),
   phone: z.string().refine((value) => {
     const rawValue = removeNonNumericFromString(value);
-    return rawValue.length === 12;
+    return rawValue.length === 11;
   }, "Số điện thoại di động không hợp lệ"),
 });
 

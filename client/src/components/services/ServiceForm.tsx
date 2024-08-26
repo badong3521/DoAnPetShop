@@ -4,7 +4,6 @@ import { Input } from "@/components/ui/Form/Inputs/Input";
 import { TextArea } from "@/components/ui/Form/TextArea";
 import { zodResolver } from "@hookform/resolvers/zod";
 import {
-  convertCentsToReais,
   maskNumberToCurrency,
   parseMaskedCurrencyValueToNumber,
 } from "@/utils/currency";
@@ -32,13 +31,13 @@ const petshopServiceSchema = z.object({
     })
     // CurrencyInput masks the currency value, so we need to transform that string value into
     // a number for better validation
-    // .transform((value) => parseMaskedCurrencyValueToNumber(value))
-    // .pipe(
-    //   z
-    //     .number()
-    //     .min(10_000, "Giá tiền tối thiểu là 10.000đ")
-    //     .max(1_000_000, "Giá tiền tối đa là 100.000đ")
-    // )
+    .transform((value) => parseMaskedCurrencyValueToNumber(value))
+    .pipe(
+      z
+        .number()
+        .min(10_000, "Giá tiền tối thiểu là 10.000đ")
+        .max(1_000_000, "Giá tiền tối đa là 100.000.000đ")
+    )
     .transform((value) => maskNumberToCurrency(value)), // transform back to string to use it as a string
   duration: z
     .string()
@@ -48,7 +47,7 @@ const petshopServiceSchema = z.object({
       const timeDuration = parseTimeStringToDuration(value);
       return timeDuration.asSeconds();
     })
-    .pipe(z.number().min(1, "Giá tiền tối thiểu là 1 giây"))
+    .pipe(z.number().min(1, "Thời gian tối thiểu là 1 giây"))
     .transform((value) => {
       // transform back to time string (HH:mm:ss) to use it as a string
       return parseSecondsToTimeDurationString(value);
@@ -72,21 +71,20 @@ export function ServiceForm(props: Props) {
     defaultValues: {
       title: props.service?.title ?? "",
       description: props.service?.description ?? "",
-      value: props.service
-        ? maskNumberToCurrency(convertCentsToReais(props.service?.value))
-        : "0",
+      value: props.service ? maskNumberToCurrency(props.service?.value) : "0",
       duration: parseSecondsToTimeDurationString(
         props.service?.duration ?? 3600
       ),
     },
   });
 
-  const getSubmitButtonText = () => (props.service ? "Biên tập" : "Tạo Mới");
+  const getSubmitButtonText = () => (props.service ? "Xác Nhận" : "Tạo Mới");
 
   const handleFormSubmit: SubmitHandler<PetshopServiceFormData> = async (
     data
   ) => {
     const timeDuration = parseTimeStringToDuration(data.duration);
+
     props.onSubmit({
       ...data,
       value: parseMaskedCurrencyValueToNumber(data.value),
@@ -137,8 +135,6 @@ export function ServiceForm(props: Props) {
               id="value"
               errorMessage={errors.value?.message}
               {...register("value")}
-              onChange={(event) => {}}
-              value={props.service?.value}
             />
           </fieldset>
         </div>

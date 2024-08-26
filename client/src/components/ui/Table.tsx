@@ -178,7 +178,7 @@ export function Table<T>({
 
           <span className="flex items-center gap-1">
             <strong>
-              {table.getState().pagination.pageIndex + 1} de{" "}
+              {table.getState().pagination.pageIndex + 1} cho{" "}
               {table.getPageCount()}
             </strong>
           </span>

@@ -10,7 +10,6 @@ import {
 import { useRouter } from "next/navigation";
 import toast from "react-hot-toast";
 import { PetshopServiceBodyData } from "@/@types/PetshopServices";
-import { convertCentsToReais } from "@/utils/currency";
 
 export default function NewService() {
   const router = useRouter();
@@ -32,7 +31,7 @@ export default function NewService() {
   async function handleCreateService(data: PetshopServiceBodyData) {
     const parsedData: PetshopServiceBodyData = {
       ...data,
-      value: convertCentsToReais(data.value),
+      value: data.value,
     };
 
     createPetshopServiceMutation.mutate(parsedData);

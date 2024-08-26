@@ -137,7 +137,7 @@ export default function EditCustomer({ params }: { params: { id: string } }) {
     }),
     columnHelper.accessor("breed", {
       cell: (info) => info.getValue(),
-      header: "Số điện thoại",
+      header: "Giống loài",
     }),
     columnHelper.accessor("age", {
       cell: (info) => info.getValue(),

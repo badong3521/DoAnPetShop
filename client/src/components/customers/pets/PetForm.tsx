@@ -1,3 +1,4 @@
+import React, { useState } from "react";
 import { Pet } from "@/@types/Pet";
 import { PageTitle } from "@/components/dashboard/PageTitle";
 import { Button } from "@/components/ui/Button";
@@ -21,18 +22,14 @@ export const petSchema = z.object({
 
 export type PetFormData = z.infer<typeof petSchema>;
 
-type ModalElement = {
-  showModal: () => void;
-  close: () => void;
-} & HTMLElement;
-
 type Props = {
   pet?: Pet;
   onSubmit: (pet: PetFormData) => void;
 };
+
 export function PetForm({ pet, onSubmit }: Props) {
+  const [isModalOpen, setIsModalOpen] = useState(false);
   const isPetUpdate = pet !== undefined;
-  const modal = document.getElementById(`pet_form_modal_${pet ? pet.id : "create"}`) as ModalElement | null;
 
   const {
     register,
@@ -50,12 +47,16 @@ export function PetForm({ pet, onSubmit }: Props) {
 
   function handleOpenModal() {
     resetForm();
-    modal?.showModal();
+    setIsModalOpen(true);
+  }
+
+  function handleCloseModal() {
+    setIsModalOpen(false);
   }
 
   function handleSubmitForm(data: PetFormData) {
     onSubmit(data);
-    modal?.close();
+    handleCloseModal();
   }
 
   return (
@@ -65,48 +66,67 @@ export function PetForm({ pet, onSubmit }: Props) {
           <PencilSimple className="w-6 h-6" />
         </Button>
       ) : (
-        <Button tooltipText="Thêm thú cưng" type="button" outline circle onClick={handleOpenModal}>
+        <Button
+          tooltipText="Thêm thú cưng"
+          type="button"
+          outline
+          circle
+          onClick={handleOpenModal}
+        >
           <Plus />
         </Button>
       )}
 
-      <dialog id={`pet_form_modal_${pet ? pet.id : "create"}`} className="modal">
-        <div className="modal-box">
-          <div className="flex justify-between items-center">
-            <PageTitle title="Thêm thú cưng" />
-            <form method="dialog">
-              {/* if there is a button in form, it will close the modal */}
-              <Button bg="ghost" circle>
+      {isModalOpen && (
+        <dialog open className="modal">
+          <div className="modal-box">
+            <div className="flex justify-between items-center">
+              <PageTitle title="Thêm thú cưng" />
+              <button
+                type="button"
+                onClick={handleCloseModal}
+                className="btn btn-ghost"
+              >
                 <X className="w-5 h-5" />
-              </Button>
+              </button>
+            </div>
+
+            <form className="mt-4" onSubmit={handleSubmit(handleSubmitForm)}>
+              <fieldset>
+                <Input
+                  label="Tên thú cưng"
+                  id={`name`}
+                  errorMessage={errors.name?.message}
+                  {...register(`name`)}
+                />
+              </fieldset>
+              <fieldset>
+                <Input
+                  label="Giống vật nuôi"
+                  id={`breed`}
+                  errorMessage={errors.breed?.message}
+                  {...register(`breed`)}
+                />
+              </fieldset>
+              <fieldset className="w-32">
+                <Input
+                  type="number"
+                  label="Tuổi của thú cưng"
+                  id={`age`}
+                  errorMessage={errors.age?.message}
+                  {...register(`age`)}
+                />
+              </fieldset>
+
+              <div className="ml-auto w-fit">
+                <Button bg="submit" type="submit">
+                  {isPetUpdate ? "Chỉnh sửa" : "Tạo"}
+                </Button>
+              </div>
             </form>
           </div>
-
-          <form className="mt-4" onSubmit={handleSubmit(handleSubmitForm)}>
-            <fieldset>
-              <Input label="Tên thú cưng" id={`name`} errorMessage={errors.name?.message} {...register(`name`)} />
-            </fieldset>
-            <fieldset>
-              <Input label="Giống vật nuôi" id={`breed`} errorMessage={errors.breed?.message} {...register(`breed`)} />
-            </fieldset>
-            <fieldset className="w-32">
-              <Input
-                type="number"
-                label="Tuổi của thú cưng"
-                id={`age`}
-                errorMessage={errors.age?.message}
-                {...register(`age`)}
-              />
-            </fieldset>
-
-            <div className="ml-auto w-fit">
-              <Button bg="submit" type="submit">
-                {isPetUpdate ? "Chỉnh sửa" : "Tạo"}
-              </Button>
-            </div>
-          </form>
-        </div>
-      </dialog>
+        </dialog>
+      )}
     </div>
   );
 }

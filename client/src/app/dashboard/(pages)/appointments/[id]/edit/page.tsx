@@ -49,7 +49,7 @@ export default function EditService({ params }: { params: { id: string } }) {
     mutationFn: (status: AppointmentStatus) =>
       updateAppointmentStatus(params.id, status),
     onSuccess: (data) => {
-      toast.success("Status atualizado com sucesso!");
+      toast.success("Đã cập nhật trạng thái thành công!");
       queryClient.invalidateQueries([APPOINTMENT_KEY]);
       queryClient.setQueryData([APPOINTMENT_KEY, params.id], () => ({
         appointment: {
@@ -60,7 +60,7 @@ export default function EditService({ params }: { params: { id: string } }) {
     },
     onError: () => {
       toast.error(
-        "Ops. Ocorreu um problema ao tentar editar o status do agendamento."
+        "Ối. Đã xảy ra sự cố khi cố gắng chỉnh sửa trạng thái cuộc hẹn."
       );
       setValue("status", appointment!.status);
     },
@@ -81,12 +81,12 @@ export default function EditService({ params }: { params: { id: string } }) {
   const appointmentShowQueryErrorMessage = (() => {
     const error = appointmentShowQuery.error;
     if (axios.isAxiosError(error) && error.response?.status === 404)
-      return "Erro! Agendamento não encontrado.";
+      return "Lỗi! Không tìm thấy cuộc hẹn.";
   })();
 
   return (
     <div>
-      <PageTitle renderBackOption title="Agendamento" />
+      <PageTitle renderBackOption title="Cuộc hẹn" />
 
       <AsynchronousContent
         status={appointmentShowQuery.status}
@@ -94,7 +94,7 @@ export default function EditService({ params }: { params: { id: string } }) {
       >
         <div>
           <InfoContent
-            label="Horário"
+            label="Thời gian"
             value={dayjs(appointment?.appointmentTime).format(
               "DD/MM/YYYY - HH:mm"
             )}
@@ -124,7 +124,7 @@ export default function EditService({ params }: { params: { id: string } }) {
             }
           />
           <InfoContent
-            label="Status"
+            label="Trạng thái"
             value={
               <Select
                 {...register("status")}

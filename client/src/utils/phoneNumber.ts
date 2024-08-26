@@ -1,12 +1,12 @@
-export const cellPhonePattern = "+84 (##) #### ####"
+export const cellPhonePattern = "+84 (##) #### ####";
 
-// We need to remove the country code and the 9 from the raw phone string because when we pass it to the 
-// react-number-format lib, the pattern (above) will automatically add them already
+// Loại bỏ mã vùng và số 9 khỏi chuỗi số điện thoại thô
 export function removeCountryCodeAnd9FromRawPhone(rawPhone: string) {
-  let length = rawPhone.length
-  let result = rawPhone.slice(2, length) // removed country code: 55
+  // Loại bỏ mã vùng +84 (2 ký tự) khỏi chuỗi số điện thoại
+  let result = rawPhone.slice(3); // loại bỏ mã vùng: 84
 
-  length = rawPhone.length
-  result = result.slice(0, 2) + result.slice(3, length) // removed 9
-  return result
+  // Loại bỏ số 9 nếu có
+  result = result.replace(/^9/, ""); // loại bỏ số 9 nếu xuất hiện ở đầu chuỗi
+
+  return result;
 }

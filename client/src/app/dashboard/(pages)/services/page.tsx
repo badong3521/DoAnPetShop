@@ -55,7 +55,7 @@ export default function Services() {
       ),
     }),
     columnHelper.accessor("value", {
-      cell: (info) => info.getValue(),
+      cell: (info) => parseCurrencyValueInCentsToBRL(info.getValue()),
       header: "Giá tiền",
     }),
     columnHelper.accessor("duration", {

@@ -7,9 +7,10 @@ import { Label } from "@/components/ui/Form/Label";
 import { Table } from "@/components/ui/Table";
 import {
   APPOINTMENT_KEY,
+  deleteAppointmentStatus,
   fetchAppointments,
 } from "@/services/queries/Appointment";
-import { useQuery } from "@tanstack/react-query";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import {
   PaginationState,
   SortingState,
@@ -25,71 +26,107 @@ import { z } from "zod";
 import { useEffect, useState } from "react";
 import { isFetchingWithPreviousData } from "@/utils/isFetchingWithPreviousData";
 import { parseSortingStateToSortingParams } from "@/utils/parseSortingStateToSortingParams";
+import { ConfirmDeletePopover } from "@/components/ConfirmDeletePopover";
+import { CUSTOMER_KEY, deleteCustomer } from "@/services/queries/Customer";
+import toast from "react-hot-toast";
+import axios from "axios";
+import { APIError } from "@/@types/API";
+import { deletePetshopService } from "@/services/queries/PetshopServices";
 
 dayjs.extend(customParseFormatPlugin);
 
 const columnHelper = createColumnHelper<Appointment>();
-
-const columns = [
-  columnHelper.display({
-    cell: (props) => props.row.index + 1,
-    id: "row-number",
-  }),
-  columnHelper.accessor("appointmentTime", {
-    cell: (info) => dayjs(info.getValue()).format("DD/MM/YYYY - HH:mm"),
-    enableSorting: true,
-    header: "Horário",
-  }),
-  columnHelper.display({
-    header: "Pet",
-    cell: (props) => (
-      <Link
-        className="link tooltip"
-        data-tip={"Ver pet"}
-        href={`/dashboard/customers/${props.row.original.pet.ownerId}/edit`}
-      >
-        {props.row.original.pet.name}
-      </Link>
-    ),
-  }),
-  columnHelper.display({
-    header: "Dịch vụ",
-    cell: (props) => (
-      <Link
-        className="link tooltip"
-        data-tip={"Ver servico"}
-        href={
-          props.row.original.service
-            ? `/dashboard/services/${props.row.original.service.id}/edit`
-            : ""
-        }
-      >
-        {props.row.original.service?.title}
-      </Link>
-    ),
-  }),
-  columnHelper.accessor("status", {
-    cell: (info) => parseAppointmentStatus(info.getValue()),
-    enableSorting: true,
-    header: "Status",
-  }),
-  columnHelper.display({
-    header: "Acões",
-    cell: (props) => (
-      <Button circle tooltipText="Chỉnh sửa" asChild>
-        <Link href={`/dashboard/appointments/${props.row.original.id}/edit`}>
-          <PencilSimple className="w-6 h-6" />
-        </Link>
-      </Button>
-    ),
-  }),
-];
 
 const DATE_INPUT_FORMAT = "YYYY-MM-DDTHH:mm";
 
 export default function Appointments() {
   const router = useRouter();
   const searchParams = useSearchParams();
+  const queryClient = useQueryClient();
+
+  const deleteAppointmentMutation = useMutation({
+    mutationFn: (id: string) => deleteAppointmentStatus(id),
+    onSuccess: () => {
+      toast.success("Đã xóa cuộc hẹn thành công");
+      queryClient.invalidateQueries([CUSTOMER_KEY]);
+    },
+    onError: (err) => {
+      console.log("err", err);
+
+      if (
+        axios.isAxiosError(err) &&
+        (err.response?.data as APIError).name === "InvalidDeleteOperation"
+      ) {
+        // toast.error("Không thể xóa khách hàng vì đã có lịch hẹn.");
+      } else {
+        toast.error("Ối. Đã xảy ra sự cố khi cố xóa cuộc hẹn khách.");
+      }
+    },
+  });
+
+  const columns = [
+    columnHelper.display({
+      cell: (props) => props.row.index + 1,
+      id: "row-number",
+    }),
+    columnHelper.accessor("appointmentTime", {
+      cell: (info) => dayjs(info.getValue()).format("DD/MM/YYYY - HH:mm"),
+      enableSorting: true,
+      header: "Thời gian",
+    }),
+    columnHelper.display({
+      header: "Pet",
+      cell: (props) => (
+        <Link
+          className="link tooltip"
+          data-tip={"Thú cưng"}
+          href={`/dashboard/customers/${props.row.original.pet.ownerId}/edit`}
+        >
+          {props.row.original.pet.name}
+        </Link>
+      ),
+    }),
+    columnHelper.display({
+      header: "Dịch vụ",
+      cell: (props) => (
+        <Link
+          className="link tooltip"
+          data-tip={"Xem dịch vụ"}
+          href={
+            props.row.original.service
+              ? `/dashboard/services/${props.row.original.service.id}/edit`
+              : ""
+          }
+        >
+          {props.row.original.service?.title}
+        </Link>
+      ),
+    }),
+    columnHelper.accessor("status", {
+      cell: (info) => parseAppointmentStatus(info.getValue()),
+      enableSorting: true,
+      header: "Trạng thái",
+    }),
+    columnHelper.display({
+      header: "Hành động",
+      cell: (props) => (
+        <div className="flex gap-3">
+          <Button circle tooltipText="Chỉnh sửa" asChild>
+            <Link
+              href={`/dashboard/appointments/${props.row.original.id}/edit`}
+            >
+              <PencilSimple className="w-6 h-6" />
+            </Link>
+          </Button>
+          <ConfirmDeletePopover
+            onConfirmDelete={() =>
+              deleteAppointmentMutation.mutate(props.row.original.id)
+            }
+          />
+        </div>
+      ),
+    }),
+  ];
 
   const date = parseDateParam();
   const status = parseStatusParam();
