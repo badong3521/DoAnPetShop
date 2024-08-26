@@ -2,63 +2,63 @@
 <h1>🐾PETSHOP🐾</h1>
 </div>
 
-<p align="center">Fictitious Petshop system, register customers, pets and services and easily manage appointments.</p>
-👉Check it out: https://petshop-system-project.vercel.app/ <sup>*</sup>
+<p align="center">Hệ thống Petshop giả lập, đăng ký khách hàng, thú cưng và dịch vụ, đồng thời dễ dàng quản lý các cuộc hẹn.</p>
+👉Xem ngay: https://petshop-system-project.vercel.app/ <sup>*</sup>
 
-<sub>\* As explained in the website, this project uses free resources and hosting. Therefore, after a period of inactivity, the server shuts down and will automatically restart when accessed. This may take 1~3 MINUTES. Don't be surprised if the first request takes a while to load...</sub>
+<sub>\* Như đã giải thích trên trang web, dự án này sử dụng các tài nguyên và dịch vụ lưu trữ miễn phí. Do đó, sau một thời gian không hoạt động, máy chủ sẽ tắt và tự động khởi động lại khi được truy cập. Quá trình này có thể mất từ 1 đến 3 PHÚT. Đừng ngạc nhiên nếu yêu cầu đầu tiên mất một thời gian để tải...</sub>
 
-## 📜 About
+## 📜 Giới thiệu
 
 <div align="center">
    <img src="./server/prisma/ERD.svg" width="400px" />
 </div>
-As shown in the Entity Relationship Diagram above, the petshop system is very simple, we have a User which is responsible to perform all available actions (authenticate and CRUD other entities).
+Như được hiển thị trong Sơ đồ Quan hệ Thực thể ở trên, hệ thống petshop rất đơn giản, chúng ta có một Người dùng chịu trách nhiệm thực hiện tất cả các hành động có sẵn (xác thực và thực hiện các thao tác CRUD trên các thực thể khác).
 
-- The user can create, read, update and delete (CRUD) Customers and each Customer can have as many Pets as needed (CRUD options for Pets are available as well).
-- The user can also CRUD Services that are used to schedule Appointments for a specific Pet
-- User can also update the Appointment status, and filter Appointments by schedule date and status. Pagination and sorting were added as well.
+- Người dùng có thể tạo, đọc, cập nhật và xóa (CRUD) Khách hàng, và mỗi Khách hàng có thể có nhiều Thú cưng (CRUD cho Thú cưng cũng có sẵn).
+- Người dùng cũng có thể CRUD các Dịch vụ được sử dụng để lập lịch Cuộc hẹn cho một Thú cưng cụ thể.
+- Người dùng cũng có thể cập nhật trạng thái Cuộc hẹn và lọc Cuộc hẹn theo ngày và trạng thái. Phân trang và sắp xếp cũng được thêm vào.
 
-Even though the scope of the project is not that big, I decided to follow coding best practices and also DDD patterns, which I know that is an overkill for a project this size, but I wanted to improve my knowledge on this topic.
+Mặc dù phạm vi của dự án không lớn, tôi đã quyết định tuân theo các thực hành lập trình tốt nhất và cả các mẫu thiết kế DDD, mặc dù điều này có thể quá mức cho một dự án có quy mô này, nhưng tôi muốn nâng cao kiến thức của mình về chủ đề này.
 
-Here are some features I added that I'm very proud of, wether because they were more advanced topics, or the end result was nice, or even because it looked good from the clean coding point of view (reusability, separation of concerns, etc):
+Dưới đây là một số tính năng tôi đã thêm vào mà tôi rất tự hào, vì chúng là các chủ đề nâng cao, hoặc kết quả cuối cùng rất tốt, hoặc vì nó trông đẹp từ quan điểm lập trình sạch (tính tái sử dụng, phân tách mối quan tâm, v.v.):
 
-- I added JWT authentication with refresh token logic
-- For better UX I managed to add appointments filtering, pagination and sorting state to be stored in the URL of the client.
-- I made everything look good and responsive to all devices.
-- Backend code follows lots of DDD patterns
-- Frontend with good looking and well structured design system
-- API endpoints have clean and meaningful errors + validation DTOs
+- Tôi đã thêm xác thực JWT với logic làm mới token.
+- Để có trải nghiệm người dùng tốt hơn, tôi đã quản lý thêm lọc cuộc hẹn, phân trang và trạng thái sắp xếp được lưu trữ trong URL của khách hàng.
+- Tôi đã làm mọi thứ trông đẹp mắt và tương thích với mọi thiết bị.
+- Mã nguồn Backend tuân theo nhiều mẫu thiết kế DDD.
+- Frontend với hệ thống thiết kế đẹp mắt và có cấu trúc tốt.
+- Các điểm cuối API có lỗi rõ ràng và có ý nghĩa + DTO xác thực.
 
-## 💻 Techs
+## 💻 Công nghệ
 
-- **Typescript** — A strongly typed programming language that builds on JavaScript
-- **Day.js** — JavaScript date utility library
+- **Typescript** — Ngôn ngữ lập trình mạnh mẽ dựa trên JavaScript.
+- **Day.js** — Thư viện tiện ích ngày giờ cho JavaScript.
 
 ### 🌐 FRONTEND
 
-- **Next.js** — React's framework
-- **zustand** — A small, fast and scalable bearbones state-management solution using simplified flux principles
-- **React Query** — Powerful asynchronous state management, server-state utilities and data fetching
-- **tailwindcss** — Utility-first CSS framework
-- **daisyUI** — The most popular component library for Tailwind CSS
-- **zod** — TypeScript-first schema validation with static type inference
-- **React Hook Form** — Performant, flexible and extensible forms with easy-to-use validation.
+- **Next.js** — Framework của React.
+- **zustand** — Giải pháp quản lý trạng thái nhỏ gọn, nhanh chóng và mở rộng dựa trên nguyên tắc flux đơn giản.
+- **React Query** — Quản lý trạng thái bất đồng bộ mạnh mẽ, các tiện ích trạng thái máy chủ và lấy dữ liệu.
+- **tailwindcss** — Framework CSS ưu tiên tiện ích.
+- **daisyUI** — Thư viện thành phần phổ biến nhất cho Tailwind CSS.
+- **zod** — Xác thực schema đầu tiên của TypeScript với suy luận kiểu tĩnh.
+- **React Hook Form** — Các biểu mẫu linh hoạt, hiệu quả và mở rộng với xác thực dễ sử dụng.
 
 ### ⚙ BACKEND
 
-- **NestJS** — A Node.js framework for building efficient, reliable and scalable server-side applications.
-- **MySQL** — Famous database management system that uses the SQL language
-- **Prisma** — Next-generation Node.js and TypeScript ORM
-- **Passport.js** — Simple, unobtrusive authentication for Node.js.
-- **passport-JWT** — Passport authentication strategy using JSON Web Tokens
-- **class-validator** — Decorator-based property validation for classes.
+- **NestJS** — Framework Node.js để xây dựng các ứng dụng phía máy chủ hiệu quả, đáng tin cậy và có thể mở rộng.
+- **MySQL** — Hệ quản trị cơ sở dữ liệu nổi tiếng sử dụng ngôn ngữ SQL.
+- **Prisma** — ORM thế hệ tiếp theo cho Node.js và TypeScript.
+- **Passport.js** — Xác thực đơn giản, không xâm phạm cho Node.js.
+- **passport-JWT** — Chiến lược xác thực Passport sử dụng JSON Web Tokens.
+- **class-validator** — Xác thực thuộc tính dựa trên decorator cho các lớp.
 
-## 🛠 Getting started
+## 🛠 Bắt đầu
 
-1. Clone this repo running on your terminal `git clone https://github.com/Gust4voSales/petshop-project.git`
-2. Inside the project `server` folder run `yarn` to install all dependencies
-3. Create a `.env` file with with the `.example.env` file as model
-4. Run `yarn prisma migrate dev` to apply the migrations to you db
-5. Inside the project `client` folder run `yarn` to install all dependencies
-6. Create a `.env` file with with the `.example.env` file as model
-7. Run `yarn dev` in both folders to run in development mode
+1. Clone repo này bằng cách chạy lệnh `git clone https://github.com/Gust4voSales/petshop-project.git` trên terminal của bạn.
+2. Bên trong thư mục `server` của dự án, chạy lệnh `yarn` để cài đặt tất cả các phụ thuộc.
+3. Tạo file `.env` với mô hình từ file `.example.env`.
+4. Chạy lệnh `yarn prisma migrate dev` để áp dụng các migrations vào cơ sở dữ liệu của bạn.
+5. Bên trong thư mục `client` của dự án, chạy lệnh `yarn` để cài đặt tất cả các phụ thuộc.
+6. Tạo file `.env` với mô hình từ file `.example.env`.
+7. Chạy lệnh `yarn dev` trong cả hai thư mục để chạy ở chế độ phát triển.# DoAnPetShop
