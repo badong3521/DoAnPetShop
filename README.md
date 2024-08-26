@@ -2,11 +2,6 @@
 <h1>🐾PETSHOP🐾</h1>
 </div>
 
-<p align="center">Hệ thống Petshop giả lập, đăng ký khách hàng, thú cưng và dịch vụ, đồng thời dễ dàng quản lý các cuộc hẹn.</p>
-👉Xem ngay: https://petshop-system-project.vercel.app/ <sup>*</sup>
-
-<sub>\* Như đã giải thích trên trang web, dự án này sử dụng các tài nguyên và dịch vụ lưu trữ miễn phí. Do đó, sau một thời gian không hoạt động, máy chủ sẽ tắt và tự động khởi động lại khi được truy cập. Quá trình này có thể mất từ 1 đến 3 PHÚT. Đừng ngạc nhiên nếu yêu cầu đầu tiên mất một thời gian để tải...</sub>
-
 ## 📜 Giới thiệu
 
 <div align="center">
@@ -17,8 +12,6 @@ Như được hiển thị trong Sơ đồ Quan hệ Thực thể ở trên, h�
 - Người dùng có thể tạo, đọc, cập nhật và xóa (CRUD) Khách hàng, và mỗi Khách hàng có thể có nhiều Thú cưng (CRUD cho Thú cưng cũng có sẵn).
 - Người dùng cũng có thể CRUD các Dịch vụ được sử dụng để lập lịch Cuộc hẹn cho một Thú cưng cụ thể.
 - Người dùng cũng có thể cập nhật trạng thái Cuộc hẹn và lọc Cuộc hẹn theo ngày và trạng thái. Phân trang và sắp xếp cũng được thêm vào.
-
-Mặc dù phạm vi của dự án không lớn, tôi đã quyết định tuân theo các thực hành lập trình tốt nhất và cả các mẫu thiết kế DDD, mặc dù điều này có thể quá mức cho một dự án có quy mô này, nhưng tôi muốn nâng cao kiến thức của mình về chủ đề này.
 
 Dưới đây là một số tính năng tôi đã thêm vào mà tôi rất tự hào, vì chúng là các chủ đề nâng cao, hoặc kết quả cuối cùng rất tốt, hoặc vì nó trông đẹp từ quan điểm lập trình sạch (tính tái sử dụng, phân tách mối quan tâm, v.v.):
 
@@ -53,14 +46,4 @@ Dưới đây là một số tính năng tôi đã thêm vào mà tôi rất t�
 - **passport-JWT** — Chiến lược xác thực Passport sử dụng JSON Web Tokens.
 - **class-validator** — Xác thực thuộc tính dựa trên decorator cho các lớp.
 
-## 🛠 Bắt đầu
-
-1. Clone repo này bằng cách chạy lệnh `git clone https://github.com/Gust4voSales/petshop-project.git` trên terminal của bạn.
-2. Bên trong thư mục `server` của dự án, chạy lệnh `yarn` để cài đặt tất cả các phụ thuộc.
-3. Tạo file `.env` với mô hình từ file `.example.env`.
-4. Chạy lệnh `yarn prisma migrate dev` để áp dụng các migrations vào cơ sở dữ liệu của bạn.
-5. Bên trong thư mục `client` của dự án, chạy lệnh `yarn` để cài đặt tất cả các phụ thuộc.
-6. Tạo file `.env` với mô hình từ file `.example.env`.
-7. Chạy lệnh `yarn dev` trong cả hai thư mục để chạy ở chế độ phát triển.# DoAnPetShop
-# DoAnPetShop
 # DoAnPetShop
