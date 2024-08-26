@@ -3,7 +3,11 @@
 import { PageTitle } from "@/components/dashboard/PageTitle";
 import { Button } from "@/components/ui/Button";
 import { Table } from "@/components/ui/Table";
-import { CUSTOMER_KEY, deleteCustomer, fetchCustomers } from "@/services/queries/Customer";
+import {
+  CUSTOMER_KEY,
+  deleteCustomer,
+  fetchCustomers,
+} from "@/services/queries/Customer";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { createColumnHelper } from "@tanstack/react-table";
 import Link from "next/link";
@@ -14,7 +18,10 @@ import toast from "react-hot-toast";
 import axios from "axios";
 import { APIError } from "@/@types/API";
 import { patternFormatter } from "react-number-format";
-import { cellPhonePattern, removeCountryCodeAnd9FromRawPhone } from "@/utils/phoneNumber";
+import {
+  cellPhonePattern,
+  removeCountryCodeAnd9FromRawPhone,
+} from "@/utils/phoneNumber";
 
 const columnHelper = createColumnHelper<Customer>();
 
@@ -28,14 +35,19 @@ export default function Customers() {
   const deleteCustomerMutation = useMutation({
     mutationFn: (id: string) => deleteCustomer(id),
     onSuccess: () => {
-      toast.success("Cliente excluído com sucesso");
+      toast.success("Đã xóa khách hàng thành công");
       queryClient.invalidateQueries([CUSTOMER_KEY]);
     },
     onError: (err) => {
-      if (axios.isAxiosError(err) && (err.response?.data as APIError).name === "InvalidDeleteOperation") {
-        toast.error("Não foi possível deletar o cliente pois ele já possui agendamentos.");
+      if (
+        axios.isAxiosError(err) &&
+        (err.response?.data as APIError).name === "InvalidDeleteOperation"
+      ) {
+        toast.error(
+          "Không thể xóa khách hàng vì đã có lịch hẹn."
+        );
       } else {
-        toast.error("Ops. Ocorreu um problema ao tentar remover o cliente.");
+        toast.error("Ối. Đã xảy ra sự cố khi cố xóa ứng dụng khách.");
       }
     },
   });
@@ -47,7 +59,7 @@ export default function Customers() {
     }),
     columnHelper.accessor("name", {
       cell: (info) => info.getValue(),
-      header: "Nome",
+      header: "Tên",
     }),
     columnHelper.accessor("phone", {
       cell: (info) =>
@@ -55,22 +67,26 @@ export default function Customers() {
           format: cellPhonePattern,
           patternChar: "#",
         }),
-      header: "Celular",
+      header: "Số điện thoại",
     }),
     columnHelper.accessor("pets", {
       cell: (info) => info.getValue().length,
-      header: "Pets",
+      header: "Thú cưng",
     }),
     columnHelper.display({
-      header: "Opções",
+      header: "Tuỳ chọn",
       cell: (props) => (
         <div className="flex gap-3">
-          <Button circle tooltipText="Editar" asChild>
+          <Button circle tooltipText="Chỉnh sửa" asChild>
             <Link href={`/dashboard/customers/${props.row.original.id}/edit`}>
               <PencilSimple className="w-6 h-6" />
             </Link>
           </Button>
-          <ConfirmDeletePopover onConfirmDelete={() => deleteCustomerMutation.mutate(props.row.original.id)} />
+          <ConfirmDeletePopover
+            onConfirmDelete={() =>
+              deleteCustomerMutation.mutate(props.row.original.id)
+            }
+          />
         </div>
       ),
     }),
@@ -78,8 +94,7 @@ export default function Customers() {
 
   return (
     <div>
-      <PageTitle title="Clientes" />
-
+      <PageTitle title="Khách hàng" />
       <div className="my-4">
         <Table
           data={customersListQuery.data?.customers ?? []}
@@ -89,7 +104,7 @@ export default function Customers() {
       </div>
 
       <Button bg="accent" asChild>
-        <Link href={"/dashboard/customers/new"}>Novo cliente</Link>
+        <Link href={"/dashboard/customers/new"}>Khách hàng mới</Link>
       </Button>
     </div>
   );

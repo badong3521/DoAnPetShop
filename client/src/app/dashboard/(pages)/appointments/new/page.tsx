@@ -1,7 +1,13 @@
 "use client";
-import { AppointmentForm, AppointmentFormData } from "@/components/appointments/AppointmentForm";
+import {
+  AppointmentForm,
+  AppointmentFormData,
+} from "@/components/appointments/AppointmentForm";
 import { PageTitle } from "@/components/dashboard/PageTitle";
-import { APPOINTMENT_KEY, createAppointment } from "@/services/queries/Appointment";
+import {
+  APPOINTMENT_KEY,
+  createAppointment,
+} from "@/services/queries/Appointment";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { useRouter } from "next/navigation";
 import toast from "react-hot-toast";
@@ -14,11 +20,11 @@ export default function NewAppointment() {
     mutationFn: (data: AppointmentFormData) => createAppointment(data),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: [APPOINTMENT_KEY] });
-      toast.success("Agendamento criado com sucesso!");
+      toast.success("Cuộc hẹn được tạo thành công!");
       router.push("/dashboard/appointments");
     },
     onError: (err) => {
-      toast.error("Ops. Ocorreu um problema ao tentar criar o agendamento.");
+      toast.error("Ối. Đã xảy ra sự cố khi tạo lịch biểu.");
     },
   });
 
@@ -28,9 +34,12 @@ export default function NewAppointment() {
 
   return (
     <div>
-      <PageTitle renderBackOption title="Novo agendamento" />
+      <PageTitle renderBackOption title="Lịch cuộc hẹn mới" />
 
-      <AppointmentForm isLoading={createAppointmentMutation.isLoading} onSubmit={handleCreateAppointment} />
+      <AppointmentForm
+        isLoading={createAppointmentMutation.isLoading}
+        onSubmit={handleCreateAppointment}
+      />
     </div>
   );
 }

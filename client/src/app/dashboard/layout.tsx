@@ -3,7 +3,7 @@
 import { useEffect, useState } from "react";
 import Link from "next/link";
 import { redirect, usePathname } from "next/navigation";
-import { Bag, Calendar, Info, Person } from "phosphor-react";
+import { Bag, Calendar, Person } from "phosphor-react";
 import { SignedInHeader } from "@/components/dashboard/SignedInHeader";
 import { useSessionStore } from "src/stores/session";
 import { Header } from "@/components/Header";
@@ -11,28 +11,32 @@ import { FancyLoading } from "@/components/ui/Loading/FancyLoading";
 
 const ROUTES = [
   {
-    name: "Agendamentos",
+    name: "Cuộc hẹn",
     link: "/dashboard/appointments",
     Icon: () => <Calendar size={24} />,
   },
   {
-    name: "Clientes",
+    name: "Khách hàng",
     link: "/dashboard/customers",
     Icon: () => <Person size={24} />,
   },
   {
-    name: "Serviços",
+    name: "Dịch vụ",
     link: "/dashboard/services",
     Icon: () => <Bag size={24} />,
   },
-  {
-    name: "Sobre",
-    link: "/dashboard/about",
-    Icon: () => <Info size={24} />,
-  },
+  // {
+  //   name: "Sobre",
+  //   link: "/dashboard/about",
+  //   Icon: () => <Info size={24} />,
+  // },
 ];
 
-export default function DashboardLayout({ children }: { children: React.ReactNode }) {
+export default function DashboardLayout({
+  children,
+}: {
+  children: React.ReactNode;
+}) {
   const pathname = usePathname();
   const [hydrated, setHydrated] = useState(false);
   const isUserLoggedIn = useSessionStore((state) => state.isLoggedIn);
@@ -75,7 +79,10 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
 
             {ROUTES.map((route) => (
               <li key={route.name}>
-                <Link href={route.link} className={pathname?.includes(route.link) ? "active" : ""}>
+                <Link
+                  href={route.link}
+                  className={pathname?.includes(route.link) ? "active" : ""}
+                >
                   <route.Icon />
                   {route.name}
                 </Link>

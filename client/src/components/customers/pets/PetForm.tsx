@@ -10,13 +10,13 @@ import { z } from "zod";
 export const petSchema = z.object({
   name: z
     .string()
-    .min(3, "Tamanho mínimo do nome é de 3 caracteres")
-    .max(60, "Tamanho máximo do nome é de 60 caracteres"),
+    .min(3, "Độ dài tên tối thiểu là 3 ký tự")
+    .max(60, "Độ dài tên tối đa là 60 ký tự"),
   breed: z
     .string()
-    .min(1, "Tamanho mínimo da raça é de 1 caracteres")
-    .max(60, "Tamanho máximo da raça é de 60 caracteres"),
-  age: z.coerce.number().int().min(0, "Idade mínima é 0"),
+    .min(1, "Kích thước giống chủng tộc tối thiểu là 1 ký tự")
+    .max(60, "Kích thước giống chủng tộc tối đa là 60 ký tự"),
+  age: z.coerce.number().int().min(0, "Độ tuổi tối thiểu là 0"),
 });
 
 export type PetFormData = z.infer<typeof petSchema>;
@@ -61,11 +61,11 @@ export function PetForm({ pet, onSubmit }: Props) {
   return (
     <div>
       {isPetUpdate ? (
-        <Button circle tooltipText="Editar" onClick={handleOpenModal}>
+        <Button circle tooltipText="Chỉnh sửa" onClick={handleOpenModal}>
           <PencilSimple className="w-6 h-6" />
         </Button>
       ) : (
-        <Button tooltipText="Adicionar Pet" type="button" outline circle onClick={handleOpenModal}>
+        <Button tooltipText="Thêm thú cưng" type="button" outline circle onClick={handleOpenModal}>
           <Plus />
         </Button>
       )}
@@ -73,7 +73,7 @@ export function PetForm({ pet, onSubmit }: Props) {
       <dialog id={`pet_form_modal_${pet ? pet.id : "create"}`} className="modal">
         <div className="modal-box">
           <div className="flex justify-between items-center">
-            <PageTitle title="Adicionar Pet" />
+            <PageTitle title="Thêm thú cưng" />
             <form method="dialog">
               {/* if there is a button in form, it will close the modal */}
               <Button bg="ghost" circle>
@@ -84,15 +84,15 @@ export function PetForm({ pet, onSubmit }: Props) {
 
           <form className="mt-4" onSubmit={handleSubmit(handleSubmitForm)}>
             <fieldset>
-              <Input label="Nome do pet" id={`name`} errorMessage={errors.name?.message} {...register(`name`)} />
+              <Input label="Tên thú cưng" id={`name`} errorMessage={errors.name?.message} {...register(`name`)} />
             </fieldset>
             <fieldset>
-              <Input label="Raça do pet" id={`breed`} errorMessage={errors.breed?.message} {...register(`breed`)} />
+              <Input label="Giống vật nuôi" id={`breed`} errorMessage={errors.breed?.message} {...register(`breed`)} />
             </fieldset>
             <fieldset className="w-32">
               <Input
                 type="number"
-                label="Idade do pet"
+                label="Tuổi của thú cưng"
                 id={`age`}
                 errorMessage={errors.age?.message}
                 {...register(`age`)}
@@ -101,7 +101,7 @@ export function PetForm({ pet, onSubmit }: Props) {
 
             <div className="ml-auto w-fit">
               <Button bg="submit" type="submit">
-                {isPetUpdate ? "Editar" : "Criar"}
+                {isPetUpdate ? "Chỉnh sửa" : "Tạo"}
               </Button>
             </div>
           </form>

@@ -12,7 +12,7 @@ export function Header() {
         </Link>
       </div>
 
-      <Button bg="ghost" tooltipText="Entrar" tooltipBottom asChild>
+      <Button bg="ghost" tooltipText="Đăng nhập" tooltipBottom asChild>
         <Link href={"/login"}>
           <SignIn className="h-5 w-5" />
         </Link>

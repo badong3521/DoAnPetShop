@@ -1,7 +1,10 @@
 import { Button } from "@/components/ui/Button";
 import { Input } from "@/components/ui/Form/Inputs/Input";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { cellPhonePattern, removeCountryCodeAnd9FromRawPhone } from "@/utils/phoneNumber";
+import {
+  cellPhonePattern,
+  removeCountryCodeAnd9FromRawPhone,
+} from "@/utils/phoneNumber";
 import { removeNonNumericFromString } from "@/utils/removeNonNumericFromString";
 import { Controller, useForm } from "react-hook-form";
 import { PatternFormat } from "react-number-format";
@@ -11,12 +14,12 @@ import { z } from "zod";
 const editCustomerSchema = z.object({
   name: z
     .string()
-    .min(3, "Tamanho mínimo do nome é de 3 caracteres")
-    .max(60, "Tamanho máximo do nome é de 60 caracteres"),
+    .min(3, "Độ dài tên tối thiểu là 3 ký tự")
+    .max(60, "Độ dài tên tối đa là 60 ký tự"),
   phone: z.string().refine((value) => {
     const rawValue = removeNonNumericFromString(value);
-    return rawValue.length === 13;
-  }, "Celular inválido"),
+    return rawValue.length === 12;
+  }, "Số điện thoại di động không hợp lệ"),
 });
 
 export type EditCustomerFormData = z.infer<typeof editCustomerSchema>;
@@ -45,10 +48,18 @@ export function EditCustomerForm(props: Props) {
   }
 
   return (
-    <form onSubmit={handleSubmit(handleSubmitForm)} className="flex flex-col w-full mt-4 gap-4 flex-wrap">
+    <form
+      onSubmit={handleSubmit(handleSubmitForm)}
+      className="flex flex-col w-full mt-4 gap-4 flex-wrap"
+    >
       <div className="flex gap-2 flex-wrap items-center">
         <fieldset>
-          <Input label="Nome" id="name" errorMessage={errors.name?.message} {...register("name")} />
+          <Input
+            label="Tên"
+            id="name"
+            errorMessage={errors.name?.message}
+            {...register("name")}
+          />
         </fieldset>
         <fieldset>
           <Controller
@@ -60,7 +71,7 @@ export function EditCustomerForm(props: Props) {
                 patternChar="#"
                 customInput={Input}
                 // Input props are passed to customInput
-                label="Celular"
+                label="Số điện thoại"
                 id="phone"
                 type="tel"
                 errorMessage={errors.phone?.message}
@@ -75,7 +86,7 @@ export function EditCustomerForm(props: Props) {
       </div>
       <div>
         <Button type="submit" bg="submit" isLoading={props.isLoading}>
-          Editar
+          Chỉnh sửa
         </Button>
       </div>
     </form>

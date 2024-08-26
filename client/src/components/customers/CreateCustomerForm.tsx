@@ -12,12 +12,12 @@ import { cellPhonePattern } from "@/utils/phoneNumber";
 const customerSchema = z.object({
   name: z
     .string()
-    .min(3, "Tamanho mínimo do nome é de 3 caracteres")
-    .max(60, "Tamanho máximo do nome é de 60 caracteres"),
+    .min(3, "Độ dài tên tối thiểu là 3 ký tự")
+    .max(60, "Độ dài tên tối đa là 60 ký tự"),
   phone: z.string().refine((value) => {
     const rawValue = removeNonNumericFromString(value);
     return rawValue.length === 13;
-  }, "Celular inválido"),
+  }, "Số điện thoại không hợp lệ!"),
   pets: z.array(petSchema),
 });
 
@@ -59,10 +59,18 @@ export function CreateCustomerForm(props: Props) {
   }
 
   return (
-    <form onSubmit={handleSubmit(handleSubmitForm)} className="flex flex-col w-full mt-4 gap-4 flex-wrap">
+    <form
+      onSubmit={handleSubmit(handleSubmitForm)}
+      className="flex flex-col w-full mt-4 gap-4 flex-wrap"
+    >
       <div className="flex gap-2 flex-wrap">
         <fieldset>
-          <Input label="Nome" id="name" errorMessage={errors.name?.message} {...register("name")} />
+          <Input
+            label="Tên"
+            id="name"
+            errorMessage={errors.name?.message}
+            {...register("name")}
+          />
         </fieldset>
         <fieldset>
           <Controller
@@ -74,7 +82,7 @@ export function CreateCustomerForm(props: Props) {
                 patternChar="#"
                 customInput={Input}
                 // Input props are passed to customInput
-                label="Celular"
+                label="Số điện thoại"
                 id="phone"
                 type="tel"
                 errorMessage={errors.phone?.message}
@@ -89,7 +97,7 @@ export function CreateCustomerForm(props: Props) {
       </div>
 
       <div className="prose flex items-center gap-2">
-        <h3 className="my-0">Pets</h3>
+        <h3 className="my-0">Thú cưng</h3>
       </div>
       <div className="flex flex-wrap gap-2 items-center max-h-96 overflow-y-auto">
         {fieldArrayForm.fields.map((field, index) => {
@@ -100,7 +108,7 @@ export function CreateCustomerForm(props: Props) {
             >
               <fieldset>
                 <Input
-                  label="Nome do pet"
+                  label="Tên thú cưng"
                   id={`pets.${index}.name`}
                   errorMessage={errors.pets?.[index]?.name?.message}
                   {...register(`pets.${index}.name` as const)}
@@ -108,7 +116,7 @@ export function CreateCustomerForm(props: Props) {
               </fieldset>
               <fieldset>
                 <Input
-                  label="Raça do pet"
+                  label="Giống vật nuôi"
                   id={`pets.${index}.breed`}
                   errorMessage={errors.pets?.[index]?.breed?.message}
                   {...register(`pets.${index}.breed` as const)}
@@ -117,7 +125,7 @@ export function CreateCustomerForm(props: Props) {
               <fieldset className="w-32">
                 <Input
                   type="number"
-                  label="Idade do pet"
+                  label="Tuổi của thú cưng"
                   id={`pets.${index}.age`}
                   errorMessage={errors.pets?.[index]?.age?.message}
                   {...register(`pets.${index}.age` as const)}
@@ -126,7 +134,7 @@ export function CreateCustomerForm(props: Props) {
 
               <button
                 className="tooltip tooltip-left absolute right-2 top-2 bg-error text-primary-content rounded-[--var(rounded-btn)]"
-                data-tip="Remover Pet"
+                data-tip="Loại bỏ thú cưng"
                 type="button"
                 onClick={() => fieldArrayForm.remove(index)}
               >
@@ -136,7 +144,13 @@ export function CreateCustomerForm(props: Props) {
           );
         })}
         <div>
-          <Button onClick={addPetForm} tooltipText="Adicionar Pet" type="button" outline circle>
+          <Button
+            onClick={addPetForm}
+            tooltipText="Thêm thú cưng"
+            type="button"
+            outline
+            circle
+          >
             <Plus />
           </Button>
         </div>
@@ -144,7 +158,7 @@ export function CreateCustomerForm(props: Props) {
 
       <div>
         <Button type="submit" bg="submit" isLoading={props.isLoading}>
-          Criar
+          Tạo Khách hàng
         </Button>
       </div>
     </form>

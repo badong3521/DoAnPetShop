@@ -11,7 +11,13 @@ import { EmptyContent } from "./EmptyContent";
 import { AsynchronousContent } from "@/components/AsynchronousContent";
 import { QueryStatus } from "@tanstack/react-query";
 import { Dispatch, SetStateAction } from "react";
-import { ArrowLeft, ArrowLineLeft, ArrowLineRight, ArrowRight, Icon } from "phosphor-react";
+import {
+  ArrowLeft,
+  ArrowLineLeft,
+  ArrowLineRight,
+  ArrowRight,
+  Icon,
+} from "phosphor-react";
 import { SortColumnButton } from "@/components/SortColumnButton";
 
 type Props<T> = {
@@ -95,7 +101,11 @@ export function Table<T>({
 
   return (
     <AsynchronousContent status={asyncStatus}>
-      <div className={`max-h-screen-3/5 overflow-auto ${isFetchingWithPreviousData ? "animate-pulse" : ""}`}>
+      <div
+        className={`max-h-screen-3/5 overflow-auto ${
+          isFetchingWithPreviousData ? "animate-pulse" : ""
+        }`}
+      >
         <table className="table whitespace-nowrap">
           {hasItems && (
             <thead className="sticky top-0 bg-base-200 z-[2]">
@@ -104,7 +114,12 @@ export function Table<T>({
                   {headerGroup.headers.map((header) => (
                     <th key={header.id}>
                       <div className="flex items-center gap-1">
-                        {header.isPlaceholder ? null : flexRender(header.column.columnDef.header, header.getContext())}
+                        {header.isPlaceholder
+                          ? null
+                          : flexRender(
+                              header.column.columnDef.header,
+                              header.getContext()
+                            )}
 
                         {header.column.columnDef.enableSorting && (
                           <SortColumnButton
@@ -123,7 +138,9 @@ export function Table<T>({
             {table.getRowModel().rows.map((row) => (
               <tr key={row.id}>
                 {row.getVisibleCells().map((cell) => (
-                  <td key={cell.id}>{flexRender(cell.column.columnDef.cell, cell.getContext())}</td>
+                  <td key={cell.id}>
+                    {flexRender(cell.column.columnDef.cell, cell.getContext())}
+                  </td>
                 ))}
               </tr>
             ))}
@@ -142,7 +159,7 @@ export function Table<T>({
       {pagination !== undefined && (
         <div className="flex items-center gap-4 justify-end mt-4 whitespace-nowrap flex-wrap">
           <div className="flex items-center gap-1">
-            <label htmlFor="page-size">Itens por página</label>
+            {/* <label htmlFor="page-size">Các mục trên mỗi trang</label> */}
             <select
               id="page-size"
               className="select select-bordered select-xs"
@@ -161,7 +178,8 @@ export function Table<T>({
 
           <span className="flex items-center gap-1">
             <strong>
-              {table.getState().pagination.pageIndex + 1} de {table.getPageCount()}
+              {table.getState().pagination.pageIndex + 1} de{" "}
+              {table.getPageCount()}
             </strong>
           </span>
 
@@ -176,7 +194,11 @@ export function Table<T>({
               onClick={() => table.previousPage()}
               disabled={!table.getCanPreviousPage()}
             />
-            <PaginationButton icon={ArrowRight} onClick={() => table.nextPage()} disabled={!table.getCanNextPage()} />
+            <PaginationButton
+              icon={ArrowRight}
+              onClick={() => table.nextPage()}
+              disabled={!table.getCanNextPage()}
+            />
             <PaginationButton
               icon={ArrowLineRight}
               onClick={() => table.setPageIndex(table.getPageCount() - 1)}
@@ -195,7 +217,10 @@ type PaginationButtonProps = {
   disabled: boolean;
 };
 const PaginationButton = ({ icon: Icon, ...props }: PaginationButtonProps) => (
-  <button {...props} className="btn btn-circle btn-ghost disabled:bg-transparent">
+  <button
+    {...props}
+    className="btn btn-circle btn-ghost disabled:bg-transparent"
+  >
     <Icon size={20} weight="fill" />
   </button>
 );

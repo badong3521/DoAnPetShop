@@ -8,7 +8,7 @@ export function About({ transparentBg }: Props) {
     <div className={`${!transparentBg ? "bg-base-300" : ""} flex items-center justify-center gap-6 flex-wrap`}>
       <span className="text-9xl">🐈</span>
       <div className="prose text-justify">
-        <h2>
+        {/* <h2>
           Olá, me chamo <ExternalLink href="https://www.linkedin.com/in/gust4vo-sales/">Gustavo</ExternalLink>.
         </h2>
         <p>
@@ -22,7 +22,7 @@ export function About({ transparentBg }: Props) {
           automaticamente quando acessado. Isto pode demorar de 1~3 MINUTOS. Não se espante se a primeira requisição
           demorar carregando...
         </p>
-        <p>Sinta-se à vontade para explorar e compartilhar seu feedback!</p>
+        <p>Sinta-se à vontade para explorar e compartilhar seu feedback!</p> */}
       </div>
     </div>
   );

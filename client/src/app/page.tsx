@@ -27,14 +27,15 @@ export default function Home() {
         <div className="hero-content text-center">
           <div className="max-w-md">
             <h1 className="text-5xl font-bold underline flex items-end gap-4 justify-center">
-              <PawPrint size={32} weight="fill" /> PETSHOP <PawPrint size={32} weight="fill" />
+              <PawPrint size={32} weight="fill" /> PETSHOP{" "}
+              <PawPrint size={32} weight="fill" />
             </h1>
             <p className="py-6">
-              Nesse sistema de Petshop fictício, cadastre clientes, pets e serviços e facilmente gerencie os
-              agendamentos.
+              Trong hệ thống Petshop hư cấu này, hãy đăng ký khách hàng, vật
+              nuôi và dịch vụ và dễ dàng quản lý các cuộc hẹn.
             </p>
             <Button bg="primary" asChild>
-              <Link href="/dashboard">Iniciar</Link>
+              <Link href="/dashboard">Bắt đầu</Link>
             </Button>
           </div>
         </div>
@@ -47,7 +48,10 @@ export default function Home() {
         </button>
       </section>
 
-      <section id="about-section" className="relative min-h-screen bg-base-300 flex justify-center items-center p-4">
+      <section
+        id="about-section"
+        className="relative min-h-screen bg-base-300 flex justify-center items-center p-4"
+      >
         <About transparentBg={false} />
 
         <button

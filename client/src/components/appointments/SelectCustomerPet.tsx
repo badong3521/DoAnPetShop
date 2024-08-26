@@ -70,22 +70,22 @@ export function SelectCustomerPet({ onPetSelectionChange }: Props) {
     }),
     columnHelperCustomer.accessor("name", {
       cell: (info) => info.getValue(),
-      header: "Nome",
+      header: "Tên",
     }),
     columnHelperCustomer.accessor("phone", {
       cell: (info) => info.getValue(),
-      header: "Celular",
+      header: "Số điện thoại",
     }),
     columnHelperCustomer.accessor("pets", {
       cell: (info) => info.getValue().length,
-      header: "Pets",
+      header: "Thú cưng",
     }),
     columnHelperCustomer.display({
-      header: "Selecionar",
+      header: "Lựa chọn",
       cell: (props) => (
         <Button
           circle
-          tooltipText={props.row.original.id === selectedCustomerId ? "Remover seleção" : "Selecionar"}
+          tooltipText={props.row.original.id === selectedCustomerId ? "Xóa lựa chọn" : "Lựa chọn"}
           onClick={() => toggleSelectCustomer(props.row.original.id)}
           disabled={props.row.original.pets.length === 0}
         >
@@ -102,22 +102,22 @@ export function SelectCustomerPet({ onPetSelectionChange }: Props) {
     }),
     columnHelperPet.accessor("name", {
       cell: (info) => info.getValue(),
-      header: "Nome",
+      header: "Tên",
     }),
     columnHelperPet.accessor("age", {
       cell: (info) => info.getValue(),
-      header: "Idade",
+      header: "Tuổi",
     }),
     columnHelperPet.accessor("breed", {
       cell: (info) => info.getValue(),
-      header: "Raça",
+      header: "Loài",
     }),
     columnHelperPet.display({
-      header: "Selecionar",
+      header: "Lựa chọn",
       cell: (props) => (
         <Button
           circle
-          tooltipText={props.row.original.id === selectedPetId ? "Remover seleção" : "Selecionar"}
+          tooltipText={props.row.original.id === selectedPetId ? "Xoá lựa chọn" : "Lựa chọn"}
           onClick={() => toggleSelectPet(props.row.original.id)}
         >
           {props.row.original.id === selectedPetId ? <X className="w-6 h-6" /> : <Check className="w-6 h-6" />}
@@ -131,7 +131,7 @@ export function SelectCustomerPet({ onPetSelectionChange }: Props) {
       return (
         <div>
           <div className="prose">
-            <h4>Selecionar Cliente</h4>
+            <h4>Chọn khách hàng</h4>
           </div>
           <Table
             data={customersListQuery.data?.customers ?? []}
@@ -146,10 +146,10 @@ export function SelectCustomerPet({ onPetSelectionChange }: Props) {
       <div>
         <div className="prose">
           <h4>
-            Selecionar Pet do cliente{" "}
+          Chọn thú cưng của khách hàng{" "}
             <button
               onClick={() => toggleSelectCustomer(selectedCustomerId)}
-              data-tip="Remover seleção"
+              data-tip="Xoá lựa chọn"
               className="tooltip underline text-error"
             >
               {selectedCustomer?.name}
@@ -164,7 +164,7 @@ export function SelectCustomerPet({ onPetSelectionChange }: Props) {
   return (
     <div>
       <Button onClick={handleOpenModal} type="button">
-        {selectedPet?.name ?? "Selecionar Pet"}
+        {selectedPet?.name ?? "Chọn thú cưng"}
       </Button>
       <dialog id="SelectCustomerModal" onClose={onModalClose} className="modal">
         <div className="modal-box max-w-2xl">
@@ -173,7 +173,7 @@ export function SelectCustomerPet({ onPetSelectionChange }: Props) {
           </form>
           <div>
             <div className="prose">
-              <h2>Selecionar Pet</h2>
+              <h2>Chọn thú cưng</h2>
             </div>
             <div className="divider" />
             <Content />

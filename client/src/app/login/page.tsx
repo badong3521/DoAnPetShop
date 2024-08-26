@@ -16,17 +16,17 @@ import { z } from "zod";
 const signInSchema = z.object({
   email: z
     .string({
-      required_error: "Email é obrigatório",
+      required_error: "Email là bắt buộc!",
     })
     .email({
-      message: "Email inválido",
+      message: "Email không hợp lệ!",
     }),
   password: z
     .string({
-      required_error: "Senha é obrigatório",
+      required_error: "Mật khẩu là bắt buộc",
     })
     .min(6, {
-      message: "Senha deve ter pelo menos 6 caracteres",
+      message: "Mật khẩu phải có ít nhất 6 ký tự",
     }),
 });
 
@@ -60,9 +60,9 @@ export default function Login() {
     },
     onError: (err) => {
       if (isAxiosError(err) && err.response?.status === 401) {
-        toast.error("Email ou senha inválidos");
+        toast.error("Email hoặc mật khẩu không hợp lệ");
       } else {
-        toast.error("Ocorreu um problema ao tentar realizar o login");
+        toast.error("Đã xảy ra sự cố khi cố gắng đăng nhập !");
       }
     },
   });
@@ -80,7 +80,10 @@ export default function Login() {
           <h2>LOGIN</h2>
         </div>
 
-        <form onSubmit={handleSubmit(handleSignIn)} className="card-body w-full flex flex-col gap-4">
+        <form
+          onSubmit={handleSubmit(handleSignIn)}
+          className="card-body w-full flex flex-col gap-4"
+        >
           <Input
             label="Email"
             {...register("email")}
@@ -89,7 +92,7 @@ export default function Login() {
             errorMessage={errors.email?.message}
           />
           <Input
-            label="Senha"
+            label="Mật khẩu"
             {...register("password")}
             id="password"
             type="password"
@@ -97,13 +100,18 @@ export default function Login() {
             errorMessage={errors.password?.message}
           />
 
-          <Button bg="primary" type="submit" isLoading={signInMutation.isLoading}>
-            Entrar
+          <Button
+            bg="primary"
+            type="submit"
+            isLoading={signInMutation.isLoading}
+          >
+            Đăng nhập
           </Button>
         </form>
-        <span className={isSubmitted ? "opacity-100" : "opacity-0"}>
-          CREDENCIAIS: <b>{LOGIN_DEFAULT_USER.email}</b> - <b>{LOGIN_DEFAULT_USER.password}</b>
-        </span>
+        {/* <span className={isSubmitted ? "opacity-100" : "opacity-0"}>
+          THÔNG TIN XÁC NHẬN: <b>{LOGIN_DEFAULT_USER.email}</b> -{" "}
+          <b>{LOGIN_DEFAULT_USER.password}</b>
+        </span> */}
       </div>
     </div>
   );

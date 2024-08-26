@@ -12,7 +12,7 @@ export const CurrencyInputComponent = (
       {label && <Label htmlFor={props.name}>{label}</Label>}
 
       <label className="input-group input-error">
-        <span>R$</span>
+        <span>đ</span>
         <CurrencyInputLib
           ref={ref}
           className={inputStyle({ errorBorder: !!errorMessage })}
@@ -21,7 +21,7 @@ export const CurrencyInputComponent = (
           decimalsLimit={2}
           allowNegativeValue={false}
           decimalScale={2}
-          intlConfig={{ locale: "pt-BR" }}
+          intlConfig={{ locale: "vi-VN" }}
           defaultValue={props.defaultValue ? Number(props.defaultValue) : undefined}
           step={undefined}
           maxLength={undefined}

@@ -3,37 +3,52 @@ import { CurrencyInput } from "@/components/ui/Form/Inputs/CurrencyInput";
 import { Input } from "@/components/ui/Form/Inputs/Input";
 import { TextArea } from "@/components/ui/Form/TextArea";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { convertCentsToReais, maskNumberToCurrency, parseMaskedCurrencyValueToNumber } from "@/utils/currency";
-import { parseTimeStringToDuration, parseSecondsToTimeDurationString } from "@/utils/timeDuration";
+import {
+  convertCentsToReais,
+  maskNumberToCurrency,
+  parseMaskedCurrencyValueToNumber,
+} from "@/utils/currency";
+import {
+  parseTimeStringToDuration,
+  parseSecondsToTimeDurationString,
+} from "@/utils/timeDuration";
 import { SubmitHandler, useForm } from "react-hook-form";
-import { PetshopServiceBodyData, PetshopService } from "src/@types/PetshopServices";
+import {
+  PetshopServiceBodyData,
+  PetshopService,
+} from "src/@types/PetshopServices";
 import { z } from "zod";
 
 const petshopServiceSchema = z.object({
-  title: z.string().min(1, "O título é obrigatório").max(60, "Tamanho máximo do título é de 60 caracteres"),
+  title: z.string().min(1, "Tiêu đề và nghĩa vụ").max(60, "Tối đa 60 kí tự"),
   description: z
     .string()
-    .min(1, "A descrição é obrigatória")
-    .max(120, "Tamanho máximo da descrição é de 120 caracteres"),
+    .min(1, "Mô tả và nghĩa vụ")
+    .max(120, "Tối đa 120 kí tự"),
   value: z
     .string()
     .nonempty({
-      message: "O valor é obrigatório",
+      message: "Giá tiền là bắt buộc",
     })
     // CurrencyInput masks the currency value, so we need to transform that string value into
     // a number for better validation
-    .transform((value) => parseMaskedCurrencyValueToNumber(value))
-    .pipe(z.number().min(0.01, "Valor mínimo é de 1 centavo").max(1_000_000, "Valor máximo é de R$1.000.000"))
+    // .transform((value) => parseMaskedCurrencyValueToNumber(value))
+    // .pipe(
+    //   z
+    //     .number()
+    //     .min(10_000, "Giá tiền tối thiểu là 10.000đ")
+    //     .max(1_000_000, "Giá tiền tối đa là 100.000đ")
+    // )
     .transform((value) => maskNumberToCurrency(value)), // transform back to string to use it as a string
   duration: z
     .string()
-    .length(8, "O tempo é obrigatório")
+    .length(8, "Thời gian là bắt buộc")
     // parses time string into seconds for validation
     .transform((value) => {
       const timeDuration = parseTimeStringToDuration(value);
       return timeDuration.asSeconds();
     })
-    .pipe(z.number().min(1, "Valor mínimo é de 1s"))
+    .pipe(z.number().min(1, "Giá tiền tối thiểu là 1 giây"))
     .transform((value) => {
       // transform back to time string (HH:mm:ss) to use it as a string
       return parseSecondsToTimeDurationString(value);
@@ -57,16 +72,21 @@ export function ServiceForm(props: Props) {
     defaultValues: {
       title: props.service?.title ?? "",
       description: props.service?.description ?? "",
-      value: props.service ? maskNumberToCurrency(convertCentsToReais(props.service?.value)) : "0,00",
-      duration: parseSecondsToTimeDurationString(props.service?.duration ?? 3600),
+      value: props.service
+        ? maskNumberToCurrency(convertCentsToReais(props.service?.value))
+        : "0",
+      duration: parseSecondsToTimeDurationString(
+        props.service?.duration ?? 3600
+      ),
     },
   });
 
-  const getSubmitButtonText = () => (props.service ? "Editar" : "Criar");
+  const getSubmitButtonText = () => (props.service ? "Biên tập" : "Tạo Mới");
 
-  const handleFormSubmit: SubmitHandler<PetshopServiceFormData> = async (data) => {
+  const handleFormSubmit: SubmitHandler<PetshopServiceFormData> = async (
+    data
+  ) => {
     const timeDuration = parseTimeStringToDuration(data.duration);
-
     props.onSubmit({
       ...data,
       value: parseMaskedCurrencyValueToNumber(data.value),
@@ -75,16 +95,24 @@ export function ServiceForm(props: Props) {
   };
 
   return (
-    <form onSubmit={handleSubmit(handleFormSubmit)} className="w-full max-w-2xl mt-4">
+    <form
+      onSubmit={handleSubmit(handleFormSubmit)}
+      className="w-full max-w-2xl mt-4"
+    >
       <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 sm:gap-4">
         <div className="flex flex-col gap-2">
           <fieldset>
-            <Input label="Título" id="title" errorMessage={errors.title?.message} {...register("title")} />
+            <Input
+              label="Tiêu đề"
+              id="title"
+              errorMessage={errors.title?.message}
+              {...register("title")}
+            />
           </fieldset>
 
           <fieldset>
             <TextArea
-              label="Descrição"
+              label="Miêu tả"
               id="description"
               errorMessage={errors.description?.message}
               {...register("description")}
@@ -95,7 +123,7 @@ export function ServiceForm(props: Props) {
         <div className="flex flex-col gap-2">
           <fieldset>
             <Input
-              label="Duração"
+              label="Khoảng thời gian"
               type="time"
               step={1} // required to render seconds as well
               id="duration"
@@ -104,7 +132,14 @@ export function ServiceForm(props: Props) {
             />
           </fieldset>
           <fieldset>
-            <CurrencyInput label="Valor" id="value" errorMessage={errors.value?.message} {...register("value")} />
+            <CurrencyInput
+              label="Giá tiền"
+              id="value"
+              errorMessage={errors.value?.message}
+              {...register("value")}
+              onChange={(event) => {}}
+              value={props.service?.value}
+            />
           </fieldset>
         </div>
       </div>

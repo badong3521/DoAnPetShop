@@ -3,7 +3,11 @@
 import { AsynchronousContent } from "@/components/AsynchronousContent";
 import { InfoContent } from "@/components/InfoContent";
 import { PageTitle } from "@/components/dashboard/PageTitle";
-import { APPOINTMENT_KEY, fetchAppointment, updateAppointmentStatus } from "@/services/queries/Appointment";
+import {
+  APPOINTMENT_KEY,
+  fetchAppointment,
+  updateAppointmentStatus,
+} from "@/services/queries/Appointment";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { useForm } from "react-hook-form";
 import axios from "axios";
@@ -21,11 +25,12 @@ type UpdateAppointmentStatusFormData = {
 
 export default function EditService({ params }: { params: { id: string } }) {
   const queryClient = useQueryClient();
-  const { register, setValue, watch } = useForm<UpdateAppointmentStatusFormData>({
-    defaultValues: {
-      status: "",
-    },
-  });
+  const { register, setValue, watch } =
+    useForm<UpdateAppointmentStatusFormData>({
+      defaultValues: {
+        status: "",
+      },
+    });
   const appointmentShowQuery = useQuery({
     queryKey: [APPOINTMENT_KEY, params.id],
     queryFn: () => fetchAppointment(params.id),
@@ -41,7 +46,8 @@ export default function EditService({ params }: { params: { id: string } }) {
   }, [appointment]);
 
   const updateAppointmentStatusMutation = useMutation({
-    mutationFn: (status: AppointmentStatus) => updateAppointmentStatus(params.id, status),
+    mutationFn: (status: AppointmentStatus) =>
+      updateAppointmentStatus(params.id, status),
     onSuccess: (data) => {
       toast.success("Status atualizado com sucesso!");
       queryClient.invalidateQueries([APPOINTMENT_KEY]);
@@ -53,36 +59,52 @@ export default function EditService({ params }: { params: { id: string } }) {
       }));
     },
     onError: () => {
-      toast.error("Ops. Ocorreu um problema ao tentar editar o status do agendamento.");
+      toast.error(
+        "Ops. Ocorreu um problema ao tentar editar o status do agendamento."
+      );
       setValue("status", appointment!.status);
     },
   });
 
   // selectedStatus changed
   useEffect(() => {
-    if (!appointment || selectedStatus === "" || selectedStatus === appointment?.status) return;
+    if (
+      !appointment ||
+      selectedStatus === "" ||
+      selectedStatus === appointment?.status
+    )
+      return;
 
     updateAppointmentStatusMutation.mutate(selectedStatus as AppointmentStatus);
   }, [selectedStatus, appointment]);
 
   const appointmentShowQueryErrorMessage = (() => {
     const error = appointmentShowQuery.error;
-    if (axios.isAxiosError(error) && error.response?.status === 404) return "Erro! Agendamento não encontrado.";
+    if (axios.isAxiosError(error) && error.response?.status === 404)
+      return "Erro! Agendamento não encontrado.";
   })();
 
   return (
     <div>
       <PageTitle renderBackOption title="Agendamento" />
 
-      <AsynchronousContent status={appointmentShowQuery.status} errorMessage={appointmentShowQueryErrorMessage}>
+      <AsynchronousContent
+        status={appointmentShowQuery.status}
+        errorMessage={appointmentShowQueryErrorMessage}
+      >
         <div>
-          <InfoContent label="Horário" value={dayjs(appointment?.appointmentTime).format("DD/MM/YYYY - HH:mm")} />
           <InfoContent
-            label="Serviço"
+            label="Horário"
+            value={dayjs(appointment?.appointmentTime).format(
+              "DD/MM/YYYY - HH:mm"
+            )}
+          />
+          <InfoContent
+            label="Dịch vụ"
             value={
               <Link
                 className="link font-normal tooltip w-fit"
-                data-tip={"Ver serviço"}
+                data-tip={"Ver Dịch vụ"}
                 href={`/dashboard/services/${appointment?.service?.id}/edit`}
               >
                 {appointment?.service?.title}
@@ -104,9 +126,12 @@ export default function EditService({ params }: { params: { id: string } }) {
           <InfoContent
             label="Status"
             value={
-              <Select {...register("status")} disabled={updateAppointmentStatusMutation.isLoading}>
+              <Select
+                {...register("status")}
+                disabled={updateAppointmentStatusMutation.isLoading}
+              >
                 <option disabled value="">
-                  Selecione um status
+                  Chọn một trạng thái
                 </option>
                 {Object.keys(AppointmentStatus).map((status) => (
                   <option key={status} value={status}>

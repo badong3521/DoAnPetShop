@@ -3,7 +3,11 @@
 import Link from "next/link";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { PageTitle } from "@/components/dashboard/PageTitle";
-import { deletePetshopService, fetchPetshopServices, PETSHOPSERVICE_KEY } from "@/services/queries/PetshopServices";
+import {
+  deletePetshopService,
+  fetchPetshopServices,
+  PETSHOPSERVICE_KEY,
+} from "@/services/queries/PetshopServices";
 import { parseCurrencyValueInCentsToBRL } from "@/utils/currency";
 import { parseSecondsToHuman } from "@/utils/timeDuration";
 import { Button } from "@/components/ui/Button";
@@ -29,10 +33,10 @@ export default function Services() {
     mutationFn: (id: string) => deletePetshopService(id),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: [PETSHOPSERVICE_KEY] });
-      toast.success("Serviço removido com sucesso!");
+      toast.success("Đã xóa dịch vụ thành công!");
     },
     onError: () => {
-      toast.error("Ops. Ocorreu um problema ao tentar remover o serviço.");
+      toast.error("Ối. Đã xảy ra sự cố khi cố gắng xóa dịch vụ.");
     },
   });
 
@@ -42,7 +46,7 @@ export default function Services() {
       id: "row-number",
     }),
     columnHelper.display({
-      header: "Título",
+      header: "Tiêu đề",
       cell: (props) => (
         <div className="flex gap-2 items-center">
           {props.row.original.title}
@@ -51,18 +55,18 @@ export default function Services() {
       ),
     }),
     columnHelper.accessor("value", {
-      cell: (info) => parseCurrencyValueInCentsToBRL(info.getValue()),
-      header: "Valor",
+      cell: (info) => info.getValue(),
+      header: "Giá tiền",
     }),
     columnHelper.accessor("duration", {
       cell: (info) => parseSecondsToHuman(info.getValue()),
-      header: "Duração",
+      header: "Khoảng thời gian",
     }),
     columnHelper.display({
-      header: "Opções",
+      header: "Tùy chọn",
       cell: (props) => (
         <div className="flex gap-3 w-fit">
-          <Button circle tooltipText="Editar" asChild>
+          <Button circle tooltipText="Chỉnh sửa" asChild>
             <Link href={`/dashboard/services/${props.row.original.id}/edit`}>
               <PencilSimple className="w-6 h-6" />
             </Link>
@@ -80,7 +84,7 @@ export default function Services() {
 
   return (
     <div>
-      <PageTitle title="Serviços" />
+      <PageTitle title="Dịch vụ" />
 
       <div className="my-4">
         <Table
@@ -91,7 +95,7 @@ export default function Services() {
       </div>
 
       <Button bg="accent" asChild>
-        <Link href="/dashboard/services/new">Novo serviço</Link>
+        <Link href="/dashboard/services/new">Dịch vụ mới</Link>
       </Button>
     </div>
   );

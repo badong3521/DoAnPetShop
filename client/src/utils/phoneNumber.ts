@@ -1,4 +1,4 @@
-export const cellPhonePattern = "+55 (##) 9 #### ####"
+export const cellPhonePattern = "+84 (##) #### ####"
 
 // We need to remove the country code and the 9 from the raw phone string because when we pass it to the 
 // react-number-format lib, the pattern (above) will automatically add them already

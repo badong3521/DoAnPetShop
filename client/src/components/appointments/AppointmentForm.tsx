@@ -8,13 +8,16 @@ import { SelectCustomerPet } from "./SelectCustomerPet";
 import { Label } from "@/components/ui/Form/Label";
 import { Select } from "@/components/ui/Form/Inputs/Select";
 import { useQuery } from "@tanstack/react-query";
-import { PETSHOPSERVICE_KEY, fetchPetshopServices } from "@/services/queries/PetshopServices";
+import {
+  PETSHOPSERVICE_KEY,
+  fetchPetshopServices,
+} from "@/services/queries/PetshopServices";
 
 const appointmentSchema = z.object({
   appointmentTime: z.coerce
     .date({
       errorMap: (issue, { defaultError }) => ({
-        message: issue.code === "invalid_date" ? "Data inválida" : defaultError, // https://github.com/colinhacks/zod/issues/1526
+        message: issue.code === "invalid_date" ? "Dữ liệu không hợp lệ" : defaultError, // https://github.com/colinhacks/zod/issues/1526
       }),
     })
     .refine(
@@ -23,19 +26,19 @@ const appointmentSchema = z.object({
         return dayjs(d).isAfter(now);
       },
       {
-        message: "Horário de agendamento não pode ser anterior o horário atual",
+        message: "Thời gian hẹn không thể sớm hơn thời gian hiện tại",
       }
     ),
   petId: z
     .string({
-      required_error: "É necessário selecionar um pet",
+      required_error: "Bạn cần chọn thú cưng",
     })
-    .uuid("É necessário selecionar um pet"),
+    .uuid("Bạn cần chọn thú cưng"),
   serviceId: z
     .string({
-      required_error: "É necessário selecionar um serviço",
+      required_error: "Bạn cần chọn dịch vụ",
     })
-    .uuid("É necessário selecionar um serviço"),
+    .uuid("Bạn cần chọn dịch vụ"),
 });
 
 export type AppointmentFormData = z.infer<typeof appointmentSchema>;
@@ -81,20 +84,30 @@ export function AppointmentForm(props: Props) {
   };
 
   return (
-    <form onSubmit={handleSubmit(handleFormSubmit)} className="w-full max-w-2xl mt-4">
+    <form
+      onSubmit={handleSubmit(handleFormSubmit)}
+      className="w-full max-w-2xl mt-4"
+    >
       <div className="flex flex-col justify-between w-full gap-2">
         <div className="flex w-fit flex-col md:flex-row gap-2 md:gap-8 flex-wrap">
           <fieldset>
-            <Label>Selecione o Pet</Label>
+            <Label>Chọn thú cưng</Label>
             <input className="hidden" {...register("petId")} />
             <SelectCustomerPet onPetSelectionChange={onPetSelectionChange} />
-            {errors.petId?.message && <Label error>{errors.petId?.message}</Label>}
+            {errors.petId?.message && (
+              <Label error>{errors.petId?.message}</Label>
+            )}
           </fieldset>
 
           <fieldset>
-            <Select label="Serviço" id="serviceId" errorMessage={errors.serviceId?.message} {...register("serviceId")}>
+            <Select
+              label="Dịch vụ"
+              id="serviceId"
+              errorMessage={errors.serviceId?.message}
+              {...register("serviceId")}
+            >
               <option disabled value="">
-                Selecione um serviço
+                Chọn một dịch vụ
               </option>
               {petshopServicesListQuery.data?.services.map((service) => (
                 <option key={service.id} value={service.id}>
@@ -108,7 +121,7 @@ export function AppointmentForm(props: Props) {
         <fieldset className="w-60">
           <Input
             type="datetime-local"
-            label="Horário"
+            label="Thời gian"
             id="appointmentTime"
             errorMessage={errors.appointmentTime?.message}
             {...register("appointmentTime")}
@@ -120,7 +133,7 @@ export function AppointmentForm(props: Props) {
 
       <div className="mt-8">
         <Button type="submit" bg="submit" isLoading={props.isLoading}>
-          Criar
+          Tạo cuộc hẹn
         </Button>
       </div>
     </form>

@@ -15,11 +15,11 @@ export default function NewCustomer() {
     mutationFn: (d: CreateCustomerFormData) => createCustomer(d),
     onSuccess: (data) => {
       queryClient.invalidateQueries({ queryKey: [CUSTOMER_KEY] });
-      toast.success("Cliente criado com sucesso!");
+      toast.success("Khách hàng được tạo thành công!");
       router.push(`/dashboard/customers/${data.customer.id}/edit`);
     },
     onError: () => {
-      toast.error("Ops. Ocorreu um problema ao tentar criar o cliente.");
+      toast.error("Ối. Đã xảy ra sự cố khi tạo khách hàng mới.");
     },
   });
 
@@ -29,7 +29,7 @@ export default function NewCustomer() {
 
   return (
     <div>
-      <PageTitle renderBackOption title="Novo cliente" />
+      <PageTitle renderBackOption title="Khách hàng mới" />
 
       <CreateCustomerForm onSubmit={handleCreateCustomer} isLoading={createCustomerMutation.isLoading} />
     </div>

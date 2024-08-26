@@ -45,10 +45,10 @@ export default function EditCustomer({ params }: { params: { id: string } }) {
     mutationFn: (payload: EditCustomerMutationPayload) => updateCustomer(payload.id, payload.data),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: [CUSTOMER_KEY] });
-      toast.success("Cliente editado com sucesso!");
+      toast.success("Khách hàng đã chỉnh sửa thành công!");
     },
     onError: () => {
-      toast.error("Ops. Ocorreu um problema ao tentar editar o cliente.");
+      toast.error("Ối. Đã xảy ra sự cố khi cố gắng chỉnh sửa ứng dụng khách.");
     },
   });
 
@@ -63,10 +63,10 @@ export default function EditCustomer({ params }: { params: { id: string } }) {
       };
       queryClient.setQueryData([CUSTOMER_KEY, params.id], { customer: updatedCustomer });
 
-      toast.success("Pet adicionado com sucesso!");
+      toast.success("Đã thêm thú cưng thành công!");
     },
     onError: () => {
-      toast.error("Ops. Ocorreu um problema ao tentar adicionar o pet ao cliente.");
+      toast.error("Ối. Đã xảy ra sự cố khi thêm thú cưng vào máy khách.");
     },
   });
 
@@ -87,10 +87,10 @@ export default function EditCustomer({ params }: { params: { id: string } }) {
       };
       queryClient.setQueryData([CUSTOMER_KEY, params.id], { customer: updatedCustomer });
 
-      toast.success("Pet atualizado com sucesso!");
+      toast.success("Cập nhật thú cưng thành công!");
     },
     onError: () => {
-      toast.error("Ops. Ocorreu um problema ao tentar atualizar o pet do cliente.");
+      toast.error("Ối. Đã xảy ra sự cố khi cập nhật thú cưng của khách hàng.");
     },
   });
 
@@ -98,20 +98,20 @@ export default function EditCustomer({ params }: { params: { id: string } }) {
     mutationFn: (petId: string) => removeCustomerPet(petId),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: [CUSTOMER_KEY] });
-      toast.success("Pet removido com sucesso!");
+      toast.success("Đã xóa thú cưng thành công!");
     },
     onError: (err: APIError | Error) => {
       if (axios.isAxiosError(err) && (err.response?.data as APIError).name === "InvalidDeleteOperation") {
-        toast.error("Não foi possível deletar o pet do cliente pois ele já possui agendamentos.");
+        toast.error("Không thể xóa thú cưng của khách hàng vì họ đã có lịch hẹn.");
       } else {
-        toast.error("Ops. Ocorreu um problema ao tentar remover o pet do cliente.");
+        toast.error("Ối. Đã xảy ra sự cố khi cố gắng loại bỏ thú cưng của khách hàng.");
       }
     },
   });
 
   const showCustomerErrorMessage = () => {
     const error = customerShowQuery.error;
-    if (axios.isAxiosError(error) && error.response?.status === 404) return "Erro! Cliente não encontrado.";
+    if (axios.isAxiosError(error) && error.response?.status === 404) return "Lỗi! Không tìm thấy khách hàng.";
   };
 
   async function handleEditCustomer(data: EditCustomerFormData) {
@@ -133,18 +133,18 @@ export default function EditCustomer({ params }: { params: { id: string } }) {
     }),
     columnHelper.accessor("name", {
       cell: (info) => info.getValue(),
-      header: "Nome",
+      header: "Tên",
     }),
     columnHelper.accessor("breed", {
       cell: (info) => info.getValue(),
-      header: "Celular",
+      header: "Số điện thoại",
     }),
     columnHelper.accessor("age", {
       cell: (info) => info.getValue(),
-      header: "Idade",
+      header: "Tuổi",
     }),
     columnHelper.display({
-      header: "Opções",
+      header: "Tuỳ chọn",
       cell: (props) => (
         <div className="flex gap-3">
           <PetForm pet={props.row.original} onSubmit={(d) => handleEditPet(props.row.original.id, d)} />
@@ -161,7 +161,7 @@ export default function EditCustomer({ params }: { params: { id: string } }) {
 
   return (
     <div>
-      <PageTitle renderBackOption title="Editar cliente" />
+      <PageTitle renderBackOption title="Chỉnh sửa khách hàng" />
 
       <AsynchronousContent status={customerShowQuery.status} errorMessage={showCustomerErrorMessage()}>
         {() => (

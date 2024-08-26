@@ -1,18 +1,14 @@
-import { PetshopService } from '@/@types/PetshopServices';
-import api from '../api';
+import { PetshopService } from "@/@types/PetshopServices";
+import api from "../api";
 
 // Query key
-export const PETSHOPSERVICE_KEY = "petshopService-fetch"
-
+export const PETSHOPSERVICE_KEY = "petshopService-fetch";
 
 interface PetshopServicesReturn {
-  services: PetshopService[]
+  services: PetshopService[];
 }
-export async function fetchPetshopServices(
-) {
-  const { data } = await api.get<PetshopServicesReturn>(
-    `/services`
-  );
+export async function fetchPetshopServices() {
+  const { data } = await api.get<PetshopServicesReturn>(`/services`);
 
   return data;
 }
@@ -25,18 +21,25 @@ export async function fetchPetshopService(id: string) {
   return data;
 }
 
-export async function createPetshopService(petshopService: Omit<PetshopService, 'id'>) {
+export async function createPetshopService(
+  petshopService: Omit<PetshopService, "id">
+) {
+  console.log("petshopService", petshopService);
+
   await api.post("/services", {
-    ...petshopService
-  })
+    ...petshopService,
+  });
 }
 
-export async function updatePetshopService(id: string, petshopService: Omit<PetshopService, 'id'>) {
+export async function updatePetshopService(
+  id: string,
+  petshopService: Omit<PetshopService, "id">
+) {
   await api.put(`/services/${id}`, {
-    ...petshopService
-  })
+    ...petshopService,
+  });
 }
 
 export async function deletePetshopService(id: string) {
-  await api.delete(`/services/${id}`)
+  await api.delete(`/services/${id}`);
 }

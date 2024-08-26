@@ -36,7 +36,7 @@ export function ProvidersWrapper({ children }: { children: React.ReactNode }) {
       />
       {children}
 
-      {showWarning && (
+      {/* {showWarning && (
         <div
           role="alert"
           className="alert alert-warning w-full lg:w-1/2 fixed top-20 left-1/2 -translate-x-1/2 z-10 animate-pulse px-10"
@@ -70,7 +70,7 @@ export function ProvidersWrapper({ children }: { children: React.ReactNode }) {
             espante se a primeira requisição demorar carregando...
           </span>
         </div>
-      )}
+      )} */}
     </QueryClientProvider>
   );
 }

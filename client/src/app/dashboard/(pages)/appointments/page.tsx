@@ -5,9 +5,16 @@ import { Button } from "@/components/ui/Button";
 import { Select } from "@/components/ui/Form/Inputs/Select";
 import { Label } from "@/components/ui/Form/Label";
 import { Table } from "@/components/ui/Table";
-import { APPOINTMENT_KEY, fetchAppointments } from "@/services/queries/Appointment";
+import {
+  APPOINTMENT_KEY,
+  fetchAppointments,
+} from "@/services/queries/Appointment";
 import { useQuery } from "@tanstack/react-query";
-import { PaginationState, SortingState, createColumnHelper } from "@tanstack/react-table";
+import {
+  PaginationState,
+  SortingState,
+  createColumnHelper,
+} from "@tanstack/react-table";
 import { parseAppointmentStatus } from "@/utils/parseAppointmentStatus";
 import dayjs from "dayjs";
 import Link from "next/link";
@@ -46,12 +53,16 @@ const columns = [
     ),
   }),
   columnHelper.display({
-    header: "Serviço",
+    header: "Dịch vụ",
     cell: (props) => (
       <Link
         className="link tooltip"
         data-tip={"Ver servico"}
-        href={props.row.original.service ? `/dashboard/services/${props.row.original.service.id}/edit` : ""}
+        href={
+          props.row.original.service
+            ? `/dashboard/services/${props.row.original.service.id}/edit`
+            : ""
+        }
       >
         {props.row.original.service?.title}
       </Link>
@@ -65,7 +76,7 @@ const columns = [
   columnHelper.display({
     header: "Acões",
     cell: (props) => (
-      <Button circle tooltipText="Editar" asChild>
+      <Button circle tooltipText="Chỉnh sửa" asChild>
         <Link href={`/dashboard/appointments/${props.row.original.id}/edit`}>
           <PencilSimple className="w-6 h-6" />
         </Link>
@@ -91,8 +102,10 @@ export default function Appointments() {
   });
   const [sorting, setSorting] = useState<SortingState>(sortingParams);
 
-  const startTimestamp = date !== undefined ? dayjs(date).toISOString() : undefined; // value sent to the query
-  const endTimestamp = date !== undefined ? dayjs(date).endOf("day").toISOString() : undefined; // value sent to the query
+  const startTimestamp =
+    date !== undefined ? dayjs(date).toISOString() : undefined; // value sent to the query
+  const endTimestamp =
+    date !== undefined ? dayjs(date).endOf("day").toISOString() : undefined; // value sent to the query
   const appointmentsListQuery = useQuery({
     queryKey: [APPOINTMENT_KEY, startTimestamp, status, pagination, sorting],
     queryFn: () =>
@@ -147,7 +160,8 @@ export default function Appointments() {
     const statusParam = searchParams.get("status");
 
     const appointmentStatusSchema = z.nativeEnum(AppointmentStatus);
-    const validStatusParam = appointmentStatusSchema.safeParse(statusParam).success;
+    const validStatusParam =
+      appointmentStatusSchema.safeParse(statusParam).success;
 
     if (validStatusParam) {
       return statusParam as AppointmentStatus;
@@ -162,7 +176,8 @@ export default function Appointments() {
     const paginationValidator = z.coerce.number().min(1);
 
     const validPageParam = paginationValidator.safeParse(pageParam).success;
-    const validPageSizeParam = paginationValidator.safeParse(pageSizeParam).success;
+    const validPageSizeParam =
+      paginationValidator.safeParse(pageSizeParam).success;
 
     return {
       pageIndex: validPageParam ? Number(pageParam) - 1 : 0, // default pagination index = 0
@@ -212,15 +227,15 @@ export default function Appointments() {
 
   return (
     <div>
-      <PageTitle title="Agendamentos" />
+      <PageTitle title="Cuộc hẹn" />
       <div className="flex my-4 flex-col items-center lg:flex-row lg:items-start">
         <div className="prose w-fit">
           <h3 className="flex items-center gap-2 w-40">
-            <Funnel size={16} weight="fill" /> Filtros
+            <Funnel size={16} weight="fill" /> Bộ lọc
           </h3>
 
           <div>
-            <Label htmlFor="date">Data</Label>
+            <Label htmlFor="date">Dữ liệu</Label>
             <div className="flex items-center justify-center">
               <Button bg="ghost" circle onClick={() => handleIncrementDate(-1)}>
                 <ArrowLeft className="w-5 h-5" />
@@ -242,13 +257,15 @@ export default function Appointments() {
               value={status ?? ""}
               name="status"
               id="status"
-              onChange={(e) => handleChangeStatus(e.target.value as AppointmentStatus)}
-              label="Status"
+              onChange={(e) =>
+                handleChangeStatus(e.target.value as AppointmentStatus)
+              }
+              label="Trạng thái"
             >
               <option value="">-</option>
-              <option value={AppointmentStatus.PENDING}>Pendentes</option>
-              <option value={AppointmentStatus.CANCELED}>Cancelados</option>
-              <option value={AppointmentStatus.DONE}>Concluídos</option>
+              <option value={AppointmentStatus.PENDING}>Chưa giải quyết</option>
+              <option value={AppointmentStatus.CANCELED}>Đã hủy</option>
+              <option value={AppointmentStatus.DONE}>Hoàn thành</option>
             </Select>
           </div>
         </div>
@@ -279,7 +296,7 @@ export default function Appointments() {
 
       <div className="my-4">
         <Button bg="accent" asChild>
-          <Link href={"/dashboard/appointments/new"}>Novo agendamento</Link>
+          <Link href={"/dashboard/appointments/new"}>Lịch cuộc hẹn mới</Link>
         </Button>
       </div>
     </div>

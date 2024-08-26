@@ -8,7 +8,7 @@ interface Props {
 export function ConfirmDeletePopover(props: Props) {
   return (
     <Popover.Root>
-      <Popover.Trigger className="tooltip tooltip-left" data-tip="Remover">
+      <Popover.Trigger className="tooltip tooltip-left" data-tip="Xoá">
         <div className={buttonStyle({ bg: "danger", circle: true })}>
           <TrashSimple className="w-6 h-6" />
         </div>
@@ -18,12 +18,17 @@ export function ConfirmDeletePopover(props: Props) {
           className="prose flex flex-col gap-3 bg-base-200 max-w-xs p-2 mx-2 animate-show rounded-[var(--rounded-btn)] shadow-md border-error border-2"
           sideOffset={2}
         >
-          <span>Tem certeza que deseja deletar o item permanentemente?</span>
+          <span>Bạn có chắc chắn muốn xóa mục này vĩnh viễn không?</span>
           <div className="flex items-center justify-between">
-            <Popover.Close className="btn btn-outline w-32 px-0 ">Cancelar</Popover.Close>
+            <Popover.Close className="btn btn-outline w-32 px-0 ">
+              Huỷ
+            </Popover.Close>
 
-            <Popover.Close onClick={props.onConfirmDelete} className="btn btn-outline btn-error w-32 px-0">
-              Deletar
+            <Popover.Close
+              onClick={props.onConfirmDelete}
+              className="btn btn-outline btn-error w-32 px-0"
+            >
+              Xoá
             </Popover.Close>
           </div>
 

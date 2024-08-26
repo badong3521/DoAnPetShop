@@ -1,6 +1,6 @@
-const reais = new Intl.NumberFormat('pt-BR', {
+const reais = new Intl.NumberFormat('vi-VN', {
   style: 'currency',
-  currency: 'BRL',
+  currency: 'VND',
 });
 
 export function parseCurrencyValueInCentsToBRL(valueInCents: number) {
@@ -25,7 +25,7 @@ export function parseMaskedCurrencyValueToNumber(value: string) {
 export function maskNumberToCurrency(rawValue: string | number) {
   const value = typeof rawValue === 'string' ? parseMaskedCurrencyValueToNumber(rawValue) : rawValue
 
-  const maskedValue = new Intl.NumberFormat("pt-BR", { minimumFractionDigits: 2 }).format(
+  const maskedValue = new Intl.NumberFormat("vi-VN", { minimumFractionDigits: 2 }).format(
     isNaN(value) ? 0 : value
   );
 
