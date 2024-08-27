@@ -14,7 +14,9 @@ const Adoption = () => {
         </div>
         {/* text */}
         <div className="flex-1 text-cream text-center max-w-md lg:text-left lg:max-w-none">
-          <h2 className="h2 mb-6">Making pet parenting easy for everyone</h2>
+          <h2 className="h2 mb-6">
+            Làm cho việc nuôi dạy thú cưng trở nên dễ dàng đối với mọi người
+          </h2>
           <p className="mb-6">
             Lorem ipsum dolor sit amet consectetur adipisicing elit. Veniam
             option deserunt alias rerum iure, voluptas omnis accusantium et
@@ -22,11 +24,12 @@ const Adoption = () => {
             animi?
           </p>
           <ul className="mb-[38px] flex flex-col gap-y-4 lg:list-disc lg:pl-4">
-            <li>Adoption</li>
-            <li>Frozen Raw</li>
-            <li>Next Day Delivery</li>
+            <li>Nhận con nuôi</li>
+            {/* <li>Next Day Delivery</li> */}
           </ul>
-          <button className="btn-client btn-primary-client mx-auto lg:mx-0">Explore</button>
+          <button className="btn-client btn-primary-client mx-auto lg:mx-0">
+            Khám phá
+          </button>
         </div>
       </div>
     </section>

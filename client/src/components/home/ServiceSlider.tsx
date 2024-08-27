@@ -4,6 +4,11 @@ import Image from "next/image";
 import Service1Icon from "@/public/img/services/service-icon1.svg";
 import Service2Icon from "@/public/img/services/service-icon2.svg";
 import Service3Icon from "@/public/img/services/service-icon3.svg";
+import { useQuery } from "@tanstack/react-query";
+import {
+  fetchPetshopServices,
+  PETSHOPSERVICE_KEY,
+} from "@/services/queries/PetshopServices";
 
 const services = [
   {
@@ -72,6 +77,11 @@ const services = [
 ];
 
 const ServiceSlider = () => {
+  const petshopServicesListQuery = useQuery({
+    queryKey: [PETSHOPSERVICE_KEY],
+    queryFn: fetchPetshopServices,
+  });
+
   return (
     <div className="grid max-w-2xl grid-cols-1 gap-x-8 md:gap-y-16 gap-y-8 pt-10 sm:pt-16 lg:mx-0 lg:max-w-none sm:grid-cols-2 lg:grid-cols-3">
       {services.map((service, index) => {

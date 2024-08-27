@@ -24,18 +24,17 @@ export function SignedInHeader() {
       </Button>
 
       <div className="flex-1 ">
-        {/* <Link href="/" className="btn btn-link prose hidden lg:block">
+        <Link href="/" className="btn btn-link prose hidden lg:block">
           <h1>Petshop</h1>
-        </Link> */}
+        </Link>
       </div>
 
       <div className="flex items-center gap-2">
         <span className="text-sm font-semibold underline">{user?.name}</span>
-
         <Button
           onClick={handleSignOut}
           bg="ghost"
-          tooltipText="Sair"
+          tooltipText="SignOut"
           tooltipBottom
         >
           <SignOut className="h-5 w-5" />

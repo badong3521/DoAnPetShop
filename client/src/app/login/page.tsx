@@ -26,15 +26,15 @@ const signInSchema = z.object({
       required_error: "Mật khẩu là bắt buộc",
     })
     .min(6, {
-      message: "Mật khẩu phải có ít nhất 6 ký tự",
+      message: "Mật khẩu phải có ít nhất 9 ký tự",
     }),
 });
 
 type SignInFormData = z.infer<typeof signInSchema>;
 
 const LOGIN_DEFAULT_USER = {
-  email: "admin@email.com",
-  password: "123456",
+  email: "",
+  password: "",
 };
 
 export default function Login() {
@@ -56,7 +56,12 @@ export default function Login() {
     mutationFn: (payload: SignInFormData) => signIn(payload),
     onSuccess: (data) => {
       signInUser(data.user, data.accessToken, data.refreshToken);
-      router.push("/dashboard");
+
+      if (data.user.name === "ADMIN") {
+        router.push("/dashboard");
+        return;
+      }
+      router.push("/home");
     },
     onError: (err) => {
       if (isAxiosError(err) && err.response?.status === 401) {
@@ -74,14 +79,13 @@ export default function Login() {
   return (
     <div className="h-screen flex flex-col text-white">
       <Header />
-
       <div className="card bg-neutral-focus shadow-md m-auto w-96 flex flex-col p-2 items-center">
         <form
           onSubmit={handleSubmit(handleSignIn)}
           className="card-body w-full flex flex-col gap-4"
         >
           <div className="prose">
-            <h2 className="text-center">Đăng nhập Admin</h2>
+            <h2 className="text-center text-white">Đăng nhập</h2>
           </div>
           <Input
             label="Email"

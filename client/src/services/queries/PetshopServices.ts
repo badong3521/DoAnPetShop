@@ -24,7 +24,6 @@ export async function fetchPetshopService(id: string) {
 export async function createPetshopService(
   petshopService: Omit<PetshopService, "id">
 ) {
-  console.log("petshopService", petshopService);
 
   await api.post("/services", {
     ...petshopService,

@@ -16,11 +16,13 @@ const Hero = () => {
             </div>
           </div>
           <h1 className="text-5l lg:text-8xl uppercase font-bold -tracking-[0.05em] mb-10">
-            A pet first <br />
-            <span className="text-orange font-normal">approach to</span> <br />
-            wellness
+            MỌI THÚ CƯNG <br />
+            <span className="text-orange font-normal">TIẾP CẬN</span> <br />
+            SỨC KHOẺ
           </h1>
-          <button className="btn-client btn-orange-client mx-auto lg:mx-0">Learn more</button>
+          <button className="btn-client btn-orange-client mx-auto lg:mx-0">
+            Tìm hiểu thêm
+          </button>
         </div>
       </div>
     </section>

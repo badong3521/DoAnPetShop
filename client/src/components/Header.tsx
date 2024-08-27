@@ -6,12 +6,11 @@ import { Button } from "./ui/Button";
 export function Header() {
   return (
     <header className="navbar border-b-2">
-      {/* <div className="flex-1">
+      <div className="flex-1">
         <Link href="/" className="btn btn-link prose">
           <h1>Petshop</h1>
         </Link>
-      </div> */}
-
+      </div>
       <Button bg="ghost" tooltipText="Đăng nhập" tooltipBottom asChild>
         <Link href={"/login"}>
           <SignIn className="h-5 w-5" />
