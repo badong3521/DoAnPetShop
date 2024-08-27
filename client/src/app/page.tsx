@@ -19,7 +19,7 @@ export default function Home() {
   };
 
   return (
-    <div className="h-full min-h-screen flex flex-col">
+    <div className="h-full min-h-screen flex flex-col text-white">
       <Header />
 
       <section className="hero min-h-[calc(100vh-66px)] bg-base-100 relativ">
@@ -29,7 +29,7 @@ export default function Home() {
               <PawPrint size={32} weight="fill" /> PETSHOP{" "}
               <PawPrint size={32} weight="fill" />
             </h1>
-            <p className="py-6">
+            <p className="py-6 text-white">
               Trong hệ thống Petshop hư cấu này, hãy đăng ký khách hàng, vật
               nuôi và dịch vụ và dễ dàng quản lý các cuộc hẹn.
             </p>

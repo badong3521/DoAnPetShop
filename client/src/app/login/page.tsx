@@ -56,7 +56,7 @@ export default function Login() {
     mutationFn: (payload: SignInFormData) => signIn(payload),
     onSuccess: (data) => {
       signInUser(data.user, data.accessToken, data.refreshToken);
-      router.push("/home");
+      router.push("/dashboard");
     },
     onError: (err) => {
       if (isAxiosError(err) && err.response?.status === 401) {
@@ -72,18 +72,17 @@ export default function Login() {
   }
 
   return (
-    <div className="h-screen flex flex-col">
+    <div className="h-screen flex flex-col text-white">
       <Header />
 
       <div className="card bg-neutral-focus shadow-md m-auto w-96 flex flex-col p-2 items-center">
-        <div className="prose">
-          <h2>LOGIN</h2>
-        </div>
-
         <form
           onSubmit={handleSubmit(handleSignIn)}
           className="card-body w-full flex flex-col gap-4"
         >
+          <div className="prose">
+            <h2 className="text-center">Đăng nhập Admin</h2>
+          </div>
           <Input
             label="Email"
             {...register("email")}

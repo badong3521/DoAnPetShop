@@ -5,7 +5,7 @@
   "scripts": {
     "dev": "next dev",
     "build": "next build",
-    "start": "next start",
+    "start": "next start -p 8000",
     "lint": "next lint"
   },
   "dependencies": {
@@ -14,7 +14,7 @@
     "@radix-ui/react-slot": "^1.0.2",
     "@radix-ui/react-tooltip": "^1.0.7",
     "@tanstack/react-query": "^4.35.3",
-    "@tanstack/react-table": "^8.10.6",
+    "@tanstack/react-table": "^8.20.5",
     "@types/node": "20.7.1",
     "@types/react": "18.2.23",
     "@types/react-dom": "18.2.8",
@@ -33,7 +33,6 @@
     "react-hot-toast": "^2.4.1",
     "react-icons": "^4.7.1",
     "react-number-format": "^5.3.1",
-    "swiper": "^11.1.10",
     "theme-change": "^2.5.0",
     "typescript": "5.2.2",
     "zod": "^3.22.2",

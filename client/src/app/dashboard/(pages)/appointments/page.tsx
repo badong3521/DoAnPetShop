@@ -159,7 +159,9 @@ export default function Appointments() {
 
   // update pagination URL params
   useEffect(() => {
-    const params = new URLSearchParams(searchParams);
+    const params = new URLSearchParams(
+      searchParams as unknown as URLSearchParams
+    );
     params.set("page", (pagination.pageIndex + 1).toString());
     params.set("pageSize", pagination.pageSize.toString());
 
@@ -168,7 +170,9 @@ export default function Appointments() {
 
   // update pagination URL params
   useEffect(() => {
-    const params = new URLSearchParams(searchParams);
+    const params = new URLSearchParams(
+      searchParams as unknown as URLSearchParams
+    );
     if (sorting.length === 0) {
       params.delete("sortBy");
       params.delete("sortOrder");
@@ -244,7 +248,9 @@ export default function Appointments() {
   }
 
   function handleChangeDate(date: string) {
-    const params = new URLSearchParams(searchParams);
+    const params = new URLSearchParams(
+      searchParams as unknown as URLSearchParams
+    );
     params.set("date", date);
 
     changeQueryParams(params.toString());
@@ -256,7 +262,9 @@ export default function Appointments() {
   }
 
   function handleChangeStatus(status: AppointmentStatus | "") {
-    const params = new URLSearchParams(searchParams);
+    const params = new URLSearchParams(
+      searchParams as unknown as URLSearchParams
+    );
     params.set("status", status);
 
     changeQueryParams(params.toString());

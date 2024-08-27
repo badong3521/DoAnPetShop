@@ -3,7 +3,7 @@
 import { useEffect, useState } from "react";
 import Link from "next/link";
 import { redirect, usePathname } from "next/navigation";
-import { Bag, Calendar, Person } from "phosphor-react";
+import { Bag, Calendar, Info, Person } from "phosphor-react";
 import { SignedInHeader } from "@/components/dashboard/SignedInHeader";
 import { useSessionStore } from "src/stores/session";
 import { Header } from "@/components/Header";
@@ -25,11 +25,11 @@ const ROUTES = [
     link: "/dashboard/services",
     Icon: () => <Bag size={24} />,
   },
-  // {
-  //   name: "Sobre",
-  //   link: "/dashboard/about",
-  //   Icon: () => <Info size={24} />,
-  // },
+  {
+    name: "Về tôi",
+    link: "/dashboard/about",
+    Icon: () => <Info size={24} />,
+  },
 ];
 
 export default function DashboardLayout({
@@ -61,7 +61,7 @@ export default function DashboardLayout({
     redirect("/login");
   }
   return (
-    <div>
+    <div className="text-white">
       <SignedInHeader />
 
       <div className="min-h-screen drawer drawer-mobile block lg:drawer-open lg:grid">
@@ -78,7 +78,7 @@ export default function DashboardLayout({
             </Link>
 
             {ROUTES.map((route) => (
-              <li key={route.name}>
+              <li className="text-white" key={route.name}>
                 <Link
                   href={route.link}
                   className={pathname?.includes(route.link) ? "active" : ""}

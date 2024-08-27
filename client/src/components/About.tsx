@@ -1,5 +1,3 @@
-import { ExternalLink } from "./ui/ExternalLink";
-
 interface Props {
   transparentBg: boolean;
 }
