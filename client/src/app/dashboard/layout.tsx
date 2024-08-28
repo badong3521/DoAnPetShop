@@ -40,6 +40,7 @@ export default function DashboardLayout({
   const pathname = usePathname();
   const [hydrated, setHydrated] = useState(false);
   const isUserLoggedIn = useSessionStore((state) => state.isLoggedIn);
+  const [user] = useSessionStore((state) => [state.user, state.signOut]);
 
   useEffect(() => {
     setHydrated(true);
@@ -57,9 +58,7 @@ export default function DashboardLayout({
     );
   }
 
-  console.log("LOGIN", isUserLoggedIn);
-
-  if (!isUserLoggedIn) {
+  if (!isUserLoggedIn || user?.name !== "ADMIN") {
     redirect("/login");
   }
   return (

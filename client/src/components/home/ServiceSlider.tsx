@@ -9,6 +9,7 @@ import {
   fetchPetShopServices,
   PET_SHOP_SERVICE_KEY,
 } from "@/services/queries/PetshopServices";
+import { Button } from "../ui/Button";
 
 // const services = [
 //   {
@@ -85,7 +86,7 @@ const ServiceSlider = () => {
   console.log("Data", petShopServicesListQuery.data?.services);
 
   return (
-    <div className="grid max-w-2xl grid-cols-1 gap-x-8 md:gap-y-16 gap-y-8 pt-10 sm:pt-16 lg:mx-0 lg:max-w-none sm:grid-cols-2 lg:grid-cols-3">
+    <div className="grid max-w-2xl grid-cols-1 gap-x-8 md:gap-y-16 gap-y-8 pt-5 sm:pt-8 lg:mx-0 lg:max-w-none sm:grid-cols-2 lg:grid-cols-3">
       {petShopServicesListQuery.data?.services.map((service, index) => {
         return (
           <div
@@ -102,7 +103,7 @@ const ServiceSlider = () => {
               </div>
             </>
             <div className="w-full flex-1 flex flex-col justify-end">
-              <button className="btn-client btn-primary-client">Explore</button>
+              <Button className="btn-client btn-primary-client">Explore</Button>
             </div>
           </div>
         );

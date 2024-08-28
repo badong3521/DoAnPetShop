@@ -8,7 +8,11 @@ import { Link, SignOut } from "phosphor-react";
 import { Button } from "../ui/Button";
 import { redirect } from "next/navigation";
 
-const Header = () => {
+type Props = {
+  className?: string;
+};
+
+const Header = ({ className }: Props) => {
   const isUserLoggedIn = useSessionStore((state) => state.isLoggedIn);
   const [user, signOutUser] = useSessionStore((state) => [
     state.user,
@@ -23,7 +27,7 @@ const Header = () => {
     signOutUser();
   }
   return (
-    <header className="py-6 lg:absolute lg:w-full lg:left-0">
+    <header className={`py-6 ${className} lg:w-full lg:left-0`}>
       <div className="container mx-auto flex flex-col gap-y-6 lg:flex-row h-full justify-between items-center relative">
         {/* logo */}
         <a href="/home">
@@ -41,7 +45,7 @@ const Header = () => {
         </span>
         <Button
           onClick={handleSignOut}
-          className="btn-client flex gap-2 btn-primary-client lg:btn-outline-client"
+          className="btn-client flex gap-2 btn-primary-client "
         >
           <p>Đăng xuất</p>
           <SignOut className="h-5 w-5" />
