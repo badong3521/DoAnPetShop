@@ -57,6 +57,8 @@ export default function DashboardLayout({
     );
   }
 
+  console.log("LOGIN", isUserLoggedIn);
+
   if (!isUserLoggedIn) {
     redirect("/login");
   }

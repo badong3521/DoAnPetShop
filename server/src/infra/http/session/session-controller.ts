@@ -39,7 +39,7 @@ export class SessionController {
 
   // API Đăng ký
   @PublicRoute()
-  @Post('sign-up')
+  @Post('/sign-up')
   async signUp(@Body() body: CreateUserBody) {
     const user = await this.createUserService.execute(body);
 

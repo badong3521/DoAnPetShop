@@ -40,6 +40,7 @@ const LOGIN_DEFAULT_USER = {
 export default function Login() {
   const signInUser = useSessionStore((state) => state.signIn);
   const router = useRouter();
+
   const {
     register,
     handleSubmit,
@@ -58,9 +59,11 @@ export default function Login() {
       signInUser(data.user, data.accessToken, data.refreshToken);
 
       if (data.user.name === "ADMIN") {
-        router.push("/dashboard");
+        toast.success("Đăng nhập ADMIN thành công.");
+        router.push("/dashboard/appointments");
         return;
       }
+      toast.success("Đăng nhập khách hàng thành công.");
       router.push("/home");
     },
     onError: (err) => {
@@ -79,10 +82,10 @@ export default function Login() {
   return (
     <div className="h-screen flex flex-col text-white">
       <Header />
-      <div className="card bg-neutral-focus shadow-md m-auto w-96 flex flex-col p-2 items-center">
+      <div className="card bg-neutral-focus shadow-md m-auto w-96 flex flex-col items-center">
         <form
           onSubmit={handleSubmit(handleSignIn)}
-          className="card-body w-full flex flex-col gap-4"
+          className="card-body w-full flex flex-col gap-2"
         >
           <div className="prose">
             <h2 className="text-center text-white">Đăng nhập</h2>
@@ -102,19 +105,15 @@ export default function Login() {
             placeholder={LOGIN_DEFAULT_USER.password}
             errorMessage={errors.password?.message}
           />
-
+          <div className="h-3" />
           <Button
-            bg="primary"
             type="submit"
             isLoading={signInMutation.isLoading}
+            bg="submit"
           >
             Đăng nhập
           </Button>
         </form>
-        {/* <span className={isSubmitted ? "opacity-100" : "opacity-0"}>
-          THÔNG TIN XÁC NHẬN: <b>{LOGIN_DEFAULT_USER.email}</b> -{" "}
-          <b>{LOGIN_DEFAULT_USER.password}</b>
-        </span> */}
       </div>
     </div>
   );

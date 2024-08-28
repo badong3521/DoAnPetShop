@@ -2,12 +2,12 @@ import { PetshopService } from "@/@types/PetshopServices";
 import api from "../api";
 
 // Query key
-export const PETSHOPSERVICE_KEY = "petshopService-fetch";
+export const PET_SHOP_SERVICE_KEY = "petshopService-fetch";
 
 interface PetshopServicesReturn {
   services: PetshopService[];
 }
-export async function fetchPetshopServices() {
+export async function fetchPetShopServices() {
   const { data } = await api.get<PetshopServicesReturn>(`/services`);
 
   return data;

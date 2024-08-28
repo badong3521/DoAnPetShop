@@ -9,8 +9,8 @@ import { Label } from "@/components/ui/Form/Label";
 import { Select } from "@/components/ui/Form/Inputs/Select";
 import { useQuery } from "@tanstack/react-query";
 import {
-  PETSHOPSERVICE_KEY,
-  fetchPetshopServices,
+  PET_SHOP_SERVICE_KEY,
+  fetchPetShopServices,
 } from "@/services/queries/PetshopServices";
 
 const appointmentSchema = z.object({
@@ -64,9 +64,9 @@ export function AppointmentForm(props: Props) {
     },
   });
 
-  const petshopServicesListQuery = useQuery({
-    queryKey: [PETSHOPSERVICE_KEY],
-    queryFn: fetchPetshopServices,
+  const petShopServicesListQuery = useQuery({
+    queryKey: [PET_SHOP_SERVICE_KEY],
+    queryFn: fetchPetShopServices,
   });
 
   function onPetSelectionChange(petId: string | undefined) {
@@ -109,7 +109,7 @@ export function AppointmentForm(props: Props) {
               <option disabled value="">
                 Chọn một dịch vụ
               </option>
-              {petshopServicesListQuery.data?.services.map((service) => (
+              {petShopServicesListQuery.data?.services.map((service) => (
                 <option key={service.id} value={service.id}>
                   {service.title}
                 </option>

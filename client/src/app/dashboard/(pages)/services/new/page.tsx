@@ -5,7 +5,7 @@ import { PageTitle } from "@/components/dashboard/PageTitle";
 import { ServiceForm } from "@/components/services/ServiceForm";
 import {
   createPetshopService,
-  PETSHOPSERVICE_KEY,
+  PET_SHOP_SERVICE_KEY,
 } from "@/services/queries/PetshopServices";
 import { useRouter } from "next/navigation";
 import toast from "react-hot-toast";
@@ -18,7 +18,7 @@ export default function NewService() {
   const createPetshopServiceMutation = useMutation({
     mutationFn: (data: PetshopServiceBodyData) => createPetshopService(data),
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: [PETSHOPSERVICE_KEY] });
+      queryClient.invalidateQueries({ queryKey: [PET_SHOP_SERVICE_KEY] });
       toast.success("Dịch vụ được tạo thành công!");
       router.push("/dashboard/services");
     },

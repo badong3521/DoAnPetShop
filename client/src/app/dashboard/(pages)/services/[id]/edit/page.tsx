@@ -7,7 +7,7 @@ import { PageTitle } from "@/components/dashboard/PageTitle";
 import { ServiceForm } from "@/components/services/ServiceForm";
 import {
   fetchPetshopService,
-  PETSHOPSERVICE_KEY,
+  PET_SHOP_SERVICE_KEY,
   updatePetshopService,
 } from "@/services/queries/PetshopServices";
 import { toast } from "react-hot-toast";
@@ -21,7 +21,7 @@ export default function EditService({ params }: { params: { id: string } }) {
   const queryClient = useQueryClient();
 
   const petshopServiceShowQuery = useQuery({
-    queryKey: [PETSHOPSERVICE_KEY, params.id],
+    queryKey: [PET_SHOP_SERVICE_KEY, params.id],
     queryFn: () => fetchPetshopService(params.id),
   });
 
@@ -29,7 +29,7 @@ export default function EditService({ params }: { params: { id: string } }) {
     mutationFn: (payload: EditPetshopServiceMutationPayload) =>
       updatePetshopService(payload.id, payload.data),
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: [PETSHOPSERVICE_KEY] });
+      queryClient.invalidateQueries({ queryKey: [PET_SHOP_SERVICE_KEY] });
       toast.success("Dịch vụ đã được chỉnh sửa thành công!");
     },
     onError: () => {

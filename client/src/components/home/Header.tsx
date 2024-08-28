@@ -4,7 +4,7 @@ import React from "react";
 import Image from "next/image";
 import Logo from "@/public/img/header/logo.svg";
 import { useSessionStore } from "@/stores/session";
-import { SignOut } from "phosphor-react";
+import { Link, SignOut } from "phosphor-react";
 import { Button } from "../ui/Button";
 import { redirect } from "next/navigation";
 
@@ -31,14 +31,13 @@ const Header = () => {
         </a>
         {/* nav */}
         <nav className="text-2xl flex gap-x-4 lg:gap-x-12">
-          <a href="#">Dịch vụ</a>
+          <a href="/service">Dịch vụ</a>
           <a href="#">Về tôi</a>
           {/* <a href="#">Blog</a>
           <a href="#">Liên hệ</a> */}
         </nav>
-        {/* button */}
-        <span className="text-sm font-semibold underline text-black">
-          {user?.name}
+        <span className="text-2xl font-bold underline text-black">
+          Xin chào {user?.name}
         </span>
         <Button
           onClick={handleSignOut}
