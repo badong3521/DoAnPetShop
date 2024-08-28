@@ -4,9 +4,10 @@ import React from "react";
 import Image from "next/image";
 import Logo from "@/public/img/header/logo.svg";
 import { useSessionStore } from "@/stores/session";
-import { Link, SignOut } from "phosphor-react";
+import { SignOut } from "phosphor-react";
 import { Button } from "../ui/Button";
 import { redirect } from "next/navigation";
+import Link from "next/link";
 
 type Props = {
   className?: string;
@@ -30,13 +31,13 @@ const Header = ({ className }: Props) => {
     <header className={`py-6 ${className} lg:w-full lg:left-0`}>
       <div className="container mx-auto flex flex-col gap-y-6 lg:flex-row h-full justify-between items-center relative">
         {/* logo */}
-        <a href="/home">
+        <Link href="/home">
           <Image src={Logo} alt={""} width={150} />
-        </a>
+        </Link>
         {/* nav */}
         <nav className="text-2xl flex gap-x-4 lg:gap-x-12">
-          <a href="/service">Dịch vụ</a>
-          <a href="#">Về tôi</a>
+          <Link href="/services">Dịch vụ</Link>
+          <Link href="#">Về tôi</Link>
           {/* <a href="#">Blog</a>
           <a href="#">Liên hệ</a> */}
         </nav>

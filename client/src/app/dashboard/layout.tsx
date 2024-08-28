@@ -22,7 +22,7 @@ const ROUTES = [
   },
   {
     name: "Dịch vụ",
-    link: "/dashboard/services",
+    link: "/dashboard/service",
     Icon: () => <Bag size={24} />,
   },
   {
@@ -47,7 +47,6 @@ export default function DashboardLayout({
   }, []);
 
   if (!hydrated) {
-    // Returns null on first render, so the client and server match
     return (
       <div>
         <Header />

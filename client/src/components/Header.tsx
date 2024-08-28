@@ -1,6 +1,6 @@
 "use client";
 import Link from "next/link";
-import { SignIn } from "phosphor-react";
+import { PawPrint, SignIn } from "phosphor-react";
 import { Button } from "./ui/Button";
 import { useRouter } from "next/navigation";
 
@@ -10,11 +10,15 @@ export function Header() {
   return (
     <header className="navbar border-b-2">
       <div className="flex-1">
-        <Link href="/" className="btn btn-link prose">
-          <h1>Petshop</h1>
+        <Link href="/" className="btn-client btn-link prose">
+          <h2 className="flex items-center justify-center font-bold underline text-white">
+            <PawPrint size={32} weight="fill" /> PETSHOP{" "}
+            <PawPrint size={32} weight="fill" />
+          </h2>
         </Link>
       </div>
       <Button
+        bg={"accent"}
         onClick={() => {
           router.push("/sign-up");
         }}
