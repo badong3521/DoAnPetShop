@@ -12,6 +12,9 @@ import toast from "react-hot-toast";
 import { useSessionStore } from "src/stores/session";
 import { z } from "zod";
 import { useForm } from "react-hook-form";
+import { useState } from "react";
+import { FaRegEye } from "react-icons/fa";
+import { FaEyeSlash } from "react-icons/fa";
 
 const signInSchema = z.object({
   email: z
@@ -40,6 +43,7 @@ const LOGIN_DEFAULT_USER = {
 
 export default function Login() {
   const signInUser = useSessionStore((state) => state.signIn);
+  const [showPassword, setShowPassword] = useState<boolean>(false);
   const router = useRouter();
 
   const {
@@ -111,14 +115,27 @@ export default function Login() {
             placeholder={LOGIN_DEFAULT_USER.email}
             errorMessage={errors.email?.message}
           />
-          <Input
-            label="Mật khẩu"
-            {...register("password")}
-            id="password"
-            type="password"
-            placeholder={LOGIN_DEFAULT_USER.password}
-            errorMessage={errors.password?.message}
-          />
+          <div className="relative">
+            <Input
+              label="Mật khẩu"
+              {...register("password")}
+              id="password"
+              type={showPassword ? "text" : "password"}
+              placeholder={LOGIN_DEFAULT_USER.password}
+              errorMessage={errors.password?.message}
+            />
+            <button
+              type="button"
+              className="absolute right-4 top-[60%]"
+              onClick={() => setShowPassword(!showPassword)}
+            >
+              {showPassword ? (
+                <FaRegEye className="h-5 w-5 text-gray-400" />
+              ) : (
+                <FaEyeSlash className="h-5 w-5 text-gray-400" />
+              )}
+            </button>
+          </div>
           <div className="flex gap-2 items-center" {...register("rememberMe")}>
             <input
               type="checkbox"
