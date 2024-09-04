@@ -23,7 +23,7 @@ const petshopServiceSchema = z.object({
   description: z
     .string()
     .min(1, "Mô tả và nghĩa vụ")
-    .max(120, "Tối đa 120 kí tự"),
+    .max(500, "Tối đa 500 kí tự"),
   value: z
     .string()
     .nonempty({
@@ -36,7 +36,7 @@ const petshopServiceSchema = z.object({
       z
         .number()
         .min(10_000, "Giá tiền tối thiểu là 10.000đ")
-        .max(1_000_000, "Giá tiền tối đa là 100.000.000đ")
+        .max(100_000_000, "Giá tiền tối đa là 100.000.000đ")
     )
     .transform((value) => maskNumberToCurrency(value)), // transform back to string to use it as a string
   duration: z

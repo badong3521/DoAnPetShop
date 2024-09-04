@@ -22,7 +22,7 @@ const ROUTES = [
   },
   {
     name: "Dịch vụ",
-    link: "/dashboard/service",
+    link: "/dashboard/services",
     Icon: () => <Bag size={24} />,
   },
   {

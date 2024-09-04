@@ -19,7 +19,11 @@ export function SortColumnButton({ sortingOrder, ...props }: Props) {
   };
 
   return (
-    <button className="tooltip tooltip-bottom btn-ghost rounded-full p-1" data-tip="Ordenar" {...props}>
+    <button
+      className="tooltip tooltip-bottom btn-ghost rounded-full p-1"
+      data-tip="Loại"
+      {...props}
+    >
       <Icon />
     </button>
   );

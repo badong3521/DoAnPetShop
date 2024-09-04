@@ -8,10 +8,10 @@ import { signIn } from "@/services/queries/Session";
 import { useMutation } from "@tanstack/react-query";
 import { isAxiosError } from "axios";
 import { useRouter } from "next/navigation";
-import { useForm } from "react-hook-form";
 import toast from "react-hot-toast";
 import { useSessionStore } from "src/stores/session";
 import { z } from "zod";
+import { useForm } from "react-hook-form";
 
 const signInSchema = z.object({
   email: z
@@ -25,9 +25,10 @@ const signInSchema = z.object({
     .string({
       required_error: "Mật khẩu là bắt buộc",
     })
-    .min(6, {
-      message: "Mật khẩu phải có ít nhất 9 ký tự",
+    .min(8, {
+      message: "Mật khẩu phải có ít nhất 8 ký tự",
     }),
+  rememberMe: z.boolean().optional(),
 });
 
 type SignInFormData = z.infer<typeof signInSchema>;
@@ -50,13 +51,20 @@ export default function Login() {
     defaultValues: {
       email: LOGIN_DEFAULT_USER.email,
       password: LOGIN_DEFAULT_USER.password,
+      rememberMe: false,
     },
   });
 
   const signInMutation = useMutation({
     mutationFn: (payload: SignInFormData) => signIn(payload),
-    onSuccess: (data) => {
+    onSuccess: (data, variables) => {
       signInUser(data.user, data.accessToken, data.refreshToken);
+
+      if (variables.rememberMe) {
+        localStorage.setItem("rememberedEmail", variables.email);
+      } else {
+        localStorage.removeItem("rememberedEmail");
+      }
 
       if (data.user.name === "ADMIN") {
         toast.success("Đăng nhập ADMIN thành công.");
@@ -69,8 +77,14 @@ export default function Login() {
     onError: (err) => {
       if (isAxiosError(err) && err.response?.status === 401) {
         toast.error("Email hoặc mật khẩu không hợp lệ");
+      } else if (isAxiosError(err)) {
+        toast.error(
+          `Đã xảy ra sự cố khi cố gắng đăng nhập! ${
+            err.response?.data?.message || "Lỗi không xác định"
+          }`
+        );
       } else {
-        toast.error("Đã xảy ra sự cố khi cố gắng đăng nhập !");
+        toast.error("Đã xảy ra sự cố không xác định khi cố gắng đăng nhập");
       }
     },
   });
@@ -105,6 +119,18 @@ export default function Login() {
             placeholder={LOGIN_DEFAULT_USER.password}
             errorMessage={errors.password?.message}
           />
+          <div className="flex gap-2 items-center" {...register("rememberMe")}>
+            <input
+              type="checkbox"
+              defaultChecked
+              className="checkbox checkbox-accent"
+            />
+            <label className="label gap-5 cursor-pointer">
+              <span className="label-text text-left">
+                Ghi nhớ thông tin đăng nhập
+              </span>
+            </label>
+          </div>
           <div className="h-3" />
           <Button
             type="submit"

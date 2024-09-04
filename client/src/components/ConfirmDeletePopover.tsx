@@ -18,7 +18,7 @@ export function ConfirmDeletePopover(props: Props) {
           className="prose flex flex-col gap-3 bg-base-200 max-w-xs p-2 mx-2 animate-show rounded-[var(--rounded-btn)] shadow-md border-error border-2"
           sideOffset={2}
         >
-          <span>Bạn có chắc chắn muốn xóa mục này vĩnh viễn không?</span>
+          <span>Bạn có chắc chắn muốn xóa mục này không?</span>
           <div className="flex items-center justify-between">
             <Popover.Close className="btn btn-outline w-32 px-0 ">
               Huỷ

@@ -69,7 +69,7 @@ export default function Customers() {
     }),
     columnHelper.accessor("pets", {
       cell: (info) => info.getValue().length,
-      header: "Thú cưng",
+      header: "Số lượng thú cưng",
     }),
     columnHelper.display({
       header: "Tuỳ chọn",
