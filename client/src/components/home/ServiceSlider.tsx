@@ -11,79 +11,11 @@ import {
 } from "@/services/queries/PetshopServices";
 import { Button } from "../ui/Button";
 
-// const services = [
-//   {
-//     image: Service1Icon,
-//     name: "Pharmacy",
-//     description:
-//       "Lorem ipsum, dolor sit amet consectetur adipisicing elit. Veritatis dicta, modi voluptate dolorum eaque quisquam quaerat cumque? Libero, accusamus corporis?",
-//     btnText: "Explore",
-//   },
-//   {
-//     image: Service2Icon,
-//     name: "Breed-specific Haircuts",
-//     description:
-//       "Lorem ipsum, dolor sit amet consectetur adipisicing elit. Veritatis dicta, modi voluptate dolorum eaque quisquam quaerat cumque? Libero, accusamus corporis?",
-//     btnText: "Explore",
-//   },
-//   {
-//     image: Service3Icon,
-//     name: "Cloths",
-//     description:
-//       "Lorem ipsum, dolor sit amet consectetur adipisicing elit. Veritatis dicta, modi voluptate dolorum eaque quisquam quaerat cumque? Libero, accusamus corporis?",
-//     btnText: "Explore",
-//   },
-//   {
-//     image: Service3Icon,
-//     name: "Cloths",
-//     description:
-//       "Lorem ipsum, dolor sit amet consectetur adipisicing elit. Veritatis dicta, modi voluptate dolorum eaque quisquam quaerat cumque? Libero, accusamus corporis?",
-//     btnText: "Explore",
-//   },
-//   {
-//     image: Service3Icon,
-//     name: "Cloths",
-//     description:
-//       "Lorem ipsum, dolor sit amet consectetur adipisicing elit. Veritatis dicta, modi voluptate dolorum eaque quisquam quaerat cumque? Libero, accusamus corporis?",
-//     btnText: "Explore",
-//   },
-//   {
-//     image: Service3Icon,
-//     name: "Cloths",
-//     description:
-//       "Lorem ipsum, dolor sit amet consectetur adipisicing elit. Veritatis dicta, modi voluptate dolorum eaque quisquam quaerat cumque? Libero, accusamus corporis?",
-//     btnText: "Explore",
-//   },
-//   {
-//     image: Service3Icon,
-//     name: "Cloths",
-//     description:
-//       "Lorem ipsum, dolor sit amet consectetur adipisicing elit. Veritatis dicta, modi voluptate dolorum eaque quisquam quaerat cumque? Libero, accusamus corporis?",
-//     btnText: "Explore",
-//   },
-//   {
-//     image: Service3Icon,
-//     name: "Cloths",
-//     description:
-//       "Lorem ipsum, dolor sit amet consectetur adipisicing elit. Veritatis dicta, modi voluptate dolorum eaque quisquam quaerat cumque? Libero, accusamus corporis?",
-//     btnText: "Explore",
-//   },
-//   {
-//     image: Service3Icon,
-//     name: "Cloths",
-//     description:
-//       "Lorem ipsum, dolor sit amet consectetur adipisicing elit. Veritatis dicta, modi voluptate dolorum eaque quisquam quaerat cumque? Libero, accusamus corporis?",
-//     btnText: "Explore",
-//   },
-// ];
-
 const ServiceSlider = () => {
   const petShopServicesListQuery = useQuery({
     queryKey: [PET_SHOP_SERVICE_KEY],
     queryFn: fetchPetShopServices,
   });
-
-  console.log("Data", petShopServicesListQuery.data?.services);
 
   return (
     <div className="grid max-w-2xl grid-cols-1 gap-x-8 md:gap-y-16 gap-y-8 pt-5 sm:pt-8 lg:mx-0 lg:max-w-none sm:grid-cols-2 lg:grid-cols-3">

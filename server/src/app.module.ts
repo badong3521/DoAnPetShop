@@ -4,8 +4,12 @@ import { AuthModule } from '@infra/auth/auth.module';
 import { ConfigModule } from '@nestjs/config';
 
 @Module({
-  imports: [ConfigModule.forRoot({
-    isGlobal: true,
-  }), AuthModule, HttpModule],
+  imports: [
+    ConfigModule.forRoot({
+      isGlobal: true,
+    }),
+    AuthModule,
+    HttpModule,
+  ],
 })
-export class AppModule { }
+export class AppModule {}

@@ -1,6 +1,9 @@
 "use client";
 
-import { CreateCustomerFormData, CreateCustomerForm } from "@/components/customers/CreateCustomerForm";
+import {
+  CreateCustomerFormData,
+  CreateCustomerForm,
+} from "@/components/customers/CreateCustomerForm";
 import { PageTitle } from "@/components/dashboard/PageTitle";
 import { createCustomer, CUSTOMER_KEY } from "@/services/queries/Customer";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
@@ -18,8 +21,10 @@ export default function NewCustomer() {
       toast.success("Khách hàng được tạo thành công!");
       router.push(`/dashboard/customers/${data.customer.id}/edit`);
     },
-    onError: () => {
-      toast.error("Ối. Đã xảy ra sự cố khi tạo khách hàng mới.");
+    onError: (e: any) => {
+      toast.error(
+        `Ối. Đã xảy ra sự cố khi tạo khách hàng mới. ${e.response.data.message}`
+      );
     },
   });
 
@@ -31,7 +36,10 @@ export default function NewCustomer() {
     <div>
       <PageTitle renderBackOption title="Khách hàng mới" />
 
-      <CreateCustomerForm onSubmit={handleCreateCustomer} isLoading={createCustomerMutation.isLoading} />
+      <CreateCustomerForm
+        onSubmit={handleCreateCustomer}
+        isLoading={createCustomerMutation.isLoading}
+      />
     </div>
   );
 }

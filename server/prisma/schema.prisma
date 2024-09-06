@@ -52,8 +52,21 @@ model Pet {
 
   Appointment Appointment[]
   owner       Customer      @relation(fields: [ownerId], references: [id], onDelete: Cascade)
+  diseases    PetDisease[]
 
   @@index([ownerId])
+}
+
+model PetDisease {
+  id          String   @id @default(uuid())
+  name        String
+  description String?
+  severity    String
+  pets        Pet[]
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  @@index([name])
 }
 
 model Appointment {

@@ -11,11 +11,11 @@ import {
   updatePetshopService,
 } from "@/services/queries/PetshopServices";
 import { toast } from "react-hot-toast";
-import { PetshopServiceBodyData } from "@/@types/PetshopServices";
+import { PetShopServiceBodyData } from "@/@types/PetshopServices";
 
 interface EditPetshopServiceMutationPayload {
   id: string;
-  data: PetshopServiceBodyData;
+  data: PetShopServiceBodyData;
 }
 export default function EditService({ params }: { params: { id: string } }) {
   const queryClient = useQueryClient();
@@ -43,8 +43,8 @@ export default function EditService({ params }: { params: { id: string } }) {
       return "Lỗi! Không tìm thấy dịch vụ.";
   };
 
-  async function handleEditService(data: PetshopServiceBodyData) {
-    const parsedData: PetshopServiceBodyData = {
+  async function handleEditService(data: PetShopServiceBodyData) {
+    const parsedData: PetShopServiceBodyData = {
       ...data,
       value: data.value,
     };

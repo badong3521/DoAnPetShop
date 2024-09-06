@@ -1,65 +1,82 @@
-import { Customer } from "@app/entities/customer";
-import { CustomerRepository } from "@app/repositories/customer-repository";
-import { Injectable } from "@nestjs/common";
-import { CustomerMapper } from "../mappers/customer-mapper";
-import { PrismaService } from "../prisma.service";
-import { PetMapper } from "../mappers/pet-mapper";
+import { Customer } from '@app/entities/customer';
+import { CustomerRepository } from '@app/repositories/customer-repository';
+import { Injectable } from '@nestjs/common';
+import { CustomerMapper } from '../mappers/customer-mapper';
+import { PrismaService } from '../prisma.service';
+import { PetMapper } from '../mappers/pet-mapper';
 
 @Injectable()
 export class PrismaCustomerRepository implements CustomerRepository {
-  constructor(private prismaService: PrismaService) { }
+  constructor(private prismaService: PrismaService) {}
 
   async findById(id: string): Promise<Customer | null> {
     const customer = await this.prismaService.customer.findUnique({
       where: {
-        id
+        id,
       },
-      include: { pets: true }
-    })
+      include: { pets: true },
+    });
 
-    if (!customer) return null
+    if (!customer) return null;
 
-    return CustomerMapper.toDomain(customer)
+    return CustomerMapper.toDomain(customer);
   }
 
   async findMany(): Promise<Customer[]> {
-    const customers = await this.prismaService.customer.findMany({ include: { pets: true } })
+    const customers = await this.prismaService.customer.findMany({
+      include: { pets: true },
+    });
 
-    return customers.map(CustomerMapper.toDomain)
+    return customers.map(CustomerMapper.toDomain);
+  }
+
+  async findByName(name: string): Promise<Customer[]> {
+    const customers = await this.prismaService.customer.findMany({
+      where: {
+        name: {
+          contains: name,
+        },
+      },
+      include: { pets: true },
+    });
+
+    return customers.map(CustomerMapper.toDomain);
   }
 
   async create(customer: Customer) {
-    const raw = CustomerMapper.toPrisma(customer)
-    const rawCustomerPets = customer.pets.map(p => PetMapper.toPrisma(p, false))
+    const raw = CustomerMapper.toPrisma(customer);
+    const rawCustomerPets = customer.pets.map((p) =>
+      PetMapper.toPrisma(p, false),
+    );
 
     await this.prismaService.customer.create({
       data: {
-        ...raw, pets: {
+        ...raw,
+        pets: {
           createMany: {
-            data: rawCustomerPets
-          }
-        }
+            data: rawCustomerPets,
+          },
+        },
       },
-    })
+    });
   }
 
   async save(customer: Customer): Promise<void> {
-    const raw = CustomerMapper.toPrisma(customer)
+    const raw = CustomerMapper.toPrisma(customer);
 
     await this.prismaService.customer.update({
       where: {
-        id: customer.id
+        id: customer.id,
       },
-      data: raw
-    })
+      data: raw,
+    });
   }
 
   async deleteById(id: string): Promise<void> {
     await this.prismaService.customer.delete({
       where: {
-        id
-      }
-    })
+        id,
+      },
+    });
   }
-
 }

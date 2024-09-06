@@ -13,8 +13,8 @@ import {
 } from "@/utils/timeDuration";
 import { SubmitHandler, useForm } from "react-hook-form";
 import {
-  PetshopServiceBodyData,
-  PetshopService,
+  PetShopServiceBodyData,
+  PetShopService,
 } from "src/@types/PetshopServices";
 import { z } from "zod";
 
@@ -57,8 +57,8 @@ const petshopServiceSchema = z.object({
 export type PetshopServiceFormData = z.infer<typeof petshopServiceSchema>;
 
 interface Props {
-  service?: PetshopService;
-  onSubmit: (d: PetshopServiceBodyData) => Promise<void>;
+  service?: PetShopService;
+  onSubmit: (d: PetShopServiceBodyData) => Promise<void>;
   isLoading: boolean;
 }
 export function ServiceForm(props: Props) {

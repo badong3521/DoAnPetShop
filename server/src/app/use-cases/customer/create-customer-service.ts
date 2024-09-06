@@ -1,27 +1,33 @@
-import { Customer, CustomerPet } from "@app/entities/customer";
-import { CustomerRepository } from "@app/repositories/customer-repository";
-import { Injectable } from "@nestjs/common";
+import { Customer, CustomerPet } from '@app/entities/customer';
+import { CustomerRepository } from '@app/repositories/customer-repository';
+import { ConflictException, Injectable } from '@nestjs/common';
 
 interface CreateCustomerRequest {
-  name: string
-  phone: string
-  pets?: CustomerPet[]
+  name: string;
+  phone: string;
+  pets?: CustomerPet[];
 }
 
 @Injectable()
 export class CreateCustomerService {
-  constructor(private customerRepository: CustomerRepository) { }
+  constructor(private customerRepository: CustomerRepository) {}
 
   async execute(request: CreateCustomerRequest) {
-    const { name, phone, pets = [] } = request
+    const { name, phone, pets = [] } = request;
 
-    const customer = new Customer({ name, phone, pets })
+    const existingCustomer = await this.customerRepository.findByName(name);
+    console.log('existingCustomer', existingCustomer);
 
-    await this.customerRepository.create(customer)
-
-    return {
-      customer
+    if (existingCustomer.length !== 0) {
+      throw new ConflictException('Khách hàng với tên này đã tồn tại');
     }
 
+    const customer = new Customer({ name, phone, pets });
+
+    await this.customerRepository.create(customer);
+
+    return {
+      customer,
+    };
   }
 }

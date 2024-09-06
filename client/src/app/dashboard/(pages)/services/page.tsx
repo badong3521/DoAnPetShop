@@ -17,9 +17,9 @@ import { toast } from "react-hot-toast";
 import { ConfirmDeletePopover } from "@/components/ConfirmDeletePopover";
 import { Table } from "@/components/ui/Table";
 import { createColumnHelper } from "@tanstack/react-table";
-import { PetshopService } from "@/@types/PetshopServices";
+import { PetShopService } from "@/@types/PetshopServices";
 
-const columnHelper = createColumnHelper<PetshopService>();
+const columnHelper = createColumnHelper<PetShopService>();
 
 export default function Services() {
   const queryClient = useQueryClient();
