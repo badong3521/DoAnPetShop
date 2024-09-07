@@ -3,7 +3,7 @@
 import { useEffect, useState } from "react";
 import Link from "next/link";
 import { redirect, usePathname } from "next/navigation";
-import { Bag, Calendar, Info, Person } from "phosphor-react";
+import { Bag, Calendar, Info, Person, PawPrint } from "phosphor-react";
 import { SignedInHeader } from "@/components/dashboard/SignedInHeader";
 import { useSessionStore } from "src/stores/session";
 import { Header } from "@/components/Header";
@@ -24,6 +24,11 @@ const ROUTES = [
     name: "Dịch vụ",
     link: "/dashboard/services",
     Icon: () => <Bag size={24} />,
+  },
+  {
+    name: "Pet Care",
+    link: "/dashboard/pet-care",
+    Icon: () => <PawPrint size={24} />,
   },
   {
     name: "Về tôi",

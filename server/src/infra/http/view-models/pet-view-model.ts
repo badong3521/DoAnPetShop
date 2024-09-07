@@ -1,4 +1,4 @@
-import { Pet } from "@app/entities/pet";
+import { Pet } from '@app/entities/pet';
 
 export class PetViewModel {
   static toHTTP(pet: Pet) {
@@ -8,6 +8,6 @@ export class PetViewModel {
       breed: pet.breed,
       age: pet.age,
       ownerId: pet.ownerId,
-    }
+    };
   }
 }

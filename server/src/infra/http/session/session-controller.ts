@@ -1,14 +1,6 @@
 import { AuthenticateUserService } from '@app/use-cases/user/authenticate-user-service';
 import { PublicRoute } from '@infra/auth/decorators/public-route-decorator';
-import {
-  Body,
-  Controller,
-  Get,
-  Param,
-  Post,
-  Req,
-  UseGuards,
-} from '@nestjs/common';
+import { Body, Controller, Param, Post, UseGuards } from '@nestjs/common';
 import { AuthenticateUserBody } from './dtos/authenticate-user-body';
 import { UserViewModel } from '../view-models/user-view-model';
 import { SignOutUserService } from '@app/use-cases/user/sign-out-user-service';
