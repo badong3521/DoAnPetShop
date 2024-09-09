@@ -86,3 +86,7 @@ body {
 .bg-footer {
   background-image: url("../public/img/footer/bg.svg");
 }
+
+h3 {
+  color: black;
+}

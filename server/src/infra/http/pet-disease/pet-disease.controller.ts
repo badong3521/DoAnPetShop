@@ -11,6 +11,10 @@ import {
 } from '@nestjs/common';
 import { PetDiseaseService } from './pet-disease.service';
 import { PetDiseaseViewModel } from '../view-models/pet-disease-view-model';
+import {
+  CreatePetDiseaseBody,
+  UpdatePetDiseaseBody,
+} from './dtos/pet-diseases';
 
 export class CreatePetDiseaseDto {
   name: string;
@@ -44,11 +48,7 @@ export class PetDiseaseController {
   }
 
   @Post()
-  async createPetDisease(@Body() body: CreatePetDiseaseDto) {
-    console.log('Raw request body:', body);
-    console.log('Body type:', typeof body);
-    console.log('Body keys:', Object.keys(body));
-
+  async createPetDisease(@Body() body: CreatePetDiseaseBody) {
     if (!body || Object.keys(body).length === 0) {
       throw new BadRequestException('Request body is empty');
     }
@@ -69,17 +69,10 @@ export class PetDiseaseController {
     }
   }
 
-  //   @Post()
-  //   async create(@Body() body: CreatePetshopServiceBody) {
-  //     const { petshopService } = await this.createPetshopService.execute(body);
-
-  //     return { service: PetshopServiceViewModel.toHTTP(petshopService) };
-  //   }
-
   @Put(':id')
   async updatePetDisease(
     @Param('id') id: string,
-    @Body() updatePetDiseaseDto: UpdatePetDiseaseDto,
+    @Body() updatePetDiseaseDto: UpdatePetDiseaseBody,
   ) {
     const petDisease = await this.petDiseaseService.update(
       id,

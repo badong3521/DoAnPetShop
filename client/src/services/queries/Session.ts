@@ -36,9 +36,6 @@ export async function signUp({ name, email, password }: SignUpParams) {
     email,
     password,
   });
-
-  console.log("DATA", data);
-
   return data;
 }
 

@@ -2,11 +2,6 @@ import { PetDisease } from "@/@types/PetDisease";
 import api from "../api";
 
 export const PET_DISEASE_KEY = "pet-disease-fetch";
-
-interface PetDiseasesReturn {
-  petDiseases: PetDisease[];
-}
-
 interface PetDiseaseReturn {
   petDisease: PetDisease;
 }
@@ -24,18 +19,16 @@ export interface UpdatePetDiseaseData {
 }
 
 export async function fetchPetDiseases() {
-  const { data } = await api.get<PetDiseasesReturn>("/pet-diseases");
+  const { data } = await api.get<PetDisease[]>("/pet-diseases");
   return data;
 }
 
 export async function fetchPetDisease(id: string) {
-  const { data } = await api.get<PetDiseaseReturn>(`/pet-diseases/${id}`);
+  const { data } = await api.get<PetDisease>(`/pet-diseases/${id}`);
   return data;
 }
 
 export async function createPetDisease(petDisease: CreatePetDiseaseData) {
-  console.log("CLIENT", petDisease);
-
   if (!petDisease || Object.keys(petDisease).length === 0) {
     throw new Error("Pet disease data is empty");
   }
@@ -45,7 +38,6 @@ export async function createPetDisease(petDisease: CreatePetDiseaseData) {
       "/pet-diseases",
       petDisease
     );
-    console.log("Response from server:", data);
     return data;
   } catch (error) {
     console.error("Error creating pet disease:", error);

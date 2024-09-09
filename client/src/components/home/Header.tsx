@@ -8,6 +8,7 @@ import { SignOut } from "phosphor-react";
 import { Button } from "../ui/Button";
 import { redirect } from "next/navigation";
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 
 type Props = {
   className?: string;
@@ -15,6 +16,7 @@ type Props = {
 
 const Header = ({ className }: Props) => {
   const isUserLoggedIn = useSessionStore((state) => state.isLoggedIn);
+  const pathname = usePathname();
   const [user, signOutUser] = useSessionStore((state) => [
     state.user,
     state.signOut,
@@ -36,10 +38,21 @@ const Header = ({ className }: Props) => {
         </Link>
         {/* nav */}
         <nav className="text-2xl flex gap-x-4 lg:gap-x-12">
-          <Link href="/services">Dịch vụ</Link>
-          <Link href="#">Về tôi</Link>
-          {/* <a href="#">Blog</a>
-          <a href="#">Liên hệ</a> */}
+          <Link
+            href="/services"
+            className={pathname === "/services" ? "font-semibold" : ""}
+          >
+            Dịch vụ
+          </Link>
+          <Link
+            href="/pet-care"
+            className={pathname === "/pet-care" ? "font-semibold" : ""}
+          >
+            Pet Care
+          </Link>
+          {/* <Link href="/about" className={pathname === "/about" ? "active" : ""}>
+            Về tôi
+          </Link> */}
         </nav>
         <span className="text-2xl font-bold underline text-black">
           Xin chào {user?.name}

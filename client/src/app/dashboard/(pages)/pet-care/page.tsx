@@ -82,7 +82,7 @@ export default function PetDiseases() {
       <PageTitle title="Pet Care" />
       <div className="my-4">
         <Table
-          data={petDiseasesListQuery.data?.petDiseases ?? []}
+          data={petDiseasesListQuery.data ?? []}
           columns={columns}
           asyncStatus={petDiseasesListQuery.status}
         />

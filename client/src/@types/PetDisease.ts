@@ -1,7 +1,7 @@
 export interface PetDisease {
   id: string;
   name: string;
-  description?: string;
+  description: string;
   severity: string;
   createdAt: string;
   updatedAt: string;

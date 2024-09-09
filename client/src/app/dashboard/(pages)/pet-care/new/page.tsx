@@ -20,7 +20,7 @@ export default function NewPetDisease() {
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: [PET_DISEASE_KEY] });
       toast.success("Bệnh thú cưng được tạo thành công!");
-      router.push("/dashboard/pet-diseases");
+      router.push("/dashboard/pet-care");
     },
     onError: (err) => {
       console.log("err", err);

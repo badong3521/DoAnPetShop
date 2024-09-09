@@ -4,66 +4,62 @@ import axios from "axios";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { AsynchronousContent } from "@/components/AsynchronousContent";
 import { PageTitle } from "@/components/dashboard/PageTitle";
-import { ServiceForm } from "@/components/services/ServiceForm";
 import {
-  fetchPetshopService,
-  PET_SHOP_SERVICE_KEY,
-  updatePetshopService,
-} from "@/services/queries/PetshopServices";
+  fetchPetDisease,
+  PET_DISEASE_KEY,
+  updatePetDisease,
+} from "@/services/queries/PetDiseases";
 import { toast } from "react-hot-toast";
-import { PetShopServiceBodyData } from "@/@types/PetshopServices";
+import { PetDiseaseBodyData } from "@/@types/PetDisease";
+import { PetDiseaseForm } from "@/components/pet-disease/PetDiseaseForm";
 
-interface EditPetshopServiceMutationPayload {
+interface EditPetDiseaseMutationPayload {
   id: string;
-  data: PetShopServiceBodyData;
+  data: PetDiseaseBodyData;
 }
-export default function EditService({ params }: { params: { id: string } }) {
+
+export default function EditPetDisease({ params }: { params: { id: string } }) {
   const queryClient = useQueryClient();
 
-  const petshopServiceShowQuery = useQuery({
-    queryKey: [PET_SHOP_SERVICE_KEY, params.id],
-    queryFn: () => fetchPetshopService(params.id),
+  const petDiseaseShowQuery = useQuery({
+    queryKey: [PET_DISEASE_KEY, params.id],
+    queryFn: () => fetchPetDisease(params.id),
   });
 
-  const editPetshopServiceMutation = useMutation({
-    mutationFn: (payload: EditPetshopServiceMutationPayload) =>
-      updatePetshopService(payload.id, payload.data),
+  const editPetDiseaseMutation = useMutation({
+    mutationFn: (payload: EditPetDiseaseMutationPayload) =>
+      updatePetDisease(payload.id, payload.data),
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: [PET_SHOP_SERVICE_KEY] });
-      toast.success("Dịch vụ đã được chỉnh sửa thành công!");
+      queryClient.invalidateQueries({ queryKey: [PET_DISEASE_KEY] });
+      toast.success("Bệnh thú cưng đã được chỉnh sửa thành công!");
     },
     onError: () => {
-      toast.error("Ối. Đã xảy ra sự cố khi cố gắng chỉnh sửa dịch vụ.");
+      toast.error("Ối. Đã xảy ra sự cố khi cố gắng chỉnh sửa bệnh thú cưng.");
     },
   });
 
-  const showPetshopServiceErrorMessage = () => {
-    const error = petshopServiceShowQuery.error;
+  const showPetDiseaseErrorMessage = () => {
+    const error = petDiseaseShowQuery.error;
     if (axios.isAxiosError(error) && error.response?.status === 404)
-      return "Lỗi! Không tìm thấy dịch vụ.";
+      return "Lỗi! Không tìm thấy bệnh thú cưng.";
   };
 
-  async function handleEditService(data: PetShopServiceBodyData) {
-    const parsedData: PetShopServiceBodyData = {
-      ...data,
-      value: data.value,
-    };
-
-    editPetshopServiceMutation.mutate({ id: params.id, data: parsedData });
+  async function handleEditPetDisease(data: PetDiseaseBodyData) {
+    editPetDiseaseMutation.mutate({ id: params.id, data });
   }
 
   return (
     <div>
-      <PageTitle renderBackOption title="Chỉnh sửa dịch vụ" />
+      <PageTitle renderBackOption title="Chỉnh sửa bệnh thú cưng" />
 
       <AsynchronousContent
-        status={petshopServiceShowQuery.status}
-        errorMessage={showPetshopServiceErrorMessage()}
+        status={petDiseaseShowQuery.status}
+        errorMessage={showPetDiseaseErrorMessage()}
       >
-        <ServiceForm
-          service={petshopServiceShowQuery.data?.service}
-          onSubmit={handleEditService}
-          isLoading={editPetshopServiceMutation.isLoading}
+        <PetDiseaseForm
+          disease={petDiseaseShowQuery.data}
+          onSubmit={handleEditPetDisease}
+          isLoading={editPetDiseaseMutation.isLoading}
         />
       </AsynchronousContent>
     </div>

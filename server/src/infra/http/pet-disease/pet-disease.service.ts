@@ -1,9 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { PrismaService } from '@infra/database/prisma/prisma.service';
-import {
-  CreatePetDiseaseDto,
-  UpdatePetDiseaseDto,
-} from './pet-disease.controller';
+import { UpdatePetDiseaseDto } from './pet-disease.controller';
+import { CreatePetDiseaseBody } from './dtos/pet-diseases';
 
 @Injectable()
 export class PetDiseaseService {
@@ -17,8 +15,7 @@ export class PetDiseaseService {
     return this.prisma.petDisease.findUnique({ where: { id } });
   }
 
-  async create(data: CreatePetDiseaseDto) {
-    console.log('data123', data);
+  async create(data: CreatePetDiseaseBody) {
     if (!data.name) {
       throw new Error('Name is required for creating a pet disease');
     }
