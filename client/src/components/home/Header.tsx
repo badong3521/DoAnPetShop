@@ -6,7 +6,6 @@ import Logo from "@/public/img/header/logo.svg";
 import { useSessionStore } from "@/stores/session";
 import { SignOut } from "phosphor-react";
 import { Button } from "../ui/Button";
-import { redirect } from "next/navigation";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 
@@ -15,16 +14,11 @@ type Props = {
 };
 
 const Header = ({ className }: Props) => {
-  const isUserLoggedIn = useSessionStore((state) => state.isLoggedIn);
   const pathname = usePathname();
   const [user, signOutUser] = useSessionStore((state) => [
     state.user,
     state.signOut,
   ]);
-
-  if (!isUserLoggedIn) {
-    redirect("/login");
-  }
 
   function handleSignOut() {
     signOutUser();
