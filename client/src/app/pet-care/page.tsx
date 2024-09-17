@@ -48,7 +48,7 @@ export default function PetCare() {
             </div>
             <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
               {filteredDiseases && filteredDiseases.length > 0 ? (
-                <div className="flex justify-center mb-14 gap-y-8 lg:gap-y-0 flex-wrap md:flex-wrap lg:flex-nowrap lg:flex-row lg:justify-between lg:gap-x-8">
+                <div className="grid max-w-2xl grid-cols-1 gap-x-8 md:gap-y-16 gap-y-8 pt-5 sm:pt-8 lg:mx-0 lg:max-w-none sm:grid-cols-2 lg:grid-cols-3">
                   {filteredDiseases.map((item) => (
                     <CardPetCare
                       key={item.id}

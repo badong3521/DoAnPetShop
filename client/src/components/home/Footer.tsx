@@ -1,3 +1,4 @@
+import Link from "next/link";
 import React from "react";
 
 import { BsFacebook, BsInstagram, BsTwitter, BsWhatsapp } from "react-icons/bs";
@@ -15,17 +16,17 @@ const Footer = () => {
             {/* links */}
             <ul className="flex flex-col gap-y-6 items-center lg:flex-row lg:gap-x-4 text-base font-semibold mb-8">
               <li>
-                <a href="#">Service</a>
+                <Link href="/services">Dịch vụ</Link>
               </li>
               <li>
-                <a href="#">About</a>
+                <Link href="/pet-care">Pet-care</Link>
               </li>
-              <li>
+              {/* <li>
                 <a href="#">Blog</a>
               </li>
               <li>
                 <a href="#">Contact</a>
-              </li>
+              </li> */}
             </ul>
             {/* socials */}
             <div className="flex justify-center lg:justify-start">

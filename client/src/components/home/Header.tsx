@@ -23,14 +23,13 @@ const Header = ({ className }: Props) => {
   function handleSignOut() {
     signOutUser();
   }
+
   return (
     <header className={`py-6 ${className} lg:w-full lg:left-0`}>
       <div className="container mx-auto flex flex-col gap-y-6 lg:flex-row h-full justify-between items-center relative">
-        {/* logo */}
         <Link href="/home">
-          <Image src={Logo} alt={""} width={150} />
+          <Image src={Logo} alt={"logo"} width={60} />
         </Link>
-        {/* nav */}
         <nav className="text-2xl flex gap-x-4 lg:gap-x-12">
           <Link
             href="/services"
@@ -44,9 +43,12 @@ const Header = ({ className }: Props) => {
           >
             Pet Care
           </Link>
-          {/* <Link href="/about" className={pathname === "/about" ? "active" : ""}>
+          <Link
+            href="/about"
+            className={pathname === "/about" ? "font-semibold" : ""}
+          >
             Về tôi
-          </Link> */}
+          </Link>
         </nav>
         <span className="text-2xl font-bold underline text-black">
           Xin chào {user?.name}

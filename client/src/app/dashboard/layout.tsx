@@ -8,6 +8,7 @@ import { SignedInHeader } from "@/components/dashboard/SignedInHeader";
 import { useSessionStore } from "src/stores/session";
 import { Header } from "@/components/Header";
 import { FancyLoading } from "@/components/ui/Loading/FancyLoading";
+// import ChatComponent from "@/components/chat/chat";
 
 const ROUTES = [
   {
@@ -62,13 +63,13 @@ export default function DashboardLayout({
     );
   }
 
-  if (!isUserLoggedIn || user?.name !== "ADMIN") {
+  if (!isUserLoggedIn || user?.role !== "ADMIN") {
     redirect("/login");
   }
+
   return (
     <div className="text-white">
       <SignedInHeader />
-
       <div className="min-h-screen drawer drawer-mobile block lg:drawer-open lg:grid">
         <input id="sidebar-drawer" type="checkbox" className="drawer-toggle" />
         <div className="drawer-content flex">
@@ -83,7 +84,7 @@ export default function DashboardLayout({
             </Link>
 
             {ROUTES.map((route) => (
-              <li className="text-white" key={route.name}>
+              <li className="text-white flex" key={route.name}>
                 <Link
                   href={route.link}
                   className={pathname?.includes(route.link) ? "active" : ""}

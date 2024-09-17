@@ -15,6 +15,7 @@ import { useForm } from "react-hook-form";
 import { useState } from "react";
 import { FaRegEye } from "react-icons/fa";
 import { FaEyeSlash } from "react-icons/fa";
+import { Role } from "@/@types/User";
 
 const signInSchema = z.object({
   email: z
@@ -70,11 +71,12 @@ export default function Login() {
         localStorage.removeItem("rememberedEmail");
       }
 
-      if (data.user.name === "ADMIN") {
+      if (data.user.role === Role.ADMIN) {
         toast.success("Đăng nhập ADMIN thành công.");
         router.push("/dashboard/appointments");
         return;
       }
+
       toast.success("Đăng nhập khách hàng thành công.");
       router.push("/home");
     },

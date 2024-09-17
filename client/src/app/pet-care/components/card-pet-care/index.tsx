@@ -15,7 +15,7 @@ export default function CardPetCare({
         query: { id },
       }}
       key={id}
-      className="group cursor-pointer w-full max-lg:max-w-xl lg:w-1/3 border border-orange-300 rounded-2xl p-5 transition-all duration-300 hover:border-orange-600"
+      className="group cursor-pointer w-full max-lg:max-w-xl border border-orange-300 rounded-2xl p-5 transition-all duration-300 hover:border-orange-600"
     >
       <div className="flex items-center mb-6">
         <Image

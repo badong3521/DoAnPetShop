@@ -1,5 +1,5 @@
 import { HashGenerator } from '@app/cryptography/hash-generator';
-import { User } from '@app/entities/user';
+import { Role, User } from '@app/entities/user';
 import { UserRepository } from '@app/repositories/user-repository';
 import { BadRequestException, Injectable } from '@nestjs/common';
 
@@ -10,7 +10,12 @@ export class CreateUserService {
     private hashGenerator: HashGenerator,
   ) {}
 
-  async execute(userData: { name: string; email: string; password: string }) {
+  async execute(userData: {
+    name: string;
+    email: string;
+    password: string;
+    role?: Role;
+  }) {
     const hashedPassword = await this.hashGenerator.hash(userData.password);
 
     const existingUser = await this.userRepository.findByEmail(userData.email);
@@ -27,6 +32,7 @@ export class CreateUserService {
       email: userData.email,
       password: hashedPassword,
       refreshToken: null,
+      role: userData.role,
     });
 
     await this.userRepository.upsert(user);

@@ -17,6 +17,7 @@ import { UpdateCustomerBody } from './dtos/update-customer-body';
 import { DeleteCustomerService } from '@app/use-cases/customer/delete-customer-service';
 
 @Controller('customers')
+// @UseGuards(RolesGuard)
 export class CustomersController {
   constructor(
     private createCustomerService: CreateCustomerService,

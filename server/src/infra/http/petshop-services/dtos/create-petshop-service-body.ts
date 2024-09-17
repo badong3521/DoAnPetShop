@@ -1,10 +1,11 @@
-import { Length, Max, Min, IsInt } from 'class-validator';
+import { Length, Max, Min, IsInt, IsString } from 'class-validator';
 
 export class CreatePetshopServiceBody {
   @Length(1, 60)
   title: string;
 
-  @Length(1, 120)
+  @IsString()
+  // @Length(1, 5000)
   description: string;
 
   @Min(1)

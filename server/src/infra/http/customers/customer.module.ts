@@ -6,6 +6,9 @@ import { DatabaseModule } from '@infra/database/database.module';
 import { Module } from '@nestjs/common';
 import { CustomersController } from './customers.controller';
 import { DeleteCustomerService } from '@app/use-cases/customer/delete-customer-service';
+// import { RolesGuard } from '../../../infra/auth/roles.guard';
+// import { APP_GUARD } from '@nestjs/core';
+// import { AuthMiddleware } from '@infra/middleware/auth.middleware';
 
 @Module({
   imports: [DatabaseModule],
@@ -16,6 +19,15 @@ import { DeleteCustomerService } from '@app/use-cases/customer/delete-customer-s
     ShowCustomerService,
     EditCustomerService,
     DeleteCustomerService,
+    // {
+    //   provide: APP_GUARD,
+    //   useClass: RolesGuard,
+    // },
   ],
 })
+// export class CustomerModule implements NestModule {
+//   configure(consumer: MiddlewareConsumer) {
+//     consumer.apply(AuthMiddleware).forRoutes('*');
+//   }
+// }
 export class CustomerModule {}
