@@ -10,6 +10,7 @@ interface CustomerProps {
   name: string;
   phone: string;
   pets: Pet[] | CustomerPet[];
+  userId: string;
 }
 
 export class Customer extends BaseEntity<CustomerProps> {
@@ -38,6 +39,14 @@ export class Customer extends BaseEntity<CustomerProps> {
 
   public set phone(phone: string) {
     this.props.phone = phone;
+  }
+
+  public get userId() {
+    return this.props.userId;
+  }
+
+  public set userId(userId: string) {
+    this.props.userId = userId;
   }
 
   public get pets() {

@@ -3,6 +3,7 @@ import { Pet } from "@/@types/Pet";
 import { Button } from "@/components/ui/Button";
 import { Table } from "@/components/ui/Table";
 import { fetchCustomers } from "@/services/queries/Customer";
+import { useSessionStore } from "@/stores/session";
 import { useQuery } from "@tanstack/react-query";
 import { createColumnHelper } from "@tanstack/react-table";
 import { Check, X } from "phosphor-react";
@@ -16,16 +17,19 @@ const columnHelperCustomer = createColumnHelper<Customer>();
 const columnHelperPet = createColumnHelper<Pet>();
 
 export function SelectCustomerPet({ onPetSelectionChange }: Props) {
+  const [user] = useSessionStore((state) => [state.user, state.signOut]);
   const [selectedCustomerId, setSelectedCustomerId] = useState<string>();
   const [selectedPetId, setSelectedPetId] = useState<string>();
 
   const customersListQuery = useQuery({
     queryKey: ["customers-list"],
-    queryFn: fetchCustomers,
+    queryFn: () => fetchCustomers(user?.id || ""),
   });
 
   const selectedCustomer = useMemo(() => {
-    return customersListQuery.data?.customers.find((customer) => customer.id === selectedCustomerId);
+    return customersListQuery.data?.customers.find(
+      (customer) => customer.id === selectedCustomerId
+    );
   }, [selectedCustomerId, customersListQuery.data]);
   const selectedPet = useMemo(() => {
     return selectedCustomer?.pets.find((pet) => pet.id === selectedPetId);
@@ -85,11 +89,19 @@ export function SelectCustomerPet({ onPetSelectionChange }: Props) {
       cell: (props) => (
         <Button
           circle
-          tooltipText={props.row.original.id === selectedCustomerId ? "Xóa lựa chọn" : "Lựa chọn"}
+          tooltipText={
+            props.row.original.id === selectedCustomerId
+              ? "Xóa lựa chọn"
+              : "Lựa chọn"
+          }
           onClick={() => toggleSelectCustomer(props.row.original.id)}
           disabled={props.row.original.pets.length === 0}
         >
-          {props.row.original.id === selectedCustomerId ? <X className="w-6 h-6" /> : <Check className="w-6 h-6" />}
+          {props.row.original.id === selectedCustomerId ? (
+            <X className="w-6 h-6" />
+          ) : (
+            <Check className="w-6 h-6" />
+          )}
         </Button>
       ),
     }),
@@ -117,10 +129,18 @@ export function SelectCustomerPet({ onPetSelectionChange }: Props) {
       cell: (props) => (
         <Button
           circle
-          tooltipText={props.row.original.id === selectedPetId ? "Xoá lựa chọn" : "Lựa chọn"}
+          tooltipText={
+            props.row.original.id === selectedPetId
+              ? "Xoá lựa chọn"
+              : "Lựa chọn"
+          }
           onClick={() => toggleSelectPet(props.row.original.id)}
         >
-          {props.row.original.id === selectedPetId ? <X className="w-6 h-6" /> : <Check className="w-6 h-6" />}
+          {props.row.original.id === selectedPetId ? (
+            <X className="w-6 h-6" />
+          ) : (
+            <Check className="w-6 h-6" />
+          )}
         </Button>
       ),
     }),
@@ -146,7 +166,7 @@ export function SelectCustomerPet({ onPetSelectionChange }: Props) {
       <div>
         <div className="prose">
           <h4>
-          Chọn thú cưng của khách hàng{" "}
+            Chọn thú cưng của khách hàng{" "}
             <button
               onClick={() => toggleSelectCustomer(selectedCustomerId)}
               data-tip="Xoá lựa chọn"
@@ -169,7 +189,9 @@ export function SelectCustomerPet({ onPetSelectionChange }: Props) {
       <dialog id="SelectCustomerModal" onClose={onModalClose} className="modal">
         <div className="modal-box max-w-2xl">
           <form method="dialog">
-            <button className="btn btn-sm btn-circle btn-ghost absolute right-2 top-2">✕</button>
+            <button className="btn btn-sm btn-circle btn-ghost absolute right-2 top-2">
+              ✕
+            </button>
           </form>
           <div>
             <div className="prose">

@@ -66,7 +66,7 @@ export default function Service() {
       <ComponentMain>
         <section className="bg-services bg-cover bg-no-repeat bg-center py-8">
           <div className="container mx-auto ">
-            <h2 className="h2 mb-12">Các Dịch Vụ Của Chúng Tôi</h2>
+            <h2 className="h2">Các Dịch Vụ Của Chúng Tôi</h2>
             <div>{renderServices()}</div>
           </div>
         </section>

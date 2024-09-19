@@ -10,8 +10,8 @@ export const CUSTOMER_KEY = "customer-fetch";
 interface CustomersReturn {
   customers: Customer[];
 }
-export async function fetchCustomers() {
-  const { data } = await api.get<CustomersReturn>(`/customers`);
+export async function fetchCustomers(id: string) {
+  const { data } = await api.get<CustomersReturn>(`/customers/list/${id}`);
 
   return data;
 }

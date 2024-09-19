@@ -6,6 +6,7 @@ interface CreateCustomerRequest {
   name: string;
   phone: string;
   pets?: CustomerPet[];
+  userId: string;
 }
 
 @Injectable()
@@ -13,16 +14,15 @@ export class CreateCustomerService {
   constructor(private customerRepository: CustomerRepository) {}
 
   async execute(request: CreateCustomerRequest) {
-    const { name, phone, pets = [] } = request;
+    const { name, phone, pets = [], userId } = request;
 
     const existingCustomer = await this.customerRepository.findByName(name);
-    console.log('existingCustomer', existingCustomer);
 
     if (existingCustomer.length !== 0) {
       throw new ConflictException('Khách hàng với tên này đã tồn tại');
     }
 
-    const customer = new Customer({ name, phone, pets });
+    const customer = new Customer({ name, phone, pets, userId });
 
     await this.customerRepository.create(customer);
 

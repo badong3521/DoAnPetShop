@@ -8,6 +8,7 @@ export class CustomerViewModel {
       name: customer.name,
       phone: customer.phone,
       pets: customer.pets.map(PetViewModel.toHTTP),
+      userId: customer.userId,
     };
   }
 }

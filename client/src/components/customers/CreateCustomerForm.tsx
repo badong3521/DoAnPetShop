@@ -8,6 +8,7 @@ import { petSchema } from "./pets/PetForm";
 import { PatternFormat } from "react-number-format";
 import { removeNonNumericFromString } from "@/utils/removeNonNumericFromString";
 import { cellPhonePattern } from "@/utils/phoneNumber";
+import { useSessionStore } from "src/stores/session";
 
 const customerSchema = z.object({
   name: z
@@ -19,6 +20,7 @@ const customerSchema = z.object({
     return rawValue.length === 10;
   }, "Số điện thoại không hợp lệ"),
   pets: z.array(petSchema),
+  userId: z.string(),
 });
 
 export type CreateCustomerFormData = z.infer<typeof customerSchema>;
@@ -28,6 +30,7 @@ interface Props {
   isLoading: boolean;
 }
 export function CreateCustomerForm(props: Props) {
+  const [user] = useSessionStore((state) => [state.user, state.signOut]);
   const {
     control,
     register,
@@ -39,6 +42,7 @@ export function CreateCustomerForm(props: Props) {
       name: "",
       phone: "",
       pets: [],
+      userId: user?.id,
     },
   });
   const fieldArrayForm = useFieldArray({
@@ -64,7 +68,7 @@ export function CreateCustomerForm(props: Props) {
       className="flex flex-col w-full mt-4 gap-4 flex-wrap"
     >
       <div className="flex gap-2 flex-wrap">
-        <fieldset>
+        <fieldset className="w-full">
           <Input
             label="Tên"
             id="name"
@@ -72,7 +76,7 @@ export function CreateCustomerForm(props: Props) {
             {...register("name")}
           />
         </fieldset>
-        <fieldset>
+        <fieldset className="w-full">
           <Controller
             control={control}
             name="phone"
@@ -97,7 +101,7 @@ export function CreateCustomerForm(props: Props) {
       </div>
 
       <div className="prose flex items-center gap-2">
-        <h3 className="my-0">Thú cưng</h3>
+        <h3 className="my-0 text-black">Thú cưng</h3>
       </div>
       <div className="flex flex-wrap gap-2 items-center max-h-96 overflow-y-auto">
         {fieldArrayForm.fields.map((field, index) => {

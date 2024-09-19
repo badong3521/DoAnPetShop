@@ -3,16 +3,72 @@
 import ComponentMain from "@/components/main-component";
 import ReactMarkdown from "react-markdown";
 import remarkGfm from "remark-gfm";
-import { useSearchParams } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 import { useQuery } from "@tanstack/react-query";
 import {
   PET_SHOP_SERVICE_KEY,
   fetchPetshopService,
 } from "@/services/queries/PetshopServices";
+import NewCustomer from "@/app/dashboard/(pages)/customers/new/page";
+import { Button } from "@/components/ui/Button";
+import {
+  CreateCustomerForm,
+  CreateCustomerFormData,
+} from "@/components/customers/CreateCustomerForm";
+import toast from "react-hot-toast";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
+import { CUSTOMER_KEY, createCustomer } from "@/services/queries/Customer";
+import { PageTitle } from "@/components/dashboard/PageTitle";
+import NewAppointment from "@/app/dashboard/(pages)/appointments/new/page";
+import {
+  AppointmentForm,
+  AppointmentFormData,
+} from "@/components/appointments/AppointmentForm";
+import {
+  APPOINTMENT_KEY,
+  createAppointment,
+} from "@/services/queries/Appointment";
 
 export default function DetailsPetService() {
   const searchParams = useSearchParams();
   const id = searchParams.get("id");
+
+  const router = useRouter();
+  const queryClient = useQueryClient();
+
+  const createCustomerMutation = useMutation({
+    mutationFn: (d: CreateCustomerFormData) => createCustomer(d),
+    onSuccess: (data) => {
+      queryClient.invalidateQueries({ queryKey: [CUSTOMER_KEY] });
+      toast.success("Khách hàng được tạo thành công!");
+      router.push(`/dashboard/customers/${data.customer.id}/edit`);
+    },
+    onError: (e: any) => {
+      toast.error(
+        `Ối. Đã xảy ra sự cố khi tạo khách hàng mới. ${e.response.data.message}`
+      );
+    },
+  });
+
+  const createAppointmentMutation = useMutation({
+    mutationFn: (data: AppointmentFormData) => createAppointment(data),
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: [APPOINTMENT_KEY] });
+      toast.success("Cuộc hẹn được tạo thành công!");
+      router.push("/dashboard/appointments");
+    },
+    onError: (err) => {
+      toast.error("Ối. Đã xảy ra sự cố khi tạo lịch biểu.");
+    },
+  });
+
+  async function handleCreateAppointment(data: AppointmentFormData) {
+    createAppointmentMutation.mutate(data);
+  }
+
+  async function handleCreateCustomer(data: CreateCustomerFormData) {
+    createCustomerMutation.mutate(data);
+  }
 
   const petshopServiceShowQuery = useQuery({
     queryKey: [PET_SHOP_SERVICE_KEY, id],
@@ -59,22 +115,11 @@ export default function DetailsPetService() {
     <div className="bg-cream max-w-[1440px] mx-auto overflow-hidden">
       <ComponentMain>
         <section className="bg-services bg-cover bg-no-repeat bg-center py-8">
-          <div className="container mx-auto ">
-            <h2 className="h2 mb-12">
+          <div className="container mx-auto">
+            <h2 className="h2">
               {petshopServiceShowQuery?.data?.service.title}
             </h2>
-            <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-              <div className="flex gap-4 justify-between items-end mb-4">
-                {/* <p className="text-4xl">
-                  {petshopServiceShowQuery?.data?.service.title}
-                </p> */}
-                {/* <p className="text-xl">
-                  Mức độ nghiêm trọng:{" "}
-                  <span className="text-orange-500 font-bold">
-                    {petshopServiceShowQuery?.data?.severity}
-                  </span>
-                </p> */}
-              </div>
+            <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 flex gap-5">
               <div className="flex justify-center mb-14 gap-y-8 lg:gap-y-0 flex-wrap md:flex-wrap lg:flex-nowrap lg:flex-row lg:justify-between lg:gap-x-8">
                 <ReactMarkdown
                   className="markdown flex-1 break-words prose max-w-none text-black"
@@ -82,6 +127,27 @@ export default function DetailsPetService() {
                 >
                   {petshopServiceShowQuery?.data?.service.description}
                 </ReactMarkdown>
+              </div>
+              <div className="w-full">
+                <div className="min-w-[300px] border-slate-600 border-2 p-5 rounded-xl flex flex-col gap-10">
+                  <div>
+                    <PageTitle
+                      title="* Thông tin khách hàng"
+                      className="text-black"
+                    />
+                    <CreateCustomerForm
+                      onSubmit={handleCreateCustomer}
+                      isLoading={createCustomerMutation.isLoading}
+                    />
+                  </div>
+                  <div>
+                    <PageTitle title="* Lịch hẹn" className="text-black" />
+                    <AppointmentForm
+                      isLoading={createAppointmentMutation.isLoading}
+                      onSubmit={handleCreateAppointment}
+                    />
+                  </div>
+                </div>
               </div>
             </div>
           </div>

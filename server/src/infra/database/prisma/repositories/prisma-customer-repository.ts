@@ -30,6 +30,17 @@ export class PrismaCustomerRepository implements CustomerRepository {
     return customers.map(CustomerMapper.toDomain);
   }
 
+  async findByUserId(userId: string): Promise<Customer[]> {
+    const customers = await this.prismaService.customer.findMany({
+      where: {
+        userId: userId,
+      },
+      include: { pets: true },
+    });
+
+    return customers.map(CustomerMapper.toDomain);
+  }
+
   async findByName(name: string): Promise<Customer[]> {
     const customers = await this.prismaService.customer.findMany({
       where: {
@@ -57,6 +68,7 @@ export class PrismaCustomerRepository implements CustomerRepository {
             data: rawCustomerPets,
           },
         },
+        userId: customer.userId,
       },
     });
   }

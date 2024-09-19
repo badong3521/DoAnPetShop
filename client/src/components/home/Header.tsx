@@ -49,10 +49,21 @@ const Header = ({ className }: Props) => {
           >
             Về tôi
           </Link>
+          {/* <Link
+            href="/order"
+            className={pathname === "/order" ? "font-semibold" : ""}
+          >
+            Đặt lịch
+          </Link> */}
         </nav>
-        <span className="text-2xl font-bold underline text-black">
-          Xin chào {user?.name}
-        </span>
+        <Link
+          href="/information"
+          className={pathname === "/information" ? "font-semibold" : ""}
+        >
+          <span className="text-2xl font-bold underline text-black">
+            Xin chào {user?.name}
+          </span>
+        </Link>
         <Button
           onClick={handleSignOut}
           className="btn-client flex gap-2 btn-primary-client "

@@ -17,7 +17,6 @@ import { UpdateCustomerBody } from './dtos/update-customer-body';
 import { DeleteCustomerService } from '@app/use-cases/customer/delete-customer-service';
 
 @Controller('customers')
-// @UseGuards(RolesGuard)
 export class CustomersController {
   constructor(
     private createCustomerService: CreateCustomerService,
@@ -27,10 +26,9 @@ export class CustomersController {
     private deleteCustomerService: DeleteCustomerService,
   ) {}
 
-  @Get()
-  async list() {
-    const { customers } = await this.listCustomersService.execute();
-
+  @Get('list/:id')
+  async list(@Param('id') userId: string) {
+    const customers = await this.listCustomersService.execute(userId);
     return { customers: customers.map(CustomerViewModel.toHTTP) };
   }
 

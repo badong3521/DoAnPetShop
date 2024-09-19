@@ -10,7 +10,7 @@ function ComponentMain({ children }: Props) {
   return (
     <div className="bg-cream max-w-[1440px] mx-auto overflow-hidden">
       <Header className="bg-cream border border-b-black" />
-      {children}
+      <div className="min-h-[750px]">{children}</div>
       <Footer />
     </div>
   );

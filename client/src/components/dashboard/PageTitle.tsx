@@ -5,6 +5,7 @@ import { ArrowLeft } from "phosphor-react";
 interface Props {
   title: string;
   renderBackOption?: boolean;
+  className?: string;
 }
 export function PageTitle(props: Props) {
   const router = useRouter();
@@ -12,12 +13,18 @@ export function PageTitle(props: Props) {
   return (
     <div className="flex items-center gap-2">
       {props.renderBackOption && (
-        <Button onClick={router.back} bg="ghost" circle tooltipText="Voltar" tooltipBottom>
+        <Button
+          onClick={router.back}
+          bg="ghost"
+          circle
+          tooltipText="Voltar"
+          tooltipBottom
+        >
           <ArrowLeft className="w-5 h-5" />
         </Button>
       )}
       <div className="prose">
-        <h2>{props.title}</h2>
+        <h2 className={`${props.className}`}>{props.title}</h2>
       </div>
     </div>
   );

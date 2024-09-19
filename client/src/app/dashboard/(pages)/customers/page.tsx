@@ -22,14 +22,17 @@ import {
   cellPhonePattern,
   removeCountryCodeAnd9FromRawPhone,
 } from "@/utils/phoneNumber";
+import { useSessionStore } from "@/stores/session";
 
 const columnHelper = createColumnHelper<Customer>();
 
 export default function Customers() {
   const queryClient = useQueryClient();
+  const [user] = useSessionStore((state) => [state.user, state.signOut]);
+
   const customersListQuery = useQuery({
     queryKey: [CUSTOMER_KEY],
-    queryFn: fetchCustomers,
+    queryFn: () => fetchCustomers(user?.id || ""),
   });
 
   const deleteCustomerMutation = useMutation({

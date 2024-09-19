@@ -35,7 +35,7 @@ export default function PetCare() {
         <section className="bg-services bg-cover bg-no-repeat bg-center py-8">
           <div className="container mx-auto ">
             <div className="flex justify-between items-baseline">
-              <h2 className="h2 mb-12">Chăm sóc thú cưng</h2>
+              <h2 className="h2">Chăm sóc thú cưng</h2>
               <div className="mb-6">
                 <input
                   type="text"

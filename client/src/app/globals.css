@@ -135,3 +135,15 @@ h3 {
 .chat-message {
   margin: 5px 0;
 }
+
+.input {
+  color: aliceblue;
+}
+
+table {
+  color: orange;
+}
+
+button.btn.btn-sm.btn-circle.btn-ghost.absolute.right-2.top-2 {
+  color: white;
+}

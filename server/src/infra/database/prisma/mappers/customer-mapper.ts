@@ -1,11 +1,10 @@
-import { Customer } from "@app/entities/customer"
-import { Prisma } from "@prisma/client"
-import { PetMapper } from "./pet-mapper"
+import { Customer } from '@app/entities/customer';
+import { Prisma } from '@prisma/client';
+import { PetMapper } from './pet-mapper';
 
 type RawCustomerWithPets = Prisma.CustomerGetPayload<{
-  include: { pets: true }
-}>
-
+  include: { pets: true };
+}>;
 
 export class CustomerMapper {
   static toPrisma(customer: Customer) {
@@ -13,14 +12,19 @@ export class CustomerMapper {
       id: customer.id,
       name: customer.name,
       phone: customer.phone,
-    }
+      userId: customer.userId,
+    };
   }
 
   static toDomain(raw: RawCustomerWithPets) {
-    return new Customer({
-      name: raw.name,
-      phone: raw.phone,
-      pets: raw.pets.map(PetMapper.toDomain),
-    }, raw.id)
+    return new Customer(
+      {
+        name: raw.name,
+        phone: raw.phone,
+        pets: raw.pets.map(PetMapper.toDomain),
+        userId: raw.userId || '',
+      },
+      raw.id,
+    );
   }
 }
