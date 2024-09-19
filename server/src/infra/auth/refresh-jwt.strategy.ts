@@ -1,13 +1,16 @@
-import { Injectable } from "@nestjs/common";
-import { PassportStrategy } from "@nestjs/passport";
-import { Request } from "express";
-import { ExtractJwt, Strategy } from "passport-jwt";
-import { jwtConstants } from "./constants";
-import { UserTokenPayload } from "@app/use-cases/user/helpers/generate-access-tokens";
-import { User } from "@app/entities/user";
+import { Injectable } from '@nestjs/common';
+import { PassportStrategy } from '@nestjs/passport';
+import { Request } from 'express';
+import { ExtractJwt, Strategy } from 'passport-jwt';
+import { jwtConstants } from './constants';
+import { UserTokenPayload } from '@app/use-cases/user/helpers/generate-access-tokens';
+import { User } from '@app/entities/user';
 
 @Injectable()
-export class RefreshJwtStrategy extends PassportStrategy(Strategy, 'jwt-refresh') {
+export class RefreshJwtStrategy extends PassportStrategy(
+  Strategy,
+  'jwt-refresh',
+) {
   constructor() {
     super({
       jwtFromRequest: ExtractJwt.fromBodyField('refreshToken'),
@@ -17,8 +20,11 @@ export class RefreshJwtStrategy extends PassportStrategy(Strategy, 'jwt-refresh'
   }
 
   async validate(req: Request, payload: UserTokenPayload) {
-    const refreshToken = req.body.refreshToken
+    const refreshToken = req.body.refreshToken;
 
-    return new User({ name: payload.name, email: payload.email, refreshToken }, payload.sub);
+    return new User(
+      { name: payload.name, email: payload.email, refreshToken },
+      payload.sub,
+    );
   }
 }

@@ -104,7 +104,7 @@ export default function EditService({ params }: { params: { id: string } }) {
             value={
               <Link
                 className="link font-normal tooltip w-fit"
-                data-tip={"Ver Dịch vụ"}
+                data-tip={"Dịch vụ"}
                 href={`/dashboard/services/${appointment?.service?.id}/edit`}
               >
                 {appointment?.service?.title}
@@ -116,7 +116,7 @@ export default function EditService({ params }: { params: { id: string } }) {
             value={
               <Link
                 className="link font-normal tooltip w-fit"
-                data-tip={"Ver pet"}
+                data-tip={"Pet"}
                 href={`/dashboard/customers/${appointment?.pet.ownerId}/edit`}
               >
                 {appointment?.pet.name}

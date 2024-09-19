@@ -17,7 +17,6 @@ export const CurrencyInputComponent = (
           ref={ref}
           className={inputStyle({ errorBorder: !!errorMessage })}
           {...props}
-          // onValueChange={(value: any, name: any) => console.log(value, name)}
           decimalsLimit={2}
           allowNegativeValue={false}
           decimalScale={2}

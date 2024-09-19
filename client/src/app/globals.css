@@ -86,3 +86,64 @@ body {
 .bg-footer {
   background-image: url("../public/img/footer/bg.svg");
 }
+
+h3 {
+  color: black;
+}
+
+.chat-container {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  z-index: 1000;
+}
+
+.chat-bubble {
+  background-color: #007bff;
+  color: white;
+  border-radius: 50%;
+  width: 50px;
+  height: 50px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+  transition: background-color 0.3s;
+}
+
+.chat-bubble:hover {
+  background-color: #0056b3;
+}
+
+.chat-box {
+  background-color: white;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  width: 300px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+  padding: 10px;
+  margin-top: 10px;
+}
+
+.chat-messages {
+  max-height: 200px;
+  overflow-y: auto;
+  margin-bottom: 10px;
+}
+
+.chat-message {
+  margin: 5px 0;
+}
+
+.input {
+  color: aliceblue;
+}
+
+table {
+  color: orange;
+}
+
+button.btn.btn-sm.btn-circle.btn-ghost.absolute.right-2.top-2 {
+  color: white;
+}

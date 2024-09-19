@@ -27,9 +27,9 @@ enum AppointmentStatus {
 }
 
 model PetshopService {
-  id          String @id
+  id          String  @id
   title       String
-  description String
+  description String? @db.Text
   value       Int
   duration    Int
 
@@ -37,10 +37,12 @@ model PetshopService {
 }
 
 model Customer {
-  id    String @id
-  name  String
-  phone String
-  pets  Pet[]
+  id     String  @id
+  name   String
+  phone  String
+  pets   Pet[]
+  userId String?
+  user   User?   @relation(fields: [userId], references: [id])
 }
 
 model Pet {
@@ -52,8 +54,22 @@ model Pet {
 
   Appointment Appointment[]
   owner       Customer      @relation(fields: [ownerId], references: [id], onDelete: Cascade)
+  diseases    PetDisease[]
 
   @@index([ownerId])
+}
+
+model PetDisease {
+  id          String   @id @default(uuid())
+  name        String
+  description String?  @db.Text
+  severity    String
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+  Pet         Pet?     @relation(fields: [petId], references: [id])
+  petId       String?
+
+  @@index([name])
 }
 
 model Appointment {
@@ -71,9 +87,11 @@ model Appointment {
 }
 
 model User {
-  id           String  @id
+  id           String     @id
   name         String
-  email        String  @unique
+  email        String     @unique
   password     String
   refreshToken String?
+  role         String     @default("USER")
+  Customer     Customer[]
 }

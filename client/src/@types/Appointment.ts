@@ -1,5 +1,5 @@
 import { Pet } from "./Pet"
-import { PetshopService } from "./PetshopServices"
+import { PetShopService } from "./PetshopServices"
 
 export enum AppointmentStatus {
   PENDING = "PENDING",
@@ -12,5 +12,5 @@ export type Appointment = {
   appointmentTime: Date
   status: AppointmentStatus
   pet: Pet
-  service?: PetshopService
+  service?: PetShopService
 }

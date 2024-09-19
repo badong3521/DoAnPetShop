@@ -1,4 +1,4 @@
-import { PetshopService } from "@app/entities/petshop-service";
+import { PetshopService } from '@app/entities/petshop-service';
 
 export class PetshopServiceViewModel {
   static toHTTP(petshopService: PetshopService) {
@@ -8,6 +8,6 @@ export class PetshopServiceViewModel {
       description: petshopService.description,
       value: petshopService.value,
       duration: petshopService.duration,
-    }
+    };
   }
 }

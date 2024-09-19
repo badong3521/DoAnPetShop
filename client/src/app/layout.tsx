@@ -1,3 +1,4 @@
+/* eslint-disable @next/next/no-page-custom-font */
 import { ProvidersWrapper } from "./ProvidersWrapper";
 import "./globals.css";
 import { Footer } from "@/components/Footer";

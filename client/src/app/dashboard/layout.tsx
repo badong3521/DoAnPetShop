@@ -3,11 +3,12 @@
 import { useEffect, useState } from "react";
 import Link from "next/link";
 import { redirect, usePathname } from "next/navigation";
-import { Bag, Calendar, Info, Person } from "phosphor-react";
+import { Bag, Calendar, Info, Person, PawPrint } from "phosphor-react";
 import { SignedInHeader } from "@/components/dashboard/SignedInHeader";
 import { useSessionStore } from "src/stores/session";
 import { Header } from "@/components/Header";
 import { FancyLoading } from "@/components/ui/Loading/FancyLoading";
+// import ChatComponent from "@/components/chat/chat";
 
 const ROUTES = [
   {
@@ -26,6 +27,11 @@ const ROUTES = [
     Icon: () => <Bag size={24} />,
   },
   {
+    name: "Pet Care",
+    link: "/dashboard/pet-care",
+    Icon: () => <PawPrint size={24} />,
+  },
+  {
     name: "Về tôi",
     link: "/dashboard/about",
     Icon: () => <Info size={24} />,
@@ -40,13 +46,13 @@ export default function DashboardLayout({
   const pathname = usePathname();
   const [hydrated, setHydrated] = useState(false);
   const isUserLoggedIn = useSessionStore((state) => state.isLoggedIn);
+  const [user] = useSessionStore((state) => [state.user, state.signOut]);
 
   useEffect(() => {
     setHydrated(true);
   }, []);
 
   if (!hydrated) {
-    // Returns null on first render, so the client and server match
     return (
       <div>
         <Header />
@@ -57,13 +63,13 @@ export default function DashboardLayout({
     );
   }
 
-  if (!isUserLoggedIn) {
+  if (!isUserLoggedIn || user?.role !== "ADMIN") {
     redirect("/login");
   }
+
   return (
     <div className="text-white">
       <SignedInHeader />
-
       <div className="min-h-screen drawer drawer-mobile block lg:drawer-open lg:grid">
         <input id="sidebar-drawer" type="checkbox" className="drawer-toggle" />
         <div className="drawer-content flex">
@@ -78,10 +84,12 @@ export default function DashboardLayout({
             </Link>
 
             {ROUTES.map((route) => (
-              <li className="text-white" key={route.name}>
+              <li className="text-white flex" key={route.name}>
                 <Link
                   href={route.link}
-                  className={pathname?.includes(route.link) ? "active" : ""}
+                  className={`${
+                    pathname?.includes(route.link) ? "active" : ""
+                  } flex`}
                 >
                   <route.Icon />
                   {route.name}

@@ -13,43 +13,37 @@ import {
 } from "@/utils/timeDuration";
 import { SubmitHandler, useForm } from "react-hook-form";
 import {
-  PetshopServiceBodyData,
-  PetshopService,
+  PetShopServiceBodyData,
+  PetShopService,
 } from "src/@types/PetshopServices";
 import { z } from "zod";
 
 const petshopServiceSchema = z.object({
   title: z.string().min(1, "Tiêu đề và nghĩa vụ").max(60, "Tối đa 60 kí tự"),
-  description: z
-    .string()
-    .min(1, "Mô tả và nghĩa vụ")
-    .max(120, "Tối đa 120 kí tự"),
+  description: z.string().min(1, "Mô tả và nghĩa vụ"),
+  // .max(5000, "Tối đa 5000 kí tự"),
   value: z
     .string()
     .nonempty({
       message: "Giá tiền là bắt buộc",
     })
-    // CurrencyInput masks the currency value, so we need to transform that string value into
-    // a number for better validation
     .transform((value) => parseMaskedCurrencyValueToNumber(value))
     .pipe(
       z
         .number()
         .min(10_000, "Giá tiền tối thiểu là 10.000đ")
-        .max(1_000_000, "Giá tiền tối đa là 100.000.000đ")
+        .max(100_000_000, "Giá tiền tối đa là 100.000.000đ")
     )
-    .transform((value) => maskNumberToCurrency(value)), // transform back to string to use it as a string
+    .transform((value) => maskNumberToCurrency(value)),
   duration: z
     .string()
     .length(8, "Thời gian là bắt buộc")
-    // parses time string into seconds for validation
     .transform((value) => {
       const timeDuration = parseTimeStringToDuration(value);
       return timeDuration.asSeconds();
     })
     .pipe(z.number().min(1, "Thời gian tối thiểu là 1 giây"))
     .transform((value) => {
-      // transform back to time string (HH:mm:ss) to use it as a string
       return parseSecondsToTimeDurationString(value);
     }),
 });
@@ -57,8 +51,8 @@ const petshopServiceSchema = z.object({
 export type PetshopServiceFormData = z.infer<typeof petshopServiceSchema>;
 
 interface Props {
-  service?: PetshopService;
-  onSubmit: (d: PetshopServiceBodyData) => Promise<void>;
+  service?: PetShopService;
+  onSubmit: (d: PetShopServiceBodyData) => Promise<void>;
   isLoading: boolean;
 }
 export function ServiceForm(props: Props) {
@@ -123,7 +117,7 @@ export function ServiceForm(props: Props) {
             <Input
               label="Khoảng thời gian"
               type="time"
-              step={1} // required to render seconds as well
+              step={1}
               id="duration"
               errorMessage={errors.duration?.message}
               {...register("duration")}

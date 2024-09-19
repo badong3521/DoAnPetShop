@@ -7,7 +7,7 @@ export function ErrorAlert(props: Props) {
   return (
     <div className="alert alert-error shadow-lg">
       <SmileySad className="w-6 h-6" />
-      <span className="text-error-content">{props.text ?? "Erro! Não foi possível buscar os dados."}</span>
+      <span className="text-error-content">{props.text ?? "Lỗi! Không tìm thấy dữ liệu."}</span>
     </div>
   );
 }

@@ -26,7 +26,7 @@ interface EditCustomerMutationPayload {
   data: EditCustomerFormData;
 }
 
-interface EditPetMutationPayload {
+export interface EditPetMutationPayload {
   id: string;
   data: PetFormData;
 }

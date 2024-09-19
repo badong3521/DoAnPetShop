@@ -5,17 +5,37 @@ interface SignInParams {
   email: string;
   password: string;
 }
+
+interface SignUpParams {
+  name: string;
+  email: string;
+  password: string;
+}
 interface SignInResponse {
   user: User;
   accessToken: string;
   refreshToken: string;
 }
+
+interface SignUpResponse {
+  user: User;
+}
+
 export async function signIn({ email, password }: SignInParams) {
   const { data } = await api.post<SignInResponse>("/sessions", {
     email,
     password,
   });
 
+  return data;
+}
+
+export async function signUp({ name, email, password }: SignUpParams) {
+  const { data } = await api.post<SignUpResponse>("/sessions/sign-up", {
+    name,
+    email,
+    password,
+  });
   return data;
 }
 

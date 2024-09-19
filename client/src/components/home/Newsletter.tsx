@@ -1,9 +1,6 @@
 import React from "react";
-
 import Image from "next/image";
-
 import { HiOutlineArrowNarrowRight } from "react-icons/hi";
-
 import DogImg from "@/public/img/newsletter/dog.png";
 
 const Newsletter = () => {
@@ -27,7 +24,6 @@ const Newsletter = () => {
             </div>
           </div>
         </div>
-        {/* image div */}
         <div className="bg-newsletterYellow bg-center bg-no-repeat bg-cover flex-1 flex justify-center items-end h-full">
           <Image src={DogImg} alt="" />
         </div>

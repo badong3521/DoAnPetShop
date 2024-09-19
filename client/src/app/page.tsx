@@ -30,8 +30,8 @@ export default function Home() {
               <PawPrint size={32} weight="fill" />
             </h1>
             <p className="py-6 text-white">
-              Trong hệ thống Petshop này, hãy đăng ký khách hàng, vật
-              nuôi và dịch vụ và dễ dàng quản lý các cuộc hẹn.
+              Trong hệ thống Petshop này, hãy đăng ký khách hàng, vật nuôi và
+              dịch vụ và dễ dàng quản lý các cuộc hẹn.
             </p>
             <Button bg="primary" asChild>
               <Link href="/dashboard">Bắt đầu</Link>

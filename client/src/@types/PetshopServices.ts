@@ -1,4 +1,4 @@
-export type PetshopService = {
+export type PetShopService = {
   id: string
   title: string
   description: string
@@ -6,7 +6,7 @@ export type PetshopService = {
   duration: number
 }
 
-export type PetshopServiceBodyData = {
+export type PetShopServiceBodyData = {
   title: string
   description: string
   value: number

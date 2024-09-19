@@ -5,8 +5,8 @@ import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { PageTitle } from "@/components/dashboard/PageTitle";
 import {
   deletePetshopService,
-  fetchPetshopServices,
-  PETSHOPSERVICE_KEY,
+  fetchPetShopServices,
+  PET_SHOP_SERVICE_KEY,
 } from "@/services/queries/PetshopServices";
 import { parseCurrencyValueInCentsToBRL } from "@/utils/currency";
 import { parseSecondsToHuman } from "@/utils/timeDuration";
@@ -17,22 +17,22 @@ import { toast } from "react-hot-toast";
 import { ConfirmDeletePopover } from "@/components/ConfirmDeletePopover";
 import { Table } from "@/components/ui/Table";
 import { createColumnHelper } from "@tanstack/react-table";
-import { PetshopService } from "@/@types/PetshopServices";
+import { PetShopService } from "@/@types/PetshopServices";
 
-const columnHelper = createColumnHelper<PetshopService>();
+const columnHelper = createColumnHelper<PetShopService>();
 
 export default function Services() {
   const queryClient = useQueryClient();
 
-  const petshopServicesListQuery = useQuery({
-    queryKey: [PETSHOPSERVICE_KEY],
-    queryFn: fetchPetshopServices,
+  const petShopServicesListQuery = useQuery({
+    queryKey: [PET_SHOP_SERVICE_KEY],
+    queryFn: fetchPetShopServices,
   });
 
   const petshopServiceDeleteMutation = useMutation({
     mutationFn: (id: string) => deletePetshopService(id),
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: [PETSHOPSERVICE_KEY] });
+      queryClient.invalidateQueries({ queryKey: [PET_SHOP_SERVICE_KEY] });
       toast.success("Đã xóa dịch vụ thành công!");
     },
     onError: () => {
@@ -88,9 +88,9 @@ export default function Services() {
 
       <div className="my-4">
         <Table
-          data={petshopServicesListQuery.data?.services ?? []}
+          data={petShopServicesListQuery.data?.services ?? []}
           columns={columns}
-          asyncStatus={petshopServicesListQuery.status}
+          asyncStatus={petShopServicesListQuery.status}
         />
       </div>
 

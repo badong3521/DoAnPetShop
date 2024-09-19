@@ -1,23 +1,17 @@
 import { AuthenticateUserService } from '@app/use-cases/user/authenticate-user-service';
 import { PublicRoute } from '@infra/auth/decorators/public-route-decorator';
-import {
-  Body,
-  Controller,
-  Get,
-  Param,
-  Post,
-  Req,
-  UseGuards,
-} from '@nestjs/common';
+import { Body, Controller, Param, Post, UseGuards } from '@nestjs/common';
 import { AuthenticateUserBody } from './dtos/authenticate-user-body';
 import { UserViewModel } from '../view-models/user-view-model';
 import { SignOutUserService } from '@app/use-cases/user/sign-out-user-service';
 import { RefreshAccessTokenService } from '@app/use-cases/user/refresh-access-token-service';
 import { RefreshJwtGuard } from '@infra/auth/refresh-jwt-auth.guard';
 import { CurrentUser } from '@infra/auth/decorators/current-user-decorator';
-import { User } from '@app/entities/user';
+import { Role, User } from '@app/entities/user';
 import { CreateUserService } from '@app/use-cases/user/create-user-service';
 import { CreateUserBody } from './dtos/create-user-body.dto';
+import { Roles } from '@infra/auth/decorators/roles-decorator';
+import { RolesGuard } from '@infra/auth/roles.guard';
 
 @Controller('sessions')
 export class SessionController {
@@ -37,9 +31,8 @@ export class SessionController {
     return { user: UserViewModel.toHTTP(user), accessToken, refreshToken };
   }
 
-  // API Đăng ký
   @PublicRoute()
-  @Post('sign-up')
+  @Post('/sign-up')
   async signUp(@Body() body: CreateUserBody) {
     const user = await this.createUserService.execute(body);
 
@@ -63,5 +56,12 @@ export class SessionController {
     });
 
     return tokens;
+  }
+
+  @Roles(Role.ADMIN)
+  @UseGuards(RolesGuard)
+  @Post('/admin-only')
+  async adminOnlyEndpoint() {
+    return { message: 'Chỉ ADMIN mới có thể truy cập' };
   }
 }

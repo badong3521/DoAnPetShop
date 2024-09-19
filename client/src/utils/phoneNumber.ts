@@ -1,10 +1,9 @@
 export const cellPhonePattern = "#### ## ####";
 
 export function removeCountryCodeAnd9FromRawPhone(rawPhone: string) {
-  let result = rawPhone.slice(3); // loại bỏ mã vùng: 84
+  let result = rawPhone.slice(3);
 
-  // Loại bỏ số 9 nếu có
-  result = result.replace(/^9/, ""); // loại bỏ số 9 nếu xuất hiện ở đầu chuỗi
+  result = result.replace(/^9/, ""); 
 
   return result;
 }
