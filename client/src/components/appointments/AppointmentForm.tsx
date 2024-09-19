@@ -17,7 +17,8 @@ const appointmentSchema = z.object({
   appointmentTime: z.coerce
     .date({
       errorMap: (issue, { defaultError }) => ({
-        message: issue.code === "invalid_date" ? "Dữ liệu không hợp lệ" : defaultError, // https://github.com/colinhacks/zod/issues/1526
+        message:
+          issue.code === "invalid_date" ? "Dữ liệu không hợp lệ" : defaultError,
       }),
     })
     .refine(

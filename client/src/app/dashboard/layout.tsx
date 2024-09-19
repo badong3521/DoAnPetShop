@@ -87,7 +87,9 @@ export default function DashboardLayout({
               <li className="text-white flex" key={route.name}>
                 <Link
                   href={route.link}
-                  className={pathname?.includes(route.link) ? "active" : ""}
+                  className={`${
+                    pathname?.includes(route.link) ? "active" : ""
+                  } flex`}
                 >
                   <route.Icon />
                   {route.name}

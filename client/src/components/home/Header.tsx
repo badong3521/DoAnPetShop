@@ -7,7 +7,7 @@ import { useSessionStore } from "@/stores/session";
 import { SignOut } from "phosphor-react";
 import { Button } from "../ui/Button";
 import Link from "next/link";
-import { usePathname } from "next/navigation";
+import { redirect, usePathname, useRouter } from "next/navigation";
 
 type Props = {
   className?: string;
@@ -19,6 +19,7 @@ const Header = ({ className }: Props) => {
     state.user,
     state.signOut,
   ]);
+  const router = useRouter();
 
   function handleSignOut() {
     signOutUser();

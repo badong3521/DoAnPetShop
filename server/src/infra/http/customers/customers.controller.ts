@@ -28,6 +28,7 @@ export class CustomersController {
 
   @Get('list/:id')
   async list(@Param('id') userId: string) {
+    console.log('UU', userId);
     const customers = await this.listCustomersService.execute(userId);
     return { customers: customers.map(CustomerViewModel.toHTTP) };
   }

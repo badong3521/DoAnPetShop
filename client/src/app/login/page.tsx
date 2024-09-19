@@ -117,11 +117,12 @@ export default function Login() {
             placeholder={LOGIN_DEFAULT_USER.email}
             errorMessage={errors.email?.message}
           />
-          <div className="relative">
+          <div className="">
             <Input
               label="Mật khẩu"
               {...register("password")}
               id="password"
+              className="relative"
               type={showPassword ? "text" : "password"}
               placeholder={LOGIN_DEFAULT_USER.password}
               errorMessage={errors.password?.message}

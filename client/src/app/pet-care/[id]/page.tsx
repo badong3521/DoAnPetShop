@@ -60,7 +60,6 @@ export default function DetailsPetCare() {
       <ComponentMain>
         <section className="bg-services bg-cover bg-no-repeat bg-center py-8">
           <div className="container mx-auto ">
-            <h2 className="h2">Chăm sóc thú cưng</h2>
             <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
               <div className="flex gap-4 justify-between items-end mb-4">
                 <p className="text-4xl">{petDiseaseShowQuery?.data?.name}</p>
